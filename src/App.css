@@ -13,6 +13,9 @@
   --err-bg: #ea0000;
   --btn-primary-bg: #007aff;
   --btn-primary-text: #fff;
+  --navbar-dark-text: #012f46;
+  --navbar-theme-text: #007aff;
+  --backdrop: rgba(1,47,70,0.78);
 }
 
 * {
