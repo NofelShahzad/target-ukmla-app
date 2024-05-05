@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+  <g id="cross-ico" transform="translate(-541 -663)">
+    <circle id="Ellipse_3" data-name="Ellipse 3" cx="7" cy="7" r="7" transform="translate(541 663)" fill="#ea0000"/>
+    <g id="Group_111" data-name="Group 111" transform="translate(634.621 -190.902) rotate(45)">
+      <line id="Line_89" data-name="Line 89" y2="7" transform="translate(547.5 666.5)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="1.5"/>
+      <line id="Line_90" data-name="Line 90" y2="7" transform="translate(551 670) rotate(90)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="1.5"/>
+    </g>
+  </g>
+</svg>

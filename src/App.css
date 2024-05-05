@@ -1,42 +1,268 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+:root {
+  --themecolor: #007aff;
+  --text-color: #0f0f0f;
+  --border-color: #007aff;
+  --title-color: #007aff;
+  --dark-background: #C5C5C5;
+  --placeholder: #C5C5C5;
+  --disable-background: #F5F5F5;
+  --disable-text: #C5C5C5;
+  --nav-link-color: #012F46;
+  --validator-background: #F4F0F8;
+  --err-text-color: #ea0000;
+  --err-bg: #ea0000;
+  --btn-primary-bg: #007aff;
+  --btn-primary-text: #fff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  min-height: 100vh;
+  width: 100%;
+  font-family: "Poppins", sans-serif;
+  color: var(--text-color);
+  background-color: #FBFFF4;
+}
+
+input::placeholder {
+  color: var(--placeholder) !important;
+}
+
+input.form-control {
+  background: #FFFFFF 0% 0% no-repeat padding-box !important;
+  border: 1px solid #C5C5C5 !important;
+  border-radius: 6px !important;
+  height: 41px;
+}
+
+input.form-control:focus {
+  border: 1px solid #007aff !important;
+  background: #FFFFFF 0% 0% no-repeat padding-box !important;
+  box-shadow: 0px 0px 8px #007AFF47 !important;
+}
+
+input.not-empty{
+  border: 1px solid var(--border-color)!important;
+}
+
+input[type='checkbox'] {
+  accent-color: #0F0F0F;
+  background: #FFFFFF 0% 0% no-repeat padding-box !important;
+  border: 1px solid #C5C5C5 !important;
+  border-radius: 6px !important;
+
+  /* background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  background: transparent url('./assets/icons/input-checkbox.svg') 0% 0% no-repeat padding-box; */
+}
+label.form-label{
+  font-weight: 500;
+}
+button:disabled {
+  background-color: var(--disable-background)!important;
+  color: var(--disable-text)!important;
+  transition: all 0.2s ease-in-out;
+}
+.btn-primary{
+  background: var(--btn-primary-bg);
+  border-radius: 6px;
+  color: var(--btn-primary-text);
+  transition: all 0.2s ease-in-out;
+}
+
+
+.field-wrapper,
+.check-field-wrapper {
+  padding: 5px;
+}
+
+.check-field-wrapper {
+  display: flex;
+  align-items: flex-start;
+}
+
+.cred-page-wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.cred-page-wrapper .cred-page-inner-wrapper {
+  border-radius: 20px;
+  /* height: 65vh; */
+  margin: 20px 0;
+  /* min-height: 600px; */
+  /* width: 70%; */
+  z-index: 1;
+  border: 2px solid var(--border-color);
+  padding: 40px 60px;
+
+
+}
+
+.cred-page-wrapper .cred-page-inner-wrapper .title-wrapper {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.cred-page-wrapper .cred-page-inner-wrapper .title-wrapper .cred-title {
+  color: var(--title-color);
+  font-weight: 600;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.cred-page-wrapper .cred-page-inner-wrapper .title-wrapper p{
+  font-weight: 500;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.signup-form-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.signup-form-wrapper a {
+  font-weight: 600;
+  color: var(--text-color);
 }
 
-.card {
-  padding: 2em;
+.signup-form-wrapper .check-field-wrapper input {
+  margin-top: 0.3rem;
 }
 
-.read-the-docs {
-  color: #888;
+button {
+  background: #F5F5F5 0% 0% no-repeat padding-box;
+  border-radius: 6px;
+  font-weight: 600;
+  width: 100%;
+  padding: 10px 0;
+  outline: unset;
+  border: unset;
+}
+.cred-page-wrapper .cred-page-inner-wrapper .form-action-buttons-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
+.cred-page-wrapper .cred-page-inner-wrapper .form-action-buttons-wrapper .forgot-password-container{
+  text-align: end;
+  margin-bottom: 10px;
+}
+.cred-page-wrapper .cred-page-inner-wrapper .form-action-buttons-wrapper .forgot-password-container a{
+  font-weight: 500;
+  color: var(--text-color);
+  text-decoration: none;
+}
+.cred-page-wrapper .cred-page-inner-wrapper .form-action-buttons-wrapper .form-action-buttons-inner-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+.cred-page-wrapper .cred-page-inner-wrapper .form-action-buttons-wrapper .form-action-buttons-inner-wrapper a{
+  border: 1px solid var(--border-color);
+  background-color: #FFFFFF;
+  width: 100%;
+  border-radius: 6px;
+  font-weight: 600;
+  width: 100%;
+  padding: 10px 0;
+  outline: unset;
+}
+.cred-page-wrapper .cred-page-inner-wrapper .form-action-buttons-wrapper .form-action-buttons-inner-wrapper button[type='submit']{
+  background-color: var(--themecolor);
+  color: #fff;
+}
+.validation-container {
+  background-color: var(--validator-background);
+  padding: 20px;
+  border-radius: 10px;
+  margin: 15px 0;
+}
+.validation-container .validator-title{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.validation-container .validator-title p{
+  margin: 0;
+}
+.validation-container .validator-title .validate-type span{
+  color: var(--themecolor);
+  font: normal normal medium 11px/17px 'Poppins';
+}
+
+.validation-container ul.validator-list{
+  list-style-type: none;
+  padding: 0;
+}
+.validation-container ul.validator-list li{
+  padding-bottom: 10px;
+}
+.validation-container ul.validator-list img{
+  padding-right: 5px;
+  width: 26px;
+  height: 26px;
+}
+
+.field-wrapper .password-wrapper{
+  position: relative;
+}
+.field-wrapper .password-wrapper img{
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+
+.account-verified-container{
+  text-align: center;
+}
+.account-verified-container img{
+  margin-bottom: 15px;
+}
+.account-verified-container .verified-title{
+  /* font: normal normal bold 34px/48px 'Poppins'; */
+}
+
+/* Login Page Start */
+.err-msg{
+  font-size: 14px;
+  text-align: end;
+  margin-top: 5px;
+  font-weight: 500;
+  color: var(--err-text-color);
+  padding-right: 15px;
+}
+.err-msg p {
+  margin: 0;
+}
+.btn-continue{
+  background: var(--btn-primary-bgrimary-bg) ;
+  border-radius: 6px;
+  /* color: ; */
+}
+.failed-container {
+  border: 1px solid var(--err-text-color)!important;
+}
+.failed-container .verified-title{
+  color: var(--err-text-color);
+}
+.failed-container .btn{
+  background-color: var(--err-bg);
+  color: var(--btn-primary-text);
+  font-weight: 500;
+}
+.failed-container .btn:active{
+  border: 1px solid var(--err-text-color);
+  color: var(--err-text-color);
 }
