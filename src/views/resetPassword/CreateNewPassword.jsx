@@ -38,6 +38,7 @@ function CreateNewPassword() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsVerified(true);
+        setIsSubmitting(true);
     }
 
 

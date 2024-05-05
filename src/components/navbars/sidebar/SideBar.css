@@ -1,0 +1,67 @@
+aside.sidebar {
+    box-shadow: rgba(0, 0, 0, 0.05) 0rem 1.25rem 1.6875rem 0rem;
+    margin-bottom: inherit;
+    left: 0px;
+    width: 250px;
+    transform: translateX(0px);
+    transition: width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms, background-color 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+    height: 100vh;
+}
+
+aside.sidebar .logo-wrapper {
+    padding: 24px 32px 32px;
+    text-align: center;
+    opacity: 1;
+    background: transparent;
+    color: rgb(52, 71, 103);
+    box-shadow: none;
+}
+aside.sidebar .sidebar-menu{
+    list-style-type: none;
+    height: 50%;
+}
+aside.sidebar .sidebar-menu li {
+    padding: 5px 10px;
+    position: relative;
+}
+aside.sidebar .sidebar-menu li a{
+    color: var(--text-color);
+    text-decoration: none;
+    width: 100%;
+    display: block;
+}
+aside.sidebar .sidebar-menu li a img{
+    padding-right: 20px;
+}
+aside.sidebar .sidebar-menu li a.active{
+    color: var(--active-color);
+}
+aside.sidebar .sidebar-menu li a.active:after{
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    height: 30px;
+    width: 3px;
+    border-radius: 2px;
+    background-color: var(--active-color);
+    animation: move 1s ease-in-out infinite;
+}
+aside.sidebar .sidebar-social-links{
+    /* padding: 0; */
+    list-style-type: none;
+}
+aside.sidebar .sidebar-social-links li{
+    padding: 5px 10px;
+}
+aside.sidebar .sidebar-social-links li a{
+    text-decoration: none;
+    color: var(--text-color);
+    display: inline-flex;
+    gap: 10px;
+    width: 100%;
+}
+aside.sidebar .sidebar-social-links li a img{
+
+}

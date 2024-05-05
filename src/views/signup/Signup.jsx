@@ -36,10 +36,14 @@ function Signup() {
     setSignupData({ ...signupData, [e.target.name]: e.target.checked })
   }
 
+ 
+
   useEffect(() => {
-    const hasLength = signupData?.password.length >= 8;
-    const hasLetter = /[a-zA-Z]/.test(signupData?.password);
-    const hasNumber = /\d/.test(signupData?.password);
+    
+    const password = signupData.password;
+    const hasLength = password.length >= 8;
+    const hasLetter = /[a-zA-Z]/.test(password);
+    const hasNumber = /\d/.test(password);
 
     setValidation({
       hasLength,
@@ -47,19 +51,19 @@ function Signup() {
       hasNumber
     });
 
-  }, [signupData?.password])
-
-  useEffect(() => {
-    const isAllFieldsFilled = () => {
-      for (const key in signupData) {
-        if (Object.prototype.hasOwnProperty.call(signupData, key) && signupData[key] === '') {
-          return false;
-        }
-      }
-      return true;
+    const isAllFieldsValid = () => {
+      const { firstName, lastName, email, password } = signupData;
+      return (
+        firstName.trim() !== '' &&
+        lastName.trim() !== '' &&
+        email.trim() !== '' &&
+        password.length >= 8 &&
+        /[a-zA-Z]/.test(password) &&
+        /\d/.test(password)
+      );
     };
 
-    setSubmitDisable(!isAllFieldsFilled());
+    setSubmitDisable(!isAllFieldsValid());
   }, [signupData]);
 
 
@@ -165,7 +169,7 @@ function Signup() {
             <div className="col-7">
               <div className="form-action-buttons-inner-wrapper">
                 <button type='submit' disabled={submitDisable || isSubmitting}>Creat{isSubmitting ? 'ing' : 'e'} account</button>
-                <Link to='' className="btn">Already have an account</Link>
+                <Link to='/login' className="btn">Already have an account</Link>
 
               </div>
             </div>

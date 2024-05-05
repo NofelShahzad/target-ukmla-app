@@ -88,10 +88,10 @@ function Login() {
                         </div>
                         <div className='form-action-buttons-wrapper'>
                             <div className="col-12">
-                                <div className="forgot-password-container"><Link to='/'> Forgot Password?</Link></div>
+                                <div className="forgot-password-container"><Link to='/reset-password'> Forgot Password?</Link></div>
                                 <div className="form-action-buttons-inner-wrapper">
                                     <button type='submit' disabled={submitDisable || isSubmitting}>Sign in</button>
-                                    <Link to='/' className="btn">Register for new account</Link>
+                                    <Link to='/signup' className="btn">Register for new account</Link>
 
                                 </div>
                             </div>

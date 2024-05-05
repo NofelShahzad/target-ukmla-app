@@ -6,6 +6,7 @@ import './Navbar.css'
 // import { NavLink } from "react-router-dom";
 import hamburger from '../../../assets/icons/hamburger-icon.svg'
 import close from '../../../assets/icons/hamburger-close.svg'
+import logo from '../../../assets/logo/TARGET-UKMLA.png'
 import { useState } from "react"
 
 function Navbar() {
@@ -16,7 +17,9 @@ function Navbar() {
         <div className="container">
           <nav>
             <Link className="brand-logo" to="/">
-              <h1><span>TARGET</span> UKMLA
+              <h1>
+                <img src={logo} alt="logo"/>
+                {/* <span>TARGET</span> UKMLA */}
               </h1>
             </Link>
             <li className="toggle-btn">

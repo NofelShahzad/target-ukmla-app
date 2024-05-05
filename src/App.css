@@ -15,6 +15,7 @@
   --btn-primary-text: #fff;
   --navbar-dark-text: #012f46;
   --navbar-theme-text: #007aff;
+  --active-color: #007aff;
   --backdrop: rgba(1,47,70,0.78);
 }
 
@@ -145,12 +146,13 @@ button {
   padding: 10px 0;
   outline: unset;
   border: unset;
+  transition: all 0.2s ease-in-out;
 }
 .cred-page-wrapper .cred-page-inner-wrapper .form-action-buttons-wrapper{
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
+  padding-top: 10px;
 }
 .cred-page-wrapper .cred-page-inner-wrapper .form-action-buttons-wrapper .forgot-password-container{
   text-align: end;
@@ -181,6 +183,7 @@ button {
 .cred-page-wrapper .cred-page-inner-wrapper .form-action-buttons-wrapper .form-action-buttons-inner-wrapper button[type='submit']{
   background-color: var(--themecolor);
   color: #fff;
+  transition: all 0.2s ease-in-out;
 }
 .validation-container {
   background-color: var(--validator-background);
