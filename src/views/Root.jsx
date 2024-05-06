@@ -8,7 +8,7 @@ function Root() {
     <>
         <Navbar/>
         <Outlet/>
-        <SideBar/>
+        {/* <SideBar/> */}
     </>
   )
 }

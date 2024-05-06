@@ -84,6 +84,9 @@ function Signup() {
 
   return (
     <div className='cred-page-wrapper'>
+      {/* <div className='progressbar-wrapper'>
+        <div className='progressbar-inner-wrapper' style={{'width': isVerified ?'60%':'30%'}}></div>
+      </div> */}
       {/* <div className='container'> */}
       {!isVerified &&
       <div className="col-sm-10 col-md-7 col-10 cred-page-inner-wrapper">

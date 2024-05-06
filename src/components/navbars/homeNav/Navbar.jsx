@@ -70,6 +70,9 @@ function Navbar() {
 
           </nav>
         </div>
+        <div className='progressbar-wrapper'>
+        <div className='progressbar-inner-wrapper' style={{'width':  '30%'}}></div>
+      </div>
       </div>
 
     </>
