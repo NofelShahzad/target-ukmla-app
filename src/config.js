@@ -1,0 +1,1 @@
+export const  VITE_REACT_APP_API_BASE_URL="https://admin/api/v1/"

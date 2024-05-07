@@ -10,7 +10,7 @@ import logo from '../../../assets/logo/TARGET-UKMLA.png'
 import { useState } from "react"
 
 function Navbar() {
-  const [toogleHamburger, setToogleHamburger] = useState(false)
+  const [toogleHamburger, setToogleHamburger] = useState(false);
   return (
     <>
       <div className="header">
