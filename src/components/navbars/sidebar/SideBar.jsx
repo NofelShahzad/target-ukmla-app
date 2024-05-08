@@ -15,7 +15,7 @@ function SideBar() {
     return (
         <aside className="sidebar">
             <div className='logo-wrapper'>
-                <img src={logo} />
+                <img src={logo} width={'100%'}/>
             </div>
             <ul className='sidebar-menu'>
                 <li>
@@ -37,7 +37,7 @@ function SideBar() {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to='/webinar'>
+                    <NavLink to='/webinars'>
                         <img src={webinarIcon} alt='webinar icon' />
                         Webinars
                     </NavLink>
