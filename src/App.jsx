@@ -1,18 +1,26 @@
 
-import {  RouterProvider } from 'react-router-dom'
+import {  BrowserRouter as Router } from 'react-router-dom'
 import './App.css'
-import router from './views/Router'
-// import { useSelector } from 'react-redux';
+import RouterWrapper from './views/Router'
+// import RouterWrapper  from './views/Router'
+// import Router from './views/Router'
+import { useSelector } from 'react-redux';
+import GlobalErrorBoundary from './components/errorBoundary/GlobalErrorBoundary';
 
 function App() {
-  // const auth =  useSelector((state) => state.auth);
-  // console.log("auth::",auth)
+  const auth =  useSelector((state) => state.auth);
+  console.log("auth::",auth)
   
 
   return (
     <>
-    <div className='app'>
-      <RouterProvider router={router}/>
+      {/* <RouterProvider router={Router}/> */}
+      <div className='app'>
+        <GlobalErrorBoundary>
+          <Router>
+            <RouterWrapper />
+          </Router>
+        </GlobalErrorBoundary>
     </div>
     </>
   )

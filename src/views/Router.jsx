@@ -1,26 +1,66 @@
-import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
-import Root from "../root/Root";
-import Signup from "./signup/Signup";
-import Login from "./login/Login";
-import ResetPassword from "./resetPassword/ResetPassword";
-import CreateNewPassword from "./resetPassword/CreateNewPassword";
+// Router.js
+// import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Root from '../root/Root';
+import Signup from './auth/Signup';
+import Login from './auth/Login';
+import ResetPassword from './auth/ResetPassword';
+import CreateNewPassword from './auth/CreateNewPassword';
+import ProtectedRoute from './auth/ProtectedRoute';
+import Dashboard from './dashboard/Dashboard';
+import { useSelector } from 'react-redux';
+import AuthenticatedLayout from '../layout/AuthenticatedLayout';
+import UnauthenticatedLayout from '../layout/UnauthenticatedLayout';
 
-const router = createBrowserRouter(
-    createRoutesFromElements(
-        <Route path="/" element={<Root/>}>
-            <Route index element={<div className="container"> <h3 className="my-4 text-center">Home</h3></div>}/>
-            <Route path="question-bank" element={<div className="container"> <h3 className="my-4 text-center">Question Bank</h3></div>}/>
-            <Route path="big-mock" element={<div className="container"> <h3 className="my-4 text-center">Big Mock</h3></div>}/>
-            <Route path="webinars" element={<div className="container"> <h3 className="my-4 text-center">Webinars</h3></div>}/>
-            <Route path="contact-us" element={<div className="container"> <h3 className="my-4 text-center">Webinars</h3></div>}/>
+const RouterWrapper = () => {
+    const isUserAuthenticated = useSelector(state => !!state.auth.user);
 
-            <Route path='signup' element={<Signup/>}/>
-            <Route path='login' element={<Login/>} />
-            <Route path='reset-password' element={<ResetPassword/>}/>
-            <Route path='new-password' element={<CreateNewPassword/>}/>
-            {/* <Route path="*" element={<div className="container"> <h3 className="my-4 text-center">Page not found!</h3></div>}/> */}
-        </Route>    
-)
-);
+    return (
+        <Routes>
 
-export default router
+            <Route path='/' element={
+                <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/">
+                    <UnauthenticatedLayout />
+                </ProtectedRoute>
+            }>
+                <Route index element={<div className="container"> <h3 className="my-4 text-center">Home</h3></div>} />
+
+                <Route path="signup" element={<Signup />} />
+                {/* <Route path="login" element={<Login />} /> */}
+                <Route
+                    path="/login"
+                    element={
+                        <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/dashboard">
+                            <Login />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route path="question-bank" element={<div className="container"> <h3 className="my-4 text-center">Question Bank</h3></div>} />
+                <Route path="big-mock" element={<div className="container"> <h3 className="my-4 text-center">Big Mock</h3></div>} />
+                <Route path="webinar" element={<div className="container"> <h3 className="my-4 text-center">Webinars</h3></div>} />
+                <Route path="contact-us" element={<div className="container"> <h3 className="my-4 text-center">Webinars</h3></div>} />
+
+                <Route path="reset-password" element={<ResetPassword />} />
+                <Route path="new-password" element={<CreateNewPassword />} />
+            </Route>
+            <Route
+                path="/dashboard"
+                element={
+                    <ProtectedRoute isAllowed={!!isUserAuthenticated} redirectedPath="/">
+                        <AuthenticatedLayout />
+                    </ProtectedRoute>
+                }
+            >
+                <Route index element={<Dashboard />} />
+                <Route path="questions-bank" element={<div className="container"> <h3 className="my-4 text-center">Dashboard Question Bank</h3></div>} />
+                <Route path="big-mocks" element={<div className="container"> <h3 className="my-4 text-center">Dashboard Big Mock</h3></div>} />
+                <Route path="webinars" element={<div className="container"> <h3 className="my-4 text-center">Dashboard Webinars</h3></div>} />
+                <Route path="contact-us" element={<div className="container"> <h3 className="my-4 text-center">Dashboard Webinars</h3></div>} />
+
+
+            </Route>
+        </Routes>
+    );
+};
+
+export default RouterWrapper;

@@ -23,7 +23,7 @@ function Root() {
       </>
     } */}
 
-      {isAuthenticated ? <AuthenticatedLayout /> : <UnauthenticatedLayout />}
+      {isAuthenticated && <AuthenticatedLayout /> }
     </>
   )
 }

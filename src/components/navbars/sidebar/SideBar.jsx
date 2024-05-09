@@ -25,13 +25,13 @@ function SideBar() {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to='/question-bank'>
+                    <NavLink to='/questions-bank'>
                         <img src={questionBankIcon} alt='question bank icon' />
                         Question Bank
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to='/big-mock'>
+                    <NavLink to='/big-mocks'>
                         <img src={bigMockIcon} alt='big mock icon' />
                         Big Mock
                     </NavLink>

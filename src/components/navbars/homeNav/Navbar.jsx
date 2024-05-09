@@ -43,7 +43,7 @@ function Navbar() {
                   Big Mock</NavLink>
               </li>
               <li>
-                <NavLink to="/webinars" className="webinars">
+                <NavLink to="/webinar" className="webinars">
                   Webinars</NavLink>
               </li>
               {/* <li>

@@ -1,7 +1,7 @@
-// ErrorBoundary.jsx
+// GlobalErrorBoundary.jsx
 import React, { Component } from 'react';
 
-class ErrorBoundary extends Component {
+class GlobalErrorBoundary extends Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false };
@@ -26,4 +26,4 @@ class ErrorBoundary extends Component {
   }
 }
 
-export default ErrorBoundary;
+export default GlobalErrorBoundary;

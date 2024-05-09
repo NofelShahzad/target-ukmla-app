@@ -58,7 +58,7 @@ function Login() {
     }
 
     const navigateDashboard = () => {
-
+        navigate('/dashboard')
         dispatch(setAuth({name:'nofel',authenticated:true }))
 
     }
