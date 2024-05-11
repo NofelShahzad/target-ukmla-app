@@ -17,6 +17,13 @@ aside.sidebar .logo-wrapper {
     background: transparent;
     color: rgb(52, 71, 103);
     box-shadow: none;
+    height: 90px;
+}
+aside.sidebar .sidebar-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100% - 90px);
 }
 aside.sidebar .sidebar-menu{
     list-style-type: none;
@@ -45,7 +52,7 @@ aside.sidebar .sidebar-menu li a.active:after{
     top: 50%;
     transform: translate(0, -50%);
     height: 30px;
-    width: 3px;
+    width: 3px!important;
     border-radius: 2px;
     background-color: var(--active-color);
     animation: move 1s ease-in-out infinite;
@@ -53,6 +60,15 @@ aside.sidebar .sidebar-menu li a.active:after{
 aside.sidebar .sidebar-social-links{
     /* padding: 0; */
     list-style-type: none;
+    position: relative;
+}
+aside.sidebar .sidebar-social-links::before{
+    content: '';
+    position: absolute;
+    top: -15px;
+    height: 1px;
+    width: 70%;
+    background-color: #C5C5C5;
 }
 aside.sidebar .sidebar-social-links li{
     padding: 5px 10px;

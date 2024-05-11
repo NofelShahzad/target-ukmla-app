@@ -4,7 +4,7 @@
 // import SideBar from '../components/navbars/sidebar/SideBar'
 import { useSelector } from 'react-redux';
 import AuthenticatedLayout from '../layout/AuthenticatedLayout';
-import UnauthenticatedLayout from '../layout/UnauthenticatedLayout';
+// import UnauthenticatedLayout from '../layout/UnauthenticatedLayout';
 
 function Root() {
   // const auth = useSelector((state) => state.auth?.user);

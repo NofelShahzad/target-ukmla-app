@@ -17,58 +17,61 @@ function SideBar() {
             <div className='logo-wrapper'>
                 <img src={logo} width={'100%'}/>
             </div>
-            <ul className='sidebar-menu'>
-                <li>
-                    <NavLink to='/dashboard'>
-                        <img src={homeIcon} alt='home icon' />
-                        Home
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to='/questions-bank'>
-                        <img src={questionBankIcon} alt='question bank icon' />
-                        Question Bank
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to='/big-mocks'>
-                        <img src={bigMockIcon} alt='big mock icon' />
-                        Big Mock
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to='/webinars'>
-                        <img src={webinarIcon} alt='webinar icon' />
-                        Webinars
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to='/contact-us'>
-                        <img src={contactUsIcon} alt='contact us icon' />
-                        Contact Us
-                    </NavLink>
-                </li>
-            </ul>
-            <ul className='sidebar-social-links'>
-                <li>
-                    <Link to='/'>
-                        <img src={facebookIcon} alt='facebook icon' />
-                        FaceBook
-                    </Link>
-                </li>
-                <li>
-                    <Link to='/'>
-                        <img src={youtubeIcon} alt='youtube icon' />
-                        Youtube
-                    </Link>
-                </li>
-                <li>
-                    <Link to='/'>
-                        <img src={instaIcon} alt='instagram icon' />
-                        Instagram
-                    </Link>
-                </li>
-            </ul>
+            <div className='sidebar-body'>
+                <ul className='sidebar-menu'>
+                    <li>
+                        <NavLink to='/dashboard'>
+                            <img src={homeIcon} alt='home icon' />
+                            Home
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/questions-bank'>
+                            <img src={questionBankIcon} alt='question bank icon' />
+                            Question Bank
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/big-mocks'>
+                            <img src={bigMockIcon} alt='big mock icon' />
+                            Big Mock
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/webinars'>
+                            <img src={webinarIcon} alt='webinar icon' />
+                            Webinars
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to='/contactus'>
+                            <img src={contactUsIcon} alt='contact us icon' />
+                            Contact Us
+                        </NavLink>
+                    </li>
+                </ul>
+                <ul className='sidebar-social-links'>
+                    <li>
+                        <Link to='/'>
+                            <img src={facebookIcon} alt='facebook icon' />
+                            FaceBook
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to='/'>
+                            <img src={youtubeIcon} alt='youtube icon' />
+                            Youtube
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to='/'>
+                            <img src={instaIcon} alt='instagram icon' />
+                            Instagram
+                        </Link>
+                    </li>
+                </ul>
+
+            </div>
         </aside>
     )
 }

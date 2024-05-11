@@ -18,7 +18,7 @@ function Navbar() {
           <nav>
             <Link className="brand-logo" to="/">
               <h1>
-                <img src={logo} alt="logo"/>
+                <img src={logo} alt="logo" />
                 {/* <span>TARGET</span> UKMLA */}
               </h1>
             </Link>
@@ -46,13 +46,7 @@ function Navbar() {
                 <NavLink to="/webinar" className="webinars">
                   Webinars</NavLink>
               </li>
-              {/* <li>
-                <a href="/#reviews" className="login">
-                  Log in</a>
-              </li>
-              <li>
-                <a href="/#contactus" className="sign-up">Sign up</a>
-              </li> */}
+             
               <li>
                 <div className="nav-btn-wrapper-mobile">
 
@@ -71,8 +65,8 @@ function Navbar() {
           </nav>
         </div>
         <div className='progressbar-wrapper'>
-        <div className='progressbar-inner-wrapper' style={{'width':  '30%'}}></div>
-      </div>
+          <div className='progressbar-inner-wrapper' style={{ 'width': '30%' }}></div>
+        </div>
       </div>
 
     </>

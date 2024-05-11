@@ -12,14 +12,13 @@ function AuthenticatedLayout() {
         {/* <div className="sidebar-wrapper"> */}
           <SideBar />
         {/* </div> */}
-        <main className="main-content dashboard-content container w-100">
+        <main className="main-content dashboard-content container w-100" style={{ 'minHeight': '100vh'}}>
           <DashboardHeader />
-          <Outlet />
+            <Outlet />
         </main>
-
       </div>
     </>
-  );
+  )
 }
 
 export default AuthenticatedLayout;
