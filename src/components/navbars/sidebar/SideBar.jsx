@@ -1,5 +1,5 @@
 import './SideBar.css'
-import logo from '../../../assets/logo/TARGET-UKMLA.png'
+import logo from '../../../assets/icons/dashboard/TARGET-UKMLA.svg'
 import homeIcon from '../../../assets/icons/home-icon.svg';
 import questionBankIcon from '../../../assets/icons/question-bank.svg';
 import bigMockIcon from '../../../assets/icons/big-mock.svg';

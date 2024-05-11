@@ -1,8 +1,8 @@
 :root {
-  --themecolor: #005bb2;
+  --themecolor: #007AFF;
   --text-color: #0f0f0f;
-  --border-color: #005bb2;
-  --title-color: #005bb2;
+  --border-color: #007AFF;
+  --title-color: #007AFF;
   --body-bg: #fff;
   --dark-background: #C5C5C5;
   --placeholder: #C5C5C5;
@@ -12,13 +12,15 @@
   --validator-background: #F4F0F8;
   --err-text-color: #ea0000;
   --err-bg: #ea0000;
-  --btn-primary-bg: #005bb2;
+  --btn-primary-bg: #007AFF;
   --btn-primary-text: #fff;
   --navbar-dark-text: #012f46;
-  --navbar-theme-text: #005bb2;
-  --active-color: #005bb2;
+  --navbar-theme-text: #007AFF;
+  --active-color: #007AFF;
   --backdrop: rgba(1,47,70,0.78);
-  --signup-progressbar-bg: #005bb2;
+  --signup-progressbar-bg: #007AFF;
+  --dash-nav-icon-bg: #007AFF;
+  --dash-nav-icon-hoverbg : #0F0F0F;
 }
 
 * {

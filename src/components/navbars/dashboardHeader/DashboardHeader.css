@@ -1,3 +1,28 @@
-nav{
+header.dashboard-header-wrapper{
     width: 100%;
+}
+header.dashboard-header-wrapper  nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header.dashboard-header-wrapper  nav .nav-body{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+header.dashboard-header-wrapper  nav .nav-body .nav-icon-container{
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: var(--dash-nav-icon-bg);
+    transition: all 0.1s ease-in-out;
+}
+
+header.dashboard-header-wrapper  nav .nav-body .nav-icon-container:hover{
+    background-color: var(--dash-nav-icon-hoverbg);
 }
