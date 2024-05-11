@@ -3,6 +3,7 @@
   --text-color: #0f0f0f;
   --border-color: #007AFF;
   --title-color: #007AFF;
+  --anchor-hover: #007AFF;
   --body-bg: #fff;
   --dark-background: #C5C5C5;
   --placeholder: #C5C5C5;
@@ -21,6 +22,12 @@
   --signup-progressbar-bg: #007AFF;
   --dash-nav-icon-bg: #007AFF;
   --dash-nav-icon-hoverbg : #0F0F0F;
+  --dash-navitem-bg: #F6F6F6;
+  --wrong-color: #BF0303;
+  --correct-color: #0DC900;
+  --not-attempt-color: #BFBFBF;
+  --removed-color: #535353;
+  --backdrop-color: #012F46;
 }
 
 * {
@@ -256,9 +263,9 @@ button {
 .account-verified-container img{
   margin-bottom: 15px;
 }
-.account-verified-container .verified-title{
-  /* font: normal normal bold 34px/48px 'Poppins'; */
-}
+/* .account-verified-container .verified-title{
+  font: normal normal bold 34px/48px 'Poppins';
+} */
 
 /* Login Page Start */
 .err-msg{
@@ -292,3 +299,147 @@ button {
   border: 1px solid var(--err-text-color);
   color: var(--err-text-color);
 }
+
+
+/* -------------------DASHBOARD CSS START------------------*/
+/* LANDING START */
+.dashboard-banner{
+  background-image: url('./assets/images/dashboard/banner-bg.png');
+  height: 189px;
+  background-repeat: no-repeat;
+  /* background-size: contain; */
+  width: 100%;
+  border-radius: 26px;
+  background-size: cover;
+
+}
+.dashboard-banner .banner-content{
+  color: #fff;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 60px;
+  user-select: none;
+}
+.dashboard-banner .banner-content .banner-title{
+  font-size: 1.4rem;
+}
+.dashboard-banner .banner-content p{
+  margin: 0;
+}
+
+.type-info-wrapper{
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.type-info-wrapper .single-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.type-info-wrapper .single-info .type{
+  width: 30px;
+  height: 4px;
+  border-radius: 10px;
+}
+.type-info-wrapper .single-info .type.correct{
+  background-color: var(--correct-color);
+}
+.type-info-wrapper .single-info .type.wrong{
+  background-color: var(--wrong-color);
+}
+.type-info-wrapper .single-info .type.not-attempt{
+  background-color: var(--not-attempt-color);
+}
+.type-info-wrapper .single-info .type.removed-by-admin{
+  background-color: var(--removed-color);
+}
+.type-info-wrapper .single-info .info-title {
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.question-categories-wrapper .question-categories-inner-wrapper {
+  display: flex;
+  /* gap: 10px; */
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+
+.single-question-card{
+  /* width: 200px; */
+  height: 303px;
+  margin: 10px;
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #D8D8D8;
+}
+.single-question-card .single-question-header h2{
+  font-size: 16px;
+  margin: 10px 0;
+  text-transform: capitalize;
+}
+.single-question-card .single-question-footer{
+  text-align: center;
+}
+
+.single-question-card .single-question-footer a{
+  width: 120px;
+  border: 1px solid #707070;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  padding: 5px 10px;
+  font-size: 16px;
+  transition: all 0.1s ease-in-out;
+  display: inline-block;
+}
+.single-question-card .single-question-footer a:hover{
+  color: var(--anchor-hover);
+  border-color: var(--anchor-hover);
+}
+.question-status-info{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.question-status-info .question-status{
+  width: 85%;
+  height: 6px;
+}
+.question-status-info .question-status .question-inner-status{
+  height: 100%;
+  margin-right:15px;
+  border-radius: 10px;
+}
+.question-status-info .question-status .correct{
+  background-color: var(--correct-color);
+}
+.question-status-info .question-status .wrong{
+  background-color: var(--wrong-color);
+}
+.question-status-info .question-status .not-attempt{
+  background-color: var(--not-attempt-color);
+}
+.question-status-info .question-status .removed-by-admin{
+  background-color: var(--removed-color);
+}
+.question-status-info .question-numbers{
+  width: 15%;
+}
+
+/* LANDING END */
+
+
+/* -------------------DASHBOARD CSS END-------------------- */
