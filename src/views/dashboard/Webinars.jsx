@@ -48,6 +48,9 @@ function Webinars() {
                             <div className='close-btn-container'>
                                 <img src={closeBtn} alt='close' onClick={handleWebinarModal}/>
                             </div>
+                            <div className='title'>
+
+                            </div>
                     </section>
 
                 </ReactPortal>
