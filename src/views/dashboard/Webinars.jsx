@@ -9,16 +9,17 @@ import ecg from '../../assets/images/dashboard/webinars/ecg.webp'
 import closeBtn from '../../assets/icons/dashboard/modal-close.svg'
 import ReactPortal from '../../components/portal/ReactPortal';
 import { useState } from 'react';
+import WebinarsInfo from '../../components/modals/WebinarsInfo';
 // import img from '../../assets/images/dashboard/webinars/babies.png'
 function Webinars() {
 
-    const [detailModal,setDetailModal] = useState(false);
+    const [detailModal, setDetailModal] = useState(false);
     // const [webinarDetail,setWebinarDetail] = useState();
 
     const handleWebinarModal = () => {
-      setDetailModal(prev=>!prev);
+        setDetailModal(prev => !prev);
     }
-    
+
 
     return (
         <>
@@ -43,16 +44,7 @@ function Webinars() {
             </div>
             {detailModal &&
                 <ReactPortal wrapperId="external_modal_container">
-
-                    <section className='webinar-detail-modal'>
-                            <div className='close-btn-container'>
-                                <img src={closeBtn} alt='close' onClick={handleWebinarModal}/>
-                            </div>
-                            <div className='title'>
-
-                            </div>
-                    </section>
-
+                        <WebinarsInfo closeBtn={closeBtn} handleWebinarModal={handleWebinarModal}/>
                 </ReactPortal>
             }
 

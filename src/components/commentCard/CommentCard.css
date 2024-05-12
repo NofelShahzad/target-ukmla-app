@@ -1,0 +1,49 @@
+.comment-card-wrapper {padding: 7px 5px;}
+
+.comment-card-wrapper .comment-card-inner-wrapper {
+    background: #FFFFFF;
+    box-shadow: 0px 3px 6px #00000029;
+    border: 1px solid #0F0F0F;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment-card-wrapper .comment-card-inner-wrapper .name-container .title {
+    text-align: left;
+    font: normal normal 600 16px/25px Poppins;
+    letter-spacing: 0px;
+    color: var(--theme-heading-color);
+    width: max-content;
+    padding-right: 5px;
+}
+.comment-card-wrapper .comment-card-inner-wrapper .name-container{
+    padding-right: 5px;
+}
+.comment-card-wrapper .comment-card-inner-wrapper .comment-body{
+    width: 80%;
+}
+.comment-card-wrapper .comment-card-inner-wrapper .comment-body p{
+    margin: 0;
+    text-align: left;
+    font: normal normal normal 16px/25px Poppins;
+    letter-spacing: 0px;
+    color: #0F0F0F;
+}
+.comment-card-wrapper .comment-card-inner-wrapper .timestamp{
+    text-align: right;
+    font: normal normal normal 16px/25px Poppins;
+    letter-spacing: 0px;
+    color: #727272;
+}
+.comment-card-wrapper .comment-card-inner-wrapper .timestamp span{
+    padding-left: 5px;
+    width: max-content;
+    display: inline-block;
+}
+@media (max-width: 991px) {
+    .comment-card-wrapper .comment-card-inner-wrapper{
+        display: block;
+    }
+}

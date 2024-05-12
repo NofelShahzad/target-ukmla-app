@@ -1,0 +1,82 @@
+.bigmocks-card{
+    padding: 5px;
+}
+
+.bigmocks-card .bigmocks-inner-card{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px;
+}
+.bigmocks-card .bigmocks-inner-card img{
+    width: 176px;
+    height: 177px;
+}
+
+.bigmocks-card .bigmocks-inner-card .bigmocks-card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    /* gap: 5px; */
+    /* min-height: 277px; */
+    min-height: 150px;
+}
+
+.bigmocks-card .bigmocks-inner-card .bigmocks-card-body .card-title-wrapper .title {
+    font-size: 16px;
+    color: var(--theme-heading-color);
+    margin: 2px 0;
+    font-weight: 600;
+}
+
+.bigmocks-card .bigmocks-inner-card .bigmocks-card-body .description p {
+    font-size: 13px;
+    /* margin-bottom: 5px; */
+}
+
+.bigmocks-card .bigmocks-inner-card .bigmocks-card-body .bigmocks-card-footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    /* flex-wrap: wrap; */
+    gap: 5px;
+}
+/* .bigmocks-card .bigmocks-inner-card .bigmocks-card-body .bigmocks-card-footer{
+    width: 171px;
+    height: 41px;
+} */
+
+.bigmocks-card .bigmocks-inner-card .bigmocks-card-body .bigmocks-card-footer .btn-detail {
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    min-width: max-content;
+}
+.bigmocks-card .bigmocks-inner-card .bigmocks-card-body .bigmocks-card-footer .btn-detail:hover{
+    color: var(--anchor-hover);
+}
+
+.bigmock-detail-page .bigmocks-card .bigmocks-inner-card .bigmocks-card-body .course-date-container .title{
+    font-weight: 700;
+    font-size: 12px;
+}
+.bigmock-detail-page .bigmocks-card .bigmocks-inner-card .bigmocks-card-body .course-date-container p{
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+.bigmock-detail-page .bigmocks-card .bigmocks-inner-card .bigmocks-img img{
+    width: 228px;
+    height: 416px;
+}
+.bigmock-detail-page .bigmocks-card .bigmocks-inner-card .bigmocks-card-body{
+    min-height: 416px;
+}
+
+.bigmock-detail-page .bigmocks-card .bigmocks-inner-card .price-details{
+    font-size: 13px;
+}

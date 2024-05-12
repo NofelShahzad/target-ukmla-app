@@ -5,7 +5,7 @@ import './WebinarsCard.css'
 function WebinarsCard({imgSrc,handleWebinarModal}) {
   return (
     <>
-        <div className='col-sm-12 col-lg-6 col-12'>
+        <div className='col-sm-12 col-xl-6 col-12'>
             <div className='webinar-card'>
                     <div className='webinar-inner-card'>
                             <div className='webinar-img'>

@@ -89,7 +89,7 @@ button:disabled {
 }
 .btn-primary{
   background: var(--btn-primary-bg);
-  border-radius: 6px;
+  border-radius: 4px;
   color: var(--btn-primary-text);
   transition: all 0.2s ease-in-out;
 }
@@ -331,7 +331,7 @@ button {
 }
 
 .type-info-wrapper{
-  padding: 20px 0;
+  padding: 20px 5px;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -376,7 +376,7 @@ button {
 .single-question-card{
   /* width: 200px; */
   height: 303px;
-  margin: 10px;
+  margin: 5px;
   background: #FFFFFF;
   border-radius: 10px;
   padding: 15px;
@@ -443,6 +443,18 @@ button {
 /* LANDING END */
 
 /* WEBINARS START */
+.page-title-container{
+  padding: 0 5px 20px 5px;
+  position: relative;
+}
+.page-title-container::after{
+  content: '';
+  border-top: 1px solid #F5F5F5;
+  position: absolute;
+  bottom: 10px;
+  width: calc(100% - 12px);
+  transform: translate(5px, 0px);
+}
 .page-title-container .title{
   font-size: 21px;
   margin: 5px 0;
@@ -455,11 +467,20 @@ button {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  /* position: relative; */
 }
+/* .webinars-wrapper .webinars-inner-wrapper::before{
+  content: '';
+  border-top: 1px solid #F5F5F5;
+  position: absolute;
+  top: -10px;
+  width: calc(100% - 12px);
+  transform: translate(5px, 0px);
+} */
 
-.webinar-detail-modal{
+.detail-modal{
   width: 466px;
-  height: 341px;
+  /* height: 341px; */
   background: #FFFFFF;
   border-radius: 8px;
   opacity: 1;
@@ -483,7 +504,138 @@ button {
   transition: all 0.1s ease-in-out;
   filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.1));
 }
+.detail-modal .title-wrapper{
+  padding-bottom: 10px;
+}
+.detail-modal .title-wrapper .title{
+    color: var(--theme-heading-color);
+    font-size: 16px;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+.detail-modal .title-wrapper .date-time-wrapper{
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+.detail-modal .description{
+  padding-bottom: 10px;
+}
+.detail-modal .description p{
+  text-align: center;
+  font-size: 14px;
+  margin: 0;
+}
+.detail-modal .speaker-container{
+  padding-bottom: 10px;
+}
+.detail-modal .speaker-container table{
+  width: 80%;
+  border-spacing: 0;
+  margin-inline: auto;
+}
+.detail-modal .speaker-container table :is(th,td){
+  padding: 4px 7px;
+}
+.detail-modal .speaker-container table tr :is(th,td):nth-child(2){
+  border-left: 1px solid #C5C5C5;
+  border-right: 1px solid #C5C5C5;
+  /* padding: 4px 7px; */
+}
+.detail-modal .speaker-container table thead{
+  font-size: 12px;
+}
+.detail-modal .speaker-container table tbody{
+  font-size: 13px;
+}
+.detail-modal .price-details{
+  text-align: center;
+  font-size: 14px;
+}
+
 
 /* WEBINARS END */
+
+/* BIGMOCKS  START*/
+.bigmocks-wrapper .bigmocks-inner-wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* .bigmock-detail-modal{
+
+} */
+
+/* BIGMOCK END */
+
+/*  */
+.tabs-btn-container{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.tabs-btn-container .tabs-btn-inner-container{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tabs-btn-container .tabs-btn-inner-container .btn-secondary{
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: #fff;
+  color: var(--text-color);
+}
+.tabs-btn-container .tabs-btn-inner-container .btn-secondary:hover{
+  color: var(--anchor-hover);
+}
+/*  */
+
+
+/* UNFLAGED QUESTION START */
+.unflag-modal-wrapper{
+  background-color: #fff;
+  width: 350px;
+  height: 354px;
+  text-align: center;
+  border-radius: 8px;
+}
+.unflag-modal-wrapper .header-unflag{
+  padding: 40px 0 20px;
+  border-bottom: 1px solid #DEDEDE;
+
+}
+.unflag-modal-wrapper .header-unflag .title{
+  font-size: 20px;
+  color: var(--err-text-color);
+  margin: 10px 0;
+  font-weight: 500;
+}
+
+.unflag-modal-wrapper .unflag-modal-body {
+  height: 62%;
+  padding: 30px 0 20px;
+}
+.unflag-modal-wrapper .unflag-modal-body p{
+  font-weight: 500;
+}
+.unflag-modal-wrapper .unflag-modal-body .action-buttons{
+
+  width: 50%;
+  margin-inline: auto;
+}
+.unflag-modal-wrapper .unflag-modal-body .action-buttons button{
+  margin-bottom: 10px;
+}
+.unflag-modal-wrapper .unflag-modal-body .action-buttons button.btn-secondary{
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-color);
+}
+.unflag-modal-wrapper .unflag-modal-body .action-buttons button.btn-secondary:hover{
+  color: var(--anchor-hover);
+}
 
 /* -------------------DASHBOARD CSS END-------------------- */

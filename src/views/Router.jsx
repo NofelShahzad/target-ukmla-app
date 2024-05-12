@@ -16,6 +16,9 @@ import BigMocks from './dashboard/BigMocks';
 import BigMock from './frontSite/BigMock';
 import Webinars from './dashboard/Webinars';
 import ContactUs from './dashboard/ContactUs'
+import BigmockDetail from './dashboard/BigmockDetail';
+import AllComments from './dashboard/AllComments';
+import FlaggedQuestion from './dashboard/FlaggedQuestion';
 
 const RouterWrapper = () => {
     const isUserAuthenticated = useSelector(state => !!state.auth.user);
@@ -58,8 +61,15 @@ const RouterWrapper = () => {
                 }
             > */}
                 {/* <Route index element={<Dashboard />} /> */}
-                <Route path="questions-bank" element={<QuestionsBank/>} />
-                <Route path="big-mocks" element={<BigMocks/>} />
+                <Route path="questions-bank" >
+                    <Route index element={<QuestionsBank/>} />
+                    <Route path='comments' element={<AllComments/>}/>
+                    <Route path='flagged-questions' element={<FlaggedQuestion/>}/>
+                </Route>
+                <Route path="big-mocks"  >
+                    <Route index element={<BigMocks/>}/>
+                    <Route path='detail/:id' element={<BigmockDetail/>}/>
+                </Route>
                 <Route path="webinars" element={<Webinars/>} />
                 <Route path="contactus" element={<ContactUs/>} />
 
