@@ -208,7 +208,7 @@ header.dashboard-header-wrapper nav ul.nav-body li .nav-icon-container .menu-dro
 header.dashboard-header-wrapper nav ul.nav-body li:hover .nav-icon-container .menu-dropdown {
     display: block;
 }
-header.dashboard-header-wrapper nav ul.nav-body li:hover .nav-icon-container .menu-dropdown li a{
+header.dashboard-header-wrapper nav ul.nav-body li:hover .nav-icon-container .menu-dropdown li .nav-link{
     padding: 5px 10px;
     width: 100%;
 }

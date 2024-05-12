@@ -1,0 +1,80 @@
+.webinar-card {
+    /* border: 1px solid var(--border-color);
+    border-radius: 8px;*/
+    padding: 10px; 
+    
+}
+.webinar-card .webinar-inner-card{
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* .webinar-card .webinar-inner-card .webinar-img{
+    width: 176px;
+} */
+.webinar-card .webinar-inner-card .webinar-img img{
+    /* width: 176px;
+    height: 100%; */
+    width: 176px;
+    height: 277px;
+}
+.webinar-card .webinar-inner-card .webinar-card-body{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    /* gap: 5px; */
+    min-height: 277px;
+}
+.webinar-card .webinar-inner-card .webinar-card-body .card-title-wrapper .title{
+    font-size: 16px;
+    color: var(--theme-heading-color);
+    margin: 2px 0;
+    font-weight: 600;
+}
+.webinar-card .webinar-inner-card .webinar-card-body .card-title-wrapper .date-time-wrapper{
+    font-size: 14px;
+    font-weight: 600;
+}
+.webinar-card .webinar-inner-card .webinar-card-body .description p{
+    font-size: 13px;
+}
+.webinar-card .webinar-inner-card .webinar-card-body .speaker-container{
+    width: 100%;
+}
+.webinar-card .webinar-inner-card .webinar-card-body .speaker-container table{
+    width: 100%;
+    border-spacing: 0;
+}
+.webinar-card .webinar-inner-card .webinar-card-body .speaker-container table thead th{
+    font-weight: 600;
+    font-size: 12px;
+}
+.webinar-card .webinar-inner-card .webinar-card-body .speaker-container table tbody{
+    font-size: 13px;
+}
+
+.webinar-card .webinar-inner-card .webinar-card-body .webinar-card-footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+/* .webinar-card .webinar-inner-card .webinar-card-body .webinar-card-footer button{
+    width: 100%;
+} */
+.webinar-card .webinar-inner-card .webinar-card-body .webinar-card-footer .btn-detail{
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+
+}

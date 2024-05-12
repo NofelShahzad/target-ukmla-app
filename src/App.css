@@ -18,7 +18,7 @@
   --navbar-dark-text: #012f46;
   --navbar-theme-text: #007AFF;
   --active-color: #007AFF;
-  --backdrop: rgba(1,47,70,0.78);
+  /* --backdrop: rgb(1, 47, 70,0.78); */
   --signup-progressbar-bg: #007AFF;
   --dash-nav-icon-bg: #007AFF;
   --dash-nav-icon-hoverbg : #0F0F0F;
@@ -27,7 +27,8 @@
   --correct-color: #0DC900;
   --not-attempt-color: #BFBFBF;
   --removed-color: #535353;
-  --backdrop-color: #012F46;
+  --backdrop-color: #012f46d4;
+  --theme-heading-color: #007AFF;
 }
 
 * {
@@ -394,7 +395,7 @@ button {
 }
 
 .single-question-card .single-question-footer a{
-  width: 120px;
+  width: 125px;
   border: 1px solid #707070;
   border-radius: 6px;
   text-decoration: none;
@@ -441,5 +442,48 @@ button {
 
 /* LANDING END */
 
+/* WEBINARS START */
+.page-title-container .title{
+  font-size: 21px;
+  margin: 5px 0;
+}
+.page-title-container p{
+  font-size: 16px;
+}
+
+.webinars-wrapper .webinars-inner-wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.webinar-detail-modal{
+  width: 466px;
+  height: 341px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  opacity: 1;
+  position: relative;
+    /* background-color: var(--grey-ee); */
+    border-radius: 5px;
+    padding: 10px 15px 20px;
+    pointer-events: auto;
+    min-width: 400px;
+
+}
+
+.close-btn-container {
+  text-align: right;
+}
+.close-btn-container img{
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+.close-btn-container img:hover{
+  transition: all 0.1s ease-in-out;
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.1));
+}
+
+/* WEBINARS END */
 
 /* -------------------DASHBOARD CSS END-------------------- */

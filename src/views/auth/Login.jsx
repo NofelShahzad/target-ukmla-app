@@ -59,7 +59,7 @@ function Login() {
 
     const navigateDashboard = () => {
         navigate('/dashboard')
-        dispatch(setAuth({name:'nofel',authenticated:true }))
+        dispatch(setAuth({email:loginData?.email,authenticated:true }))
 
     }
 

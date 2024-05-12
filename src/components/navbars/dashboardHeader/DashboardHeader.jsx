@@ -8,11 +8,19 @@ import downArrow from '../../../assets/icons/dashboard/arrow-down-icon.svg';
 import searchIcon from '../../../assets/icons/dashboard/search-icon.svg'
 import { Link } from 'react-router-dom';
 import NotificationList from './NotificationList';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../../../redux/features/auth/authSlice';
 function DashboardHeader() {
+  const dispatch = useDispatch();
   const [navSearch, setNavSearch] = useState("");
   const handleChange = (e) => {
-    setNavSearch(e.target.value)
+    setNavSearch(e.target.value);
   }
+
+  const handleLogout =() => {
+    dispatch(logoutUser())
+  }
+  
 
   return (
     <header className='dashboard-header-wrapper'>
@@ -112,9 +120,9 @@ function DashboardHeader() {
                     </Link>
                   </li>
                   <li>
-                    <Link className="nav-link" href="/">
+                    <div className="nav-link" onClick={handleLogout}>
                       <span>Log out</span>
-                    </Link>
+                    </div>
                   </li>
 
                 </ul>

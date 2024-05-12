@@ -3,7 +3,7 @@
     inset: 0;
     background-color: var(--backdrop-color);
     z-index: 999;
-    opacity: 0.78;
+    /* opacity: 0.78; */
     display: flex;
     align-items: center;
     justify-content: center;
