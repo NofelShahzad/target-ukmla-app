@@ -17,13 +17,16 @@ import dermatology from '../../assets/icons/dashboard/dermatology-icon.svg';
 function Dashboard() {
   return (
     <>
-    <div className="container">
-      <section className="dashboard-banner">
+    <div className="container-fluid">
+      <section className="dashboard-wrapper-banner">
+        <div className="dashboard-banner">
           <div className="banner-content">
               <h3 className="banner-title">The Big Mock (April 2024)</h3>
               <p>180 High Yield Questions (Now available for purchase!)</p>
 
           </div>
+
+        </div>
       </section>
 
       <section className="type-info-wrapper">

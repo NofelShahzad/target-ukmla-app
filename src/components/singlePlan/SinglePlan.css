@@ -1,0 +1,39 @@
+.single-plan-container{
+    font-size: 16px;
+    padding: 20px 0;
+}
+
+.single-plan-container table{
+    margin-bottom: 20px;
+}
+.single-plan-container table th{
+    font-weight: 500;
+}
+.single-plan-container table :is(th,td){
+    padding: 5px 0;
+}
+.single-plan-container table .status-tag{
+    border-radius: 15px;
+    padding: 0 7px;
+    text-transform: uppercase;
+    font: normal normal 500 12px/18px Poppins;
+}
+.single-plan-container table .status-tag.active{
+    background: #5DEF784A 0% 0% no-repeat padding-box;
+    border: 1px solid #5DEF78;
+}
+.single-plan-container table .status-tag.inactive{
+    background: #FF41412B 0% 0% no-repeat padding-box;
+    border: 1px solid #FF4141;
+}
+.single-plan-container .plan-action{
+    display: flex;
+    align-items: center;
+    padding-block: 20px;
+    border-top: 1px solid #E6EDFE;
+    border-bottom: 1px solid #E6EDFE;
+
+}
+.single-plan-container:last-child .plan-action{
+    border-bottom: none;
+}

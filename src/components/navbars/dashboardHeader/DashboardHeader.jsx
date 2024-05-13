@@ -24,7 +24,7 @@ function DashboardHeader() {
 
   return (
     <header className='dashboard-header-wrapper'>
-      <div className='container'>
+      <div className='container-fluid'>
         <nav>
           <div className='col-xl-6 search-field-container'>
             <input type="text"

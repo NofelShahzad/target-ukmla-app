@@ -10,15 +10,16 @@ import ProtectedRoute from './auth/ProtectedRoute';
 import Dashboard from './dashboard/Dashboard';
 import { useSelector } from 'react-redux';
 // import AuthenticatedLayout from '../layout/AuthenticatedLayout';
+import BigMock from './frontSite/BigMock';
 import UnauthenticatedLayout from '../layout/UnauthenticatedLayout';
 import QuestionsBank from './dashboard/QuestionsBank';
 import BigMocks from './dashboard/BigMocks';
-import BigMock from './frontSite/BigMock';
 import Webinars from './dashboard/Webinars';
 import ContactUs from './dashboard/ContactUs'
 import BigmockDetail from './dashboard/BigmockDetail';
 import AllComments from './dashboard/AllComments';
 import FlaggedQuestion from './dashboard/FlaggedQuestion';
+import FlaggedGuides from './dashboard/FlaggedGuides';
 
 const RouterWrapper = () => {
     const isUserAuthenticated = useSelector(state => !!state.auth.user);
@@ -65,6 +66,8 @@ const RouterWrapper = () => {
                     <Route index element={<QuestionsBank/>} />
                     <Route path='comments' element={<AllComments/>}/>
                     <Route path='flagged-questions' element={<FlaggedQuestion/>}/>
+                    <Route path='flagged-guides' element={<FlaggedGuides/>}/>
+
                 </Route>
                 <Route path="big-mocks"  >
                     <Route index element={<BigMocks/>}/>

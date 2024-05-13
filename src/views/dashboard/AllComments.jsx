@@ -7,7 +7,7 @@ import withLayout from "../../components/withAuth/withLayout";
 function AllComments() {
   return (
     <>
-      <div className="container comments-detail-page">
+      <div className="container-fluid comments-detail-page">
         <div className='page-title-container'>
           <h2 className="title">Comments</h2>
           <p>Text explaining what these are.</p>

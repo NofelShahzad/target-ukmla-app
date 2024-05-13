@@ -7,7 +7,7 @@ import '../../components/bigmocksCard/BigmocksCard.css'
 function BigmockDetail() {
     return (
         <>
-            <div className="container bigmock-detail-page">
+            <div className="container-fluid bigmock-detail-page">
                 <div className='page-title-container'>
                     <h2 className="title">Big Mock</h2>
                     <p>Text explaining what these are.</p>

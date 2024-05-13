@@ -8,6 +8,7 @@
     border: 1px solid #EA0000;
     border-radius: 8px;
     display: flex;
+    justify-content: space-between;
     padding: 15px;
 }
 
@@ -31,6 +32,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-left: 10px;
 }
 .flagged-question-card-wrapper .flagged-question-card-inner-wrapper .flag-action button{
     width: 156px;

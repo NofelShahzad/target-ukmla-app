@@ -93,6 +93,21 @@ button:disabled {
   color: var(--btn-primary-text);
   transition: all 0.2s ease-in-out;
 }
+.btn-secondary{
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background-color: #fff;
+  color: var(--text-dark);
+  padding: 10px;
+}
+.btn-secondary:hover{
+  background: var(--btn-primary-bg);
+  border-radius: 4px;
+  color: var(--btn-primary-text);
+  transition: all 0.2s ease-in-out;
+  border: 1px solid var(--border-color);
+
+}
 
 
 .field-wrapper,
@@ -304,9 +319,12 @@ button {
 
 /* -------------------DASHBOARD CSS START------------------*/
 /* LANDING START */
-.dashboard-banner{
+.dashboard-wrapper-banner{
+  padding: 0 5px;
+}
+.dashboard-wrapper-banner .dashboard-banner{
   background-image: url('./assets/images/dashboard/banner-bg.png');
-  height: 189px;
+  height: 27vh;
   background-repeat: no-repeat;
   /* background-size: contain; */
   width: 100%;
@@ -314,7 +332,7 @@ button {
   background-size: cover;
 
 }
-.dashboard-banner .banner-content{
+.dashboard-wrapper-banner .dashboard-banner .banner-content{
   color: #fff;
   height: 100%;
   display: flex;
@@ -323,10 +341,10 @@ button {
   padding: 0 60px;
   user-select: none;
 }
-.dashboard-banner .banner-content .banner-title{
+.dashboard-wrapper-banner .dashboard-banner .banner-content .banner-title{
   font-size: 1.4rem;
 }
-.dashboard-banner .banner-content p{
+.dashboard-wrapper-banner .dashboard-banner .banner-content p{
   margin: 0;
 }
 
@@ -637,5 +655,65 @@ button {
 .unflag-modal-wrapper .unflag-modal-body .action-buttons button.btn-secondary:hover{
   color: var(--anchor-hover);
 }
+
+
+/*question bank page START  */
+.question-bank-page .page-title-container::after{
+  display: none;
+}
+
+.question-bank-page .question-bank-wrapper .question-bank-inner-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.question-bank-page .question-bank-wrapper .question-bank-inner-wrapper .question-bank-bg{
+  background: #F5F5F5 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.question-bank-page .question-bank-wrapper .question-bank-inner-wrapper .question-bank-bg .title{
+  font: normal normal 600 21px/31px Poppins;
+  letter-spacing: 0px;
+  color: var(--text-dark);
+}
+.question-bank-page .question-bank-wrapper .question-bank-inner-wrapper .question-bank-bg .description p{
+  text-align: left;
+  font: normal normal normal 16px/25px Poppins;
+  letter-spacing: 0px;
+  color: #0F0F0F
+}
+.question-bank-page .question-bank-wrapper .question-bank-inner-wrapper .question-bank-bg .footer{
+  display: flex;
+    flex-wrap: wrap;  
+}
+
+.question-bank-page .question-bank-wrapper .question-bank-inner-wrapper .plans-wrapper{
+  padding: 0 5px;
+}
+
+.question-bank-page .question-bank-wrapper .question-bank-inner-wrapper .plans-wrapper .plans-inner-wrapper{
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+}
+.question-bank-page .question-bank-wrapper .question-bank-inner-wrapper .plans-wrapper .plans-inner-wrapper .title{
+  text-align: left;
+  font: normal normal 600 21px/31px Poppins;
+  letter-spacing: 0px;
+  color: var(--theme-heading-color);
+}
+
+/*question bank page END  */
+
+@media (max-width: 991px) {
+  .question-bank-page .question-bank-wrapper .question-bank-inner-wrapper .plans-wrapper{
+    padding: 0;
+  }
+}
+
 
 /* -------------------DASHBOARD CSS END-------------------- */

@@ -23,7 +23,7 @@ function Webinars() {
 
     return (
         <>
-            <div className='container'>
+            <div className='container-fluid'>
                 <div className='page-title-container'>
                     <h2 className="title">Webinars</h2>
                     <p>Text explaining what these are.</p>

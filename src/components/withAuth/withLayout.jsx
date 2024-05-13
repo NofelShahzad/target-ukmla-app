@@ -6,7 +6,7 @@ export default function withLayout(Component) {
     return (
       <main className="dashboard-wrapper d-flex">
         <SideBar />
-        <section className="main-content dashboard-content container w-100">
+        <section className="main-content dashboard-content container-fluid pb-5">
           <DashboardHeader />
           <Component {...props} />
         </section>

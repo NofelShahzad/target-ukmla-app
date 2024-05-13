@@ -3,7 +3,7 @@
 function BigMock() {
   return (
   <>
-    <div className="container"> <h3 className="my-4 text-center">Big Mock</h3></div>
+    <div className="container-fluid"> <h3 className="my-4 text-center">Big Mock</h3></div>
   </>
   )
 }

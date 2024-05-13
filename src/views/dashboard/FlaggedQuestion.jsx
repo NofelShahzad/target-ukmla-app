@@ -8,7 +8,7 @@ import ReactPortal from "../../components/portal/ReactPortal";
 import UnflagQuestion from "../../components/modals/UnflagQuestion";
 
 const mockContent='A 33 year old man presents with outward gaze and ptosis of his right eye. He also complains of seeing double. Which is the SINGLE most likely nerve to be affected?';
-const guidContent ='Radial Nerve (C5 - T1) damages are frequently asked. The radial nerve can be damaged anywhere in its ourse.';
+// const guidContent ='Radial Nerve (C5 - T1) damages are frequently asked. The radial nerve can be damaged anywhere in its ourse.';
 function FlaggedQuestion() {
     const [flagModal, setFlagModal] = useState(false);
     const [tab, setTab] = useState('question');
@@ -19,16 +19,16 @@ function FlaggedQuestion() {
 
     return (
         <>
-            <div className="container all-flagged-page">
+            <div className="container-fluid all-flagged-page">
                 <div className='page-title-container'>
-                    <h2 className="title">Comments</h2>
+                    <h2 className="title">Flagged {tab}</h2>
                     <p>Text explaining what these are.</p>
                     <div className="tabs-btn-container">
-                        <div className="col-sm-12 col-lg-9 col-12">
+                        <div className="col-sm-12 col-lg-6 col-xxl-4 col-12">
                             <div className="tabs-btn-inner-container">
                                 <button type="button" className={`btn${tab === 'question' ? ' btn-primary' : ' btn-secondary'}`} onClick={() => setTab('question')}>Flagged Question</button>
                                 <button type="button" className={`btn${tab === 'mock' ? ' btn-primary' : ' btn-secondary'}`} onClick={() => setTab('mock')}>Flagged Mock</button>
-                                <button type="button" className={`btn${tab === 'guide name' ? ' btn-primary' : ' btn-secondary'}`} onClick={() => setTab('guide name')}>Flagged Quides</button>
+                                {/* <button type="button" className={`btn${tab === 'guide' ? ' btn-primary' : ' btn-secondary'}`} onClick={() => setTab('guide')}>Flagged Quides</button> */}
 
 
                             </div>
@@ -66,7 +66,7 @@ function FlaggedQuestion() {
                             </>
 
                         }
-                        {tab === 'guide name' &&
+                        {/* {tab === 'guide' &&
                             <>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={guidContent}/>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={guidContent}/>
@@ -77,7 +77,7 @@ function FlaggedQuestion() {
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={guidContent}/>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={guidContent}/>
                             </>
-                        }
+                        } */}
 
                     </div>
                 </section>

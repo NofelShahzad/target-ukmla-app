@@ -7,7 +7,7 @@ import QuestionCardStautsInfo from "./QuestionCardStautsInfo"
 function QuestionCategoryCard({imgSrc, title}) {
   return (
     <>
-        <div className="col-3">
+        <div className="col-sm-6 col-md-4 col-lg-3 col-xxl-2 col-12">
             <div className="single-question-card">
                 <div className="single-question-header">
                     <img src={imgSrc} alt={`${title} image`} />
