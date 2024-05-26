@@ -55,20 +55,26 @@ function SideBar() {
                 <ul className='sidebar-social-links'>
                     <li>
                         <Link to='/'>
-                            <img src={facebookIcon} alt='facebook icon' />
-                            FaceBook
+                            <div className='social-icon'>
+                                <img src={facebookIcon} alt='facebook icon' />
+                            </div>
+                            <span> FaceBook</span>
                         </Link>
                     </li>
                     <li>
                         <Link to='/'>
-                            <img src={youtubeIcon} alt='youtube icon' />
-                            Youtube
+                            <div className='social-icon'>
+                                <img src={youtubeIcon} alt='youtube icon' />
+                            </div>
+                            <span> Youtube</span>
                         </Link>
                     </li>
                     <li>
                         <Link to='/'>
-                            <img src={instaIcon} alt='instagram icon' />
-                            Instagram
+                            <div className='social-icon'>
+                                <img src={instaIcon} alt='instagram icon' />
+                            </div>
+                            <span> Instagram</span>
                         </Link>
                     </li>
                 </ul>

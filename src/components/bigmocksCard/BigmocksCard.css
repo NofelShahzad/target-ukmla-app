@@ -5,7 +5,7 @@
 .bigmocks-card .bigmocks-inner-card{
     display: flex;
     align-items: center;
-    gap: 15px;
+    /* gap: 15px; */
     background: #FFFFFF;
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -24,6 +24,7 @@
     /* gap: 5px; */
     /* min-height: 277px; */
     min-height: 150px;
+    padding-left: 15px;
 }
 
 .bigmocks-card .bigmocks-inner-card .bigmocks-card-body .card-title-wrapper .title {

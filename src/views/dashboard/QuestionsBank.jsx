@@ -4,10 +4,24 @@ import { Link } from 'react-router-dom';
 import SinglePlan from '../../components/singlePlan/SinglePlan';
 import withAuth from '../../components/withAuth/withAuth'
 import withLayout from '../../components/withAuth/withLayout'
+import { useCallback, useState } from 'react';
+import ReactPortal from '../../components/portal/ReactPortal';
+import ExtendPlans from '../../components/modals/ExtendPlans';
+import closeBtn from '../../assets/icons/dashboard/modal-close.svg'
+import SubscriptionDetails from '../../components/subscriptionDetails/SubscriptionDetails';
+
 
 function QuestionsBank() {
     // const navigate = useNavigate();
-    
+    const [plansModal, setPlansModal] = useState(false);
+
+    const handleClosePlansModal = useCallback(() => {
+        setPlansModal(false)
+    }, []);
+    const handleOpenPlansModal = useCallback(() => {
+        setPlansModal(true)
+    }, []);
+
     return (
         <>
             <div className="container-fluid question-bank-page">
@@ -114,11 +128,11 @@ function QuestionsBank() {
                                 </div>
                             </div>
                             <div className='webinars-wrapper'>
-                            <div className='my-stuff-inner-wrapper question-bank-bg'>
+                                <div className='my-stuff-inner-wrapper question-bank-bg'>
                                     <h2 className='title'>Webinars</h2>
                                     <div className='description'>
                                         <p>
-                                        We offer a range of essential webinars (online live stream revision and challenging exam questions).
+                                            We offer a range of essential webinars (online live stream revision and challenging exam questions).
                                         </p>
                                     </div>
                                     <div className='footer'>
@@ -133,17 +147,22 @@ function QuestionsBank() {
                         </div>
                         <div className='col-lg-6 col-12'>
                             <div className='plans-wrapper'>
-                                    <div className="plans-inner-wrapper">
-                                        <h2 className="title">Question Bank (Plans)</h2>
-                                        
-                                        <SinglePlan status='active'/>
-                                        <SinglePlan status='inactive'/>
-                                        {/* <SinglePlan status='inactive'/> */}
-                                    </div>
+                                <div className="plans-inner-wrapper">
+                                    <h2 className="title">Question Bank (Plans)</h2>
+
+                                    <SinglePlan handleOpenPlansModal={handleOpenPlansModal} status='active' />
+                                    <SinglePlan handleOpenPlansModal={handleOpenPlansModal} status='inactive' />
+                                    {/* <SinglePlan status='inactive'/> */}
+                                </div>
                             </div>
 
                             <div className='subscription-details-wrapper'>
-
+                                <div className="subscription-details-inner-wrapper">
+                                    <h2 className="title">Subscriptions</h2>
+                                    <>
+                                        <SubscriptionDetails/>
+                                    </>
+                                </div>
                             </div>
 
                         </div>
@@ -151,6 +170,11 @@ function QuestionsBank() {
                 </section>
 
             </div>
+            {plansModal &&
+                <ReactPortal wrapperId="external_modal_container">
+                    <ExtendPlans closeBtn={closeBtn} closeModal={handleClosePlansModal} />
+                </ReactPortal>
+            }
         </>
     )
 }

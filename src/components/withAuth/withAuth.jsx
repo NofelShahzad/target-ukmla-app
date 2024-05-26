@@ -13,7 +13,7 @@ export default function withAuth(Component) {
       };
     }, []);
 
-    if (!user) return <Navigate to="/" />;
+    if (!user) return <Navigate to="/login" />;
 
     return <Component {...props} />;
   };

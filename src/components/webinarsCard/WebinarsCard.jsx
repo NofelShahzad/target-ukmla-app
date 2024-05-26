@@ -8,7 +8,7 @@ function WebinarsCard({imgSrc,handleWebinarModal}) {
         <div className='col-sm-12 col-xl-6 col-12'>
             <div className='webinar-card'>
                     <div className='webinar-inner-card'>
-                            <div className='webinar-img'>
+                            <div className='col-3 webinar-img'>
                                 <img src={imgSrc} alt="babies" />
                             </div>
                             <div className='webinar-card-body'>
@@ -40,8 +40,12 @@ function WebinarsCard({imgSrc,handleWebinarModal}) {
                                     </div>
                                     
                                     <div className="webinar-card-footer">
-                                        <button type='button' className='col-5 btn btn-detail' onClick={()=>handleWebinarModal()}>More Info</button>
-                                        <button type='button' className='col-6 btn btn-primary'>Register</button>
+                                        <div className='col-6 pe-1'>
+                                            <button type='button' className='btn btn-detail' onClick={()=>handleWebinarModal()}>More Info</button>
+                                        </div>
+                                        <div className='col-6 ps-1'>
+                                            <button type='button' className='btn btn-primary'>Register</button>
+                                        </div>
                                     </div>
                             </div>
                     </div>

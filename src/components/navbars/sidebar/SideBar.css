@@ -78,9 +78,12 @@ aside.sidebar .sidebar-social-links li a{
     text-decoration: none;
     color: var(--text-color);
     display: inline-flex;
-    gap: 10px;
+    /* gap: 10px; */
     width: 100%;
 }
-aside.sidebar .sidebar-social-links li a img{
-
+aside.sidebar .sidebar-social-links li a span{
+    padding-left: 20px;
+}
+aside.sidebar .sidebar-social-links li a .social-icon {
+    width: 18.5px;
 }

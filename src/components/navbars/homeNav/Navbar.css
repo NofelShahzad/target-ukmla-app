@@ -29,6 +29,10 @@
 .header .brand-logo {
     text-decoration: none;
     color: var(--text-color);
+    width: 170px;
+}
+.header .brand-logo  img{
+    width: 100%;
 }
 .header .brand-logo h1{
     margin-bottom: 0;
@@ -43,6 +47,9 @@
     list-style: none;
     margin-bottom: 0;
 }
+.header ul li{
+    padding: 0 10px;
+}
 .header ul, .header ul li a {
     display: flex;
     justify-content: center;
@@ -50,7 +57,7 @@
     text-decoration: none;
     color: var(--navbar-dark-text);
     font-weight: 500;
-    gap: 20px;
+    /* gap: 20px; */
     position: relative;
 }
 .header ul li a.active{
@@ -86,7 +93,10 @@
 .header .nav-btn-wrapper {
     display: flex;
     align-items: center;
-    gap: 10px;
+    /* gap: 10px; */
+}
+.header .nav-btn-wrapper a {
+    margin-inline: 5px;
 }
 
 .header .nav-btn-wrapper-mobile{

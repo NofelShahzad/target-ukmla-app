@@ -1,0 +1,61 @@
+.single-posted-comment-card {
+    background-color: #fff;
+    margin: 0px auto 20px;
+  }
+  
+.single-posted-comment-card  .single-posted-comment-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .single-posted-comment-card .single-posted-comment-card-header .author {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .single-posted-comment-card  .single-posted-comment-card-header .tag {
+    /* background-color: #007bff; */
+    color: var(--themecolor);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.9em;
+    font-weight: 600;
+  }
+  
+  .single-posted-comment-card  .single-posted-comment-card-content p{
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .single-posted-comment-card  .single-posted-comment-card-footer {
+    display: flex;
+    align-items: center;
+    color: #777;
+    font-size: 0.9em;
+  }
+  
+  /* .single-posted-comment-card-footer .time {
+    margin-right: auto;
+  } */
+  .single-posted-comment-card  .single-posted-comment-card-footer button{
+    padding: 0;
+    border: none;
+    background-color: transparent;
+  }  
+  .single-posted-comment-card  .single-posted-comment-card-footer :is(.likes, .dislikes) {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    cursor: pointer;
+  }
+  
+  .single-posted-comment-card  .single-posted-comment-card-footer .likes svg,.single-posted-comment-card .single-posted-comment-card-footer .dislikes svg {
+    margin-right: 5px;
+  }
+  
+  .single-posted-comment-card  .single-posted-comment-card-footer .likes span,.single-posted-comment-card .single-posted-comment-card-footer .dislikes span {
+    margin-left: 5px;
+  }
+  

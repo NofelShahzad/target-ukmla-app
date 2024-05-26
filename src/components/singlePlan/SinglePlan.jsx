@@ -1,7 +1,7 @@
 // import React from 'react'
 import './SinglePlan.css'
 // eslint-disable-next-line react/prop-types
-function SinglePlan({status}) {
+function SinglePlan({status, handleOpenPlansModal}) {
     return (
         <>
             <div className='single-plan-container'>
@@ -25,10 +25,10 @@ function SinglePlan({status}) {
                 </table>
                 <div className='plan-action'>
                     <div className="col-6 p-1">
-                        <button className='btn btn-secondary'>Reset Plan</button>
+                        <button className='btn btn-secondary' onClick={handleOpenPlansModal}>Reset Plan</button>
                     </div>
                     <div className="col-6 p-1">
-                        <button className='btn btn-primary'>Extend Plan</button>
+                        <button className='btn btn-primary' onClick={handleOpenPlansModal}>Extend Plan</button>
                     </div>
                 </div>
             </div>

@@ -20,6 +20,7 @@ import BigmockDetail from './dashboard/BigmockDetail';
 import AllComments from './dashboard/AllComments';
 import FlaggedQuestion from './dashboard/FlaggedQuestion';
 import FlaggedGuides from './dashboard/FlaggedGuides';
+import Questionnaire from './dashboard/questionnaire/Questionnaire';
 
 const RouterWrapper = () => {
     const isUserAuthenticated = useSelector(state => !!state.auth.user);
@@ -75,6 +76,7 @@ const RouterWrapper = () => {
                 </Route>
                 <Route path="webinars" element={<Webinars/>} />
                 <Route path="contactus" element={<ContactUs/>} />
+                <Route path=':questionnaire_Id/:question_Id' element={<Questionnaire/>}/>
 
 
             {/* </Route> */}

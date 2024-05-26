@@ -12,7 +12,7 @@ function BigmockDetail() {
                     <h2 className="title">Big Mock</h2>
                     <p>Text explaining what these are.</p>
                 </div>
-                <div className="col-md-9 col-12">
+                <div className="col-lg-9 col-12">
                     <div className="bigmocks-card">
                         <div className="bigmocks-inner-card">
                             <div className="bigmocks-img">

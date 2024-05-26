@@ -26,8 +26,12 @@ function BigmocksCard({imgSrc,handleBigmockModal}) {
                             <p>Our newest Big Mock, tailored for the upcoming PLAB exam, is now available to attempt.</p>
                               </div>
                               <div className="bigmocks-card-footer">
+                                <div className='col-6 pe-1'> 
                                   <button type='button' className='btn btn-detail' onClick={()=>handleBigmockModal()}>More Info</button>
+                                </div>
+                                <div className='col-6 ps-1'>
                                   <button type='button' className='btn btn-primary' onClickCapture={()=>handleNavigate()}>Pruchase</button>
+                                </div>
                               </div>
                           </div>
                       </div>
