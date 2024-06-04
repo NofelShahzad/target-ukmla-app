@@ -12,13 +12,22 @@ aside.sidebar {
 }
 
 aside.sidebar .logo-wrapper {
-    padding: 24px 32px 32px;
+    /* padding: 24px 32px 32px; */
+    padding: 25px 0;
     text-align: center;
     opacity: 1;
     background: transparent;
-    color: rgb(52, 71, 103);
+    font: normal normal bold 24px/37px Sofia Pro;
     box-shadow: none;
     height: 90px;
+}
+aside.sidebar .logo-wrapper a{
+    color: var(--text-dark);
+    text-decoration: none;
+    text-transform: uppercase;
+}
+aside.sidebar .logo-wrapper span{
+    color: var(--themecolor);
 }
 aside.sidebar .sidebar-body{
     display: flex;
@@ -29,22 +38,28 @@ aside.sidebar .sidebar-body{
 aside.sidebar .sidebar-menu{
     list-style-type: none;
     height: 50%;
+    padding-left: 10px;
 }
 aside.sidebar .sidebar-menu li {
     padding: 5px 10px;
     position: relative;
 }
 aside.sidebar .sidebar-menu li a{
-    color: var(--text-color);
+    color: var(--text-dark);
     text-decoration: none;
     width: 100%;
     display: block;
+    transition: all 0.15s ease-in-out;
 }
-aside.sidebar .sidebar-menu li a img{
-    padding-right: 20px;
+aside.sidebar .sidebar-menu li a :is(img, i, svg){
+    margin-right: 20px;
+    fill: var(--text-dark);
 }
 aside.sidebar .sidebar-menu li a.active{
     color: var(--active-color);
+}
+aside.sidebar .sidebar-menu li a.active svg{
+    fill: var(--active-color);
 }
 aside.sidebar .sidebar-menu li a.active:after{
     content: "";
@@ -76,7 +91,7 @@ aside.sidebar .sidebar-social-links li{
 }
 aside.sidebar .sidebar-social-links li a{
     text-decoration: none;
-    color: var(--text-color);
+    color: var(--text-dark);
     display: inline-flex;
     /* gap: 10px; */
     width: 100%;
@@ -86,4 +101,10 @@ aside.sidebar .sidebar-social-links li a span{
 }
 aside.sidebar .sidebar-social-links li a .social-icon {
     width: 18.5px;
+}
+aside.sidebar .sidebar-social-links li a:hover .social-icon svg {
+    fill: var(--active-color);
+}
+aside.sidebar .sidebar-social-links li a:hover{
+    color: var(--active-color);
 }

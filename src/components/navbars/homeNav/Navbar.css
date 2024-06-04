@@ -28,7 +28,7 @@
 }
 .header .brand-logo {
     text-decoration: none;
-    color: var(--text-color);
+    color: var(--text-dark);
     width: 170px;
 }
 .header .brand-logo  img{

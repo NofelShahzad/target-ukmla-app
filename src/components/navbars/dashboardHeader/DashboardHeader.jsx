@@ -4,7 +4,7 @@ import './DashboardHeader.css';
 import otherLinksIcon from '../../../assets/icons/dashboard/other-links-icon.svg';
 import notificationIcon from '../../../assets/icons/dashboard/noti-icon.svg';
 import profileIcon from '../../../assets/icons/dashboard/profile-icon.svg';
-import downArrow from '../../../assets/icons/dashboard/arrow-down-icon.svg';
+// import downArrow from '../../../assets/icons/dashboard/arrow-down-icon.svg';
 import searchIcon from '../../../assets/icons/dashboard/search-icon.svg'
 import { Link } from 'react-router-dom';
 import NotificationList from './NotificationList';
@@ -17,10 +17,10 @@ function DashboardHeader() {
     setNavSearch(e.target.value);
   }
 
-  const handleLogout =() => {
+  const handleLogout = () => {
     dispatch(logoutUser())
   }
-  
+
 
   return (
     <header className='dashboard-header-wrapper'>
@@ -38,8 +38,16 @@ function DashboardHeader() {
           <ul className='nav-body'>
             <li className='nav-resources-container'>
               <div className='dropdown'>
-              <div className='item'> <span> Resources</span>
-                  <img src={downArrow} alt='arrow icons' />
+                <div className='item'> <span> Resources</span>
+                  {/* <img src={downArrow} alt='arrow icons' /> */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12.5" height="6.855" viewBox="0 0 12.5 6.855">
+                    <g id="Iconly_Light-Outline_Arrow---Down-2" data-name="Iconly/Light-Outline/Arrow---Down-2" transform="translate(-4.25 -7.75)">
+                      <g id="Arrow---Down-2" transform="translate(4.25 7.75)">
+                        <path id="Stroke-1" d="M.427.427A.6.6,0,0,1,1.215.369l.068.059L6.5,5.644,11.718.427a.6.6,0,0,1,.788-.059l.068.059a.6.6,0,0,1,.059.788l-.059.068L6.928,6.928a.6.6,0,0,1-.788.059l-.068-.059L.427,1.283A.6.6,0,0,1,.427.427Z" transform="translate(-0.25 -0.25)" />
+                      </g>
+                    </g>
+                  </svg>
+
                 </div>
                 <ul className="menu-dropdown">
                   <li>
@@ -66,12 +74,31 @@ function DashboardHeader() {
             <li className='nav-question-bank-container'>
               <div className='dropdown'>
                 <div className='item'> <span> Question Bank</span>
-                  <img src={downArrow} alt='arrow icons' />
+                  {/* <img src={downArrow} alt='arrow icons' /> */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12.5" height="6.855" viewBox="0 0 12.5 6.855">
+                    <g id="Iconly_Light-Outline_Arrow---Down-2" data-name="Iconly/Light-Outline/Arrow---Down-2" transform="translate(-4.25 -7.75)">
+                      <g id="Arrow---Down-2" transform="translate(4.25 7.75)">
+                        <path id="Stroke-1" d="M.427.427A.6.6,0,0,1,1.215.369l.068.059L6.5,5.644,11.718.427a.6.6,0,0,1,.788-.059l.068.059a.6.6,0,0,1,.059.788l-.059.068L6.928,6.928a.6.6,0,0,1-.788.059l-.068-.059L.427,1.283A.6.6,0,0,1,.427.427Z" transform="translate(-0.25 -0.25)" />
+                      </g>
+                    </g>
+                  </svg>
+
                 </div>
                 <ul className="menu-dropdown">
                   <li>
                     <div className="nav-link" to="/">
-                      <div className='dropmenu-item'><span>Questions</span><img src={downArrow} alt='other icons' /></div>
+                      <div className='dropmenu-item'>
+                        <span>Questions</span>
+                        {/* <img src={downArrow} alt='other icons' /> */}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12.5" height="6.855" viewBox="0 0 12.5 6.855">
+                          <g id="Iconly_Light-Outline_Arrow---Down-2" data-name="Iconly/Light-Outline/Arrow---Down-2" transform="translate(-4.25 -7.75)">
+                            <g id="Arrow---Down-2" transform="translate(4.25 7.75)">
+                              <path id="Stroke-1" d="M.427.427A.6.6,0,0,1,1.215.369l.068.059L6.5,5.644,11.718.427a.6.6,0,0,1,.788-.059l.068.059a.6.6,0,0,1,.059.788l-.059.068L6.928,6.928a.6.6,0,0,1-.788.059l-.068-.059L.427,1.283A.6.6,0,0,1,.427.427Z" transform="translate(-0.25 -0.25)" />
+                            </g>
+                          </g>
+                        </svg>
+
+                      </div>
                       <ul className='dropdown-submenu'>
                         <li><Link to='/'> Flagged Questions</Link></li>
                       </ul>
@@ -79,10 +106,21 @@ function DashboardHeader() {
                   </li>
                   <li>
                     <div className="nav-link" to="/">
-                      <div className='dropmenu-item'><span>Revision Guides</span> <img src={downArrow} alt='other icons' /></div>
+                      <div className='dropmenu-item'>
+                        <span>Revision Guides</span>
+                        {/* <img src={downArrow} alt='other icons' /> */}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12.5" height="6.855" viewBox="0 0 12.5 6.855">
+                          <g id="Iconly_Light-Outline_Arrow---Down-2" data-name="Iconly/Light-Outline/Arrow---Down-2" transform="translate(-4.25 -7.75)">
+                            <g id="Arrow---Down-2" transform="translate(4.25 7.75)">
+                              <path id="Stroke-1" d="M.427.427A.6.6,0,0,1,1.215.369l.068.059L6.5,5.644,11.718.427a.6.6,0,0,1,.788-.059l.068.059a.6.6,0,0,1,.059.788l-.059.068L6.928,6.928a.6.6,0,0,1-.788.059l-.068-.059L.427,1.283A.6.6,0,0,1,.427.427Z" transform="translate(-0.25 -0.25)" />
+                            </g>
+                          </g>
+                        </svg>
+
+                      </div>
                       <ul className='dropdown-submenu'>
-                          <li><Link to='/'>All Guides</Link></li>
-                          <li><Link to='/'>Gems</Link></li>
+                        <li><Link to='/'>All Guides</Link></li>
+                        <li><Link to='/'>Flagged Guides</Link></li>
                       </ul>
                     </div>
                   </li>
@@ -100,7 +138,7 @@ function DashboardHeader() {
               <div className='nav-icon-container'>
                 <img src={notificationIcon} alt='arrow icons' />
                 <div className='notification-dropdown-wrapper'>
-                  <NotificationList notifications={""}/>
+                  <NotificationList notifications={""} />
                 </div>
               </div>
             </li>

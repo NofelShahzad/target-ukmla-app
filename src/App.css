@@ -1,6 +1,6 @@
 :root {
   --themecolor: #007AFF;
-  --text-color: #0f0f0f;
+  --text-dark: #0f0f0f;
   --text-light: #fff;
   --border-color: #007AFF;
   --title-color: #007AFF;
@@ -53,7 +53,7 @@ body{
   min-height: 100vh;
   width: 100%;
   font-family: "Poppins", sans-serif;
-  color: var(--text-color);
+  color: var(--text-dark);
   background-color: #FBFFF4;
 }
 input,textarea{
@@ -193,7 +193,7 @@ button:disabled {
 
 .signup-form-wrapper a {
   font-weight: 600;
-  color: var(--text-color);
+  color: var(--text-dark);
 }
 
 .signup-form-wrapper .check-field-wrapper input {
@@ -225,7 +225,7 @@ button {
 }
 .cred-page-wrapper .cred-page-inner-wrapper .form-action-buttons-wrapper .forgot-password-container a{
   font-weight: 500;
-  color: var(--text-color);
+  color: var(--text-dark);
   text-decoration: none;
 }
 .cred-page-wrapper .cred-page-inner-wrapper .form-action-buttons-wrapper .form-action-buttons-inner-wrapper{
@@ -345,7 +345,10 @@ button {
 /* -------------------DASHBOARD CSS START------------------*/
 /* LANDING START */
 .dashboard-wrapper-banner{
-  padding: 0 5px;
+  margin: 0 5px;
+  overflow: hidden;
+  transition: all 0.15s ease-in-out;
+  border-radius: 27px;
 }
 .dashboard-wrapper-banner .dashboard-banner{
   background-image: url('./assets/images/dashboard/banner-bg.png');
@@ -355,7 +358,11 @@ button {
   width: 100%;
   border-radius: 26px;
   background-size: cover;
+  transition: all 0.15s ease-in-out;
 
+}
+.dashboard-wrapper-banner .dashboard-banner:hover{
+  transform: scale(1.1);
 }
 .dashboard-wrapper-banner .dashboard-banner .banner-content{
   color: #fff;
@@ -448,7 +455,7 @@ button {
   border: 1px solid #707070;
   border-radius: 6px;
   text-decoration: none;
-  color: var(--text-color);
+  color: var(--text-dark);
   font-weight: 500;
   padding: 5px 10px;
   font-size: 16px;
@@ -637,7 +644,7 @@ button {
   border: 1px solid var(--border-color);
   border-radius: 5px;
   background-color: #fff;
-  color: var(--text-color);
+  color: var(--text-dark);
 }
 .tabs-btn-container .tabs-btn-inner-container .btn-secondary:hover{
   color: var(--anchor-hover);
@@ -684,7 +691,7 @@ button {
   background: #FFFFFF;
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  color: var(--text-color);
+  color: var(--text-dark);
 }
 .unflag-modal-wrapper .unflag-modal-body .action-buttons button.btn-secondary:hover{
   color: var(--anchor-hover);
@@ -824,7 +831,7 @@ button {
 }
 .questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-header .questionnaire-title span{
   font-size: 16px;
-  color: var(--text-color);
+  color: var(--text-dark);
 }
 .questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-header .flag-action button{
   background: var(--light-bg);
