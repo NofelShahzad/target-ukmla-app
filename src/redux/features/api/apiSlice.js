@@ -6,11 +6,11 @@ const baseQuery = fetchBaseQuery({
     baseUrl: VITE_REACT_APP_API_BASE_URL,
     // credentials: true,
     prepareHeaders: (headers, { getState }) => {
-      // const stateToken = getState().auth.token;
+      const stateToken = getState().auth.token;
       // const token = localStorage.getItem("");
   
       // If we have a token set in state, let's assume that we should be passing it.
-      // headers.set("Authorization", `Bearer ${stateToken || token || ""}`);
+      headers.set("Authorization", `Bearer ${stateToken || ""}`);
   
       // headers.set('Cross-Origin-Opener-Policy', '*');
       // headers.set("Access-Control-Allow-Credentials", "true");
