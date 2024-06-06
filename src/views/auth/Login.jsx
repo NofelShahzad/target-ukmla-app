@@ -68,7 +68,7 @@ function Login() {
         <>
             <div className='cred-page-wrapper'>
                 {!isVerified &&
-                    <div className="col-sm-10 col-md-6 col-10 cred-page-inner-wrapper">
+                    <div className="col-sm-10 col-md-6 col-xl-5 col-xxl-4 col-10 cred-page-inner-wrapper">
                         <form onSubmit={handleSubmit}>
                             <div className="title-wrapper">
                                 <h2 className="cred-title">Log In</h2>
