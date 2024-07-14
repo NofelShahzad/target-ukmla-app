@@ -95,10 +95,12 @@ function Signup() {
         last_name : signupData?.lastName,
         password : signupData?.password,
         password_confirmation : signupData?.password,
+        email: signupData?.email,
         gender : "male",
         city : "london",
         country : "UK"
       }
+      console.log("body::",body)
 
       const { data, error } = await registerUser(body);
 
