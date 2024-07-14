@@ -9,12 +9,12 @@ function AuthenticatedLayout() {
   return (
     <>
       <div className="dashboard-wrapper d-flex">
-        {/* <div className="sidebar-wrapper"> */}
+        <div className="sidebar-wrapper">
           <SideBar />
-        {/* </div> */}
+        </div>
         <main className="main-content dashboard-content container-fluid" style={{ 'minHeight': '100vh'}}>
           <DashboardHeader />
-            <Outlet />
+          <Outlet />
         </main>
       </div>
     </>
