@@ -1,11 +1,11 @@
 :root {
-  --themecolor:  #005BB2;
+  --themecolor:  #007aff;
   --text-dark: #0f0f0f;
   --text-light: #fff;
-  --border-color:  #005BB2;
-  --title-color:  #005BB2;
-  --anchor-hover:  #005BB2;
-  --checked-question:  #005BB2;
+  --border-color:  #007aff;
+  --title-color:  #007aff;
+  --anchor-hover:  #007aff;
+  --checked-question:  #007aff;
   --body-bg: #fff;
   --light-bg: #fff;
   --dark-background: #C5C5C5;
@@ -19,14 +19,14 @@
   --err-text-color: #ea0000;
   --err-bg: #ea0000;
   --flag-marked: #ea0000;
-  --btn-primary-bg:  #005BB2;
+  --btn-primary-bg:  #007aff;
   --btn-primary-text: #fff;
   --navbar-dark-text: #012f46;
-  --navbar-theme-text:  #005BB2;
-  --active-color:  #005BB2;
+  --navbar-theme-text:  #007aff;
+  --active-color:  #007aff;
   /* --backdrop: rgb(1, 47, 70,0.78); */
-  --signup-progressbar-bg:  #005BB2;
-  --dash-nav-icon-bg:  #005BB2;
+  --signup-progressbar-bg:  #007aff;
+  --dash-nav-icon-bg:  #007aff;
   --dash-nav-icon-hoverbg : #0F0F0F;
   --dash-navitem-bg: #F6F6F6;
   --wrong-color: #BF0303;
@@ -34,7 +34,7 @@
   --not-attempt-color: #BFBFBF;
   --removed-color: #535353;
   --backdrop-color: #012f46d4;
-  --theme-heading-color:  #005BB2;
+  --theme-heading-color:  #007aff;
   --wrong-question-btn-bg: #ea0000;
   --correct-question-btn-bg: #00B221;
   --removed-question-btn-bg: #555555;
@@ -362,9 +362,9 @@ button {
   transition: all 0.15s ease-in-out;
 
 }
-.dashboard-wrapper-banner .dashboard-banner:hover{
+/* .dashboard-wrapper-banner .dashboard-banner:hover{
   transform: scale(1.1);
-}
+} */
 .dashboard-wrapper-banner .dashboard-banner .banner-content{
   color: #fff;
   height: 100%;

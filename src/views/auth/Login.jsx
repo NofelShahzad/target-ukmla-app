@@ -6,6 +6,7 @@ import verifiedIcon from '../../assets/icons/verified-icon.svg';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAuth } from "../../redux/features/auth/authSlice";
+import { useRegisterUserMutation } from "../../redux/features/auth/authApi";
 
 
 function Login() {
@@ -21,8 +22,12 @@ function Login() {
     const emailMsgRef = useRef(null);
     const passwordMsgRef = useRef(null);
 
+    const [respData,setRespData] = useState(null);
+    
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
+    const [loginUser] = useRegisterUserMutation();
 
     const [loginData, setLoginData] = useState({
         email: '',
@@ -51,10 +56,23 @@ function Login() {
 
 
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Submit!");
-        setIsVerified(true);
+    const handleSubmit = async(e) => {
+        try {
+            e.preventDefault();
+            console.log("Submit!");
+            
+            setIsVerified(true);
+            const {data , error} = await loginUser(loginData);
+            if (data) {
+                console.log("data::",data)
+            }
+            if (error) {
+                console.log("error::",error);
+            }
+
+        } catch (err) {
+            console.log("err::",err);
+        }
     }
 
     const navigateDashboard = () => {

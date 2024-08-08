@@ -8,9 +8,12 @@ import eyeHide from '../../assets/icons/eye-hide-icon.svg'
 import verifiedIcon from '../../assets/icons/verified-icon.svg'
 import { Link } from 'react-router-dom'
 import { useRegisterUserMutation } from '../../redux/features/auth/authApi'
+import { useDispatch } from 'react-redux'
+import { setAuth } from '../../redux/features/auth/authSlice'
 
 function Signup() {
 
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
@@ -28,6 +31,8 @@ function Signup() {
     hasLetter: false,
     hasNumber: false
   });
+  
+  const [respData,setRespData] = useState(null);
 
   const [submitDisable, setSubmitDisable] = useState(true);
 
@@ -38,7 +43,8 @@ function Signup() {
     setSignupData({ ...signupData, [e.target.name]: e.target.value })
   }
   const handleChangeCheck = (e) => {
-    setSignupData({ ...signupData, [e.target.name]: e.target.checked })
+    // console.log()
+    setSignupData(prev=> ({ ...prev, [e.target.name]: e.target.checked }))
   }
 
 
@@ -83,8 +89,8 @@ function Signup() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      console.log("submitted::>")
-      setIsSubmitting(true);
+      // console.log("submitted::>")
+      // setIsSubmitting(true);
       // setTimeout(() => {
       //   setIsVerified(true);
       // }, 2000);
@@ -93,22 +99,20 @@ function Signup() {
       const body ={
         first_name : signupData?.firstName,
         last_name : signupData?.lastName,
+        email : signupData?.email,
         password : signupData?.password,
-        password_confirmation : signupData?.password,
-        email: signupData?.email,
-        gender : "male",
-        city : "london",
-        country : "UK"
+        terms_cond : signupData?.terms_cond,
+        receive_email : signupData?.receive_email
       }
-      console.log("body::",body)
 
       const { data, error } = await registerUser(body);
 
       if (data) {
-        console.log("register::", data);
         setIsSubmitting(false);
         setIsVerified(true);
-
+        setRespData(data);
+        
+        
 
       }
       if (error) {
@@ -118,6 +122,10 @@ function Signup() {
     } catch (err) {
       console.log(err)
     }
+  }
+  
+  const handleLogin = ()=>{
+    dispatch(setAuth(respData));
   }
 
   return (
@@ -227,8 +235,10 @@ function Signup() {
 
           <div className='account-verified-container'>
             <img src={verifiedIcon} />
-            <h2 className='verified-title'>Verified</h2>
-            <p>We have sent a password recovery link to <br /> your email address.</p>
+            <h2 className='verified-title'>Thank You!</h2>
+            <p>You are successfully sign up in to your account.</p>
+
+            <button className='btn btn-primary' onClick={handleLogin}>Continue</button>
           </div>
         </div>
 

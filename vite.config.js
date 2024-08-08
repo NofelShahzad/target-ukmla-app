@@ -8,14 +8,14 @@ export default defineConfig({
       // host: '0.0.0.0',  // Bind to all network interfaces
       port: 5173,       // Specify a port (optional)
 
-    proxy: {
-      // '/api': {
-      //   target: 'https://www.objective-kirch.109-228-49-52.plesk.page',
-      //   changeOrigin: true,
-      //   rewrite: (path) => path.replace(/^\/api/, ''),
-      // },
+    // proxy: {
+    //   // '/api': {
+    //   //   target: 'https://www.objective-kirch.109-228-49-52.plesk.page',
+    //   //   changeOrigin: true,
+    //   //   rewrite: (path) => path.replace(/^\/api/, ''),
+    //   // },
 
-      '/api': 'https://www.objective-kirch.109-228-49-52.plesk.page'
-    },
+    //   '/api': 'https://adminukmla.targetukmla.com/'
+    // },
   }
 })
