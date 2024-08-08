@@ -1,1 +1,1 @@
-export const  VITE_REACT_APP_API_BASE_URL="https://www.objective-kirch.109-228-49-52.plesk.page/api"
+export const  VITE_REACT_APP_API_BASE_URL="https://adminukmla.targetukmla.com/api"

@@ -8,21 +8,13 @@ const baseQuery = fetchBaseQuery({
     // mode: 'no-cors',
     prepareHeaders: (headers, { getState }) => {
       const stateToken = getState().auth.token;
-      // const token = localStorage.getItem("");
   
-      // If we have a token set in state, let's assume that we should be passing it.
       if (stateToken) {
         headers.set("Authorization", `Bearer ${stateToken || ""}`);
         
       }
-  
-      // headers.set('Cross-Origin-Opener-Policy', '*');
-      // headers.set("Access-Control-Allow-Credentials", "true");
-      // headers.set("X-Requested-With","XMLHttpRequest");
-      headers.set('Accept', 'application/json');
-      headers.set("Access-Control-Allow-Origin", "https://www.objective-kirch.109-228-49-52.plesk.page");
+      headers.set("Access-Control-Allow-Origin", "*");
       headers.set("Access-Control-Request-Method", "*");
-       headers.set("Access-Control-Allow-Credentials", "true");
   
       return headers;
     },

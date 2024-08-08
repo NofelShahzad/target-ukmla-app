@@ -9,7 +9,7 @@ import GlobalErrorBoundary from './components/errorBoundary/GlobalErrorBoundary'
 
 function App() {
   const auth =  useSelector((state) => state.auth);
-  console.log("auth::",auth)
+  // console.log("auth::",auth)
   
 
   return (
