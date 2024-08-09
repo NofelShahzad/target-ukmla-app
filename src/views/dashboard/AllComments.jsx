@@ -30,8 +30,8 @@ function AllComments() {
     </>
   )
 }
-const AuthenticatedDashboard = withAuth(AllComments);
-const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
+// const AuthenticatedDashboard = withAuth(AllComments);
+// const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
 
-export default LayoutAuthenticatedDashboard;
-// export default AllComments
+// export default LayoutAuthenticatedDashboard;
+export default AllComments

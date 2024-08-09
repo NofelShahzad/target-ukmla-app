@@ -11,8 +11,8 @@ function ContactUs() {
   )
 }
 
-// export default ContactUs
-const AuthenticatedDashboard = withAuth(ContactUs);
-const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
+export default ContactUs
+// const AuthenticatedDashboard = withAuth(ContactUs);
+// const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
 
-export default LayoutAuthenticatedDashboard;
+// export default LayoutAuthenticatedDashboard;

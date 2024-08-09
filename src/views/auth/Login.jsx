@@ -6,7 +6,7 @@ import verifiedIcon from '../../assets/icons/verified-icon.svg';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAuth } from "../../redux/features/auth/authSlice";
-import { useRegisterUserMutation } from "../../redux/features/auth/authApi";
+import { useLoginUserMutation, useRegisterUserMutation } from "../../redux/features/auth/authApi";
 
 
 function Login() {
@@ -27,7 +27,7 @@ function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const [loginUser] = useRegisterUserMutation();
+    const [loginUser] = useLoginUserMutation();
 
     const [loginData, setLoginData] = useState({
         email: '',
@@ -65,6 +65,7 @@ function Login() {
             const {data , error} = await loginUser(loginData);
             if (data) {
                 console.log("data::",data)
+                setRespData(data);
             }
             if (error) {
                 console.log("error::",error);
@@ -76,8 +77,8 @@ function Login() {
     }
 
     const navigateDashboard = () => {
-        navigate('/dashboard')
-        dispatch(setAuth({email:loginData?.email,authenticated:true }))
+        navigate('/')
+        dispatch(setAuth(respData))
 
     }
 

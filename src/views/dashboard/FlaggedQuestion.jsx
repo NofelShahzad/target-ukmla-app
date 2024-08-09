@@ -94,9 +94,9 @@ function FlaggedQuestion() {
     )
 }
 
-const AuthenticatedDashboard = withAuth(FlaggedQuestion);
-const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
+// const AuthenticatedDashboard = withAuth(FlaggedQuestion);
+// const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
 
-export default LayoutAuthenticatedDashboard;
+// export default LayoutAuthenticatedDashboard;
 
-// export default FlaggedQuestion
+export default FlaggedQuestion

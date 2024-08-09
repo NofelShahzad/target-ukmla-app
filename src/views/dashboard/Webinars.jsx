@@ -54,9 +54,9 @@ function Webinars() {
     )
 }
 
-// export default Webinars
+export default Webinars
 
-const AuthenticatedDashboard = withAuth(Webinars);
-const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
+// const AuthenticatedDashboard = withAuth(Webinars);
+// const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
 
-export default LayoutAuthenticatedDashboard;
+// export default LayoutAuthenticatedDashboard;

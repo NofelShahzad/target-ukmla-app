@@ -140,6 +140,19 @@ button:disabled {
   align-items: flex-start;
 }
 
+.dashboard-wrapper{
+  position: relative;
+  
+    min-height: 100vh;
+    left: 230px;
+    width: calc(100% - 230px);
+    transition: all 0.5s ease;
+}
+.sidebar-wrapper.close ~ .dashboard-wrapper {
+  left: 78px;
+  width: calc(100% - 78px);
+}
+
 .cred-page-wrapper {
   align-items: center;
   display: flex;

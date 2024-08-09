@@ -179,9 +179,9 @@ function QuestionsBank() {
     )
 }
 
-// export default withLayout(withAuth(QuestionsBank))
+export default QuestionsBank
 
-const AuthenticatedDashboard = withAuth(QuestionsBank);
-const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
+// const AuthenticatedDashboard = withAuth(QuestionsBank);
+// const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
 
-export default LayoutAuthenticatedDashboard;
+// export default LayoutAuthenticatedDashboard;

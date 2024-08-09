@@ -11,11 +11,11 @@ import './SideBar.css'
 
 
 import { Link, NavLink } from 'react-router-dom'
-function SideBar() {
+function SideBar({toogleSideBar, sidebar}) {
     return (
-        <aside className="sidebar">
-            <div className='logo-wrapper'>
-                <NavLink to='/dashboard'>
+        <aside className={`sidebar-wrapper ${sidebar ? ' close' : ''}`}>
+            <div className='logo-wrapper' onClick={toogleSideBar}>
+                <NavLink to='/'>
                     {/* <img src={logo} width={'100%'} /> */}
                     <span>Target</span> Ukmla
                 </NavLink>
@@ -23,7 +23,7 @@ function SideBar() {
             <div className='sidebar-body'>
                 <ul className='sidebar-menu'>
                     <li>
-                        <NavLink to='/dashboard'>
+                        <NavLink to='/'>
                             {/* <img src={homeIcon} alt='home icon' /> */}
                             <svg xmlns="http://www.w3.org/2000/svg" width="17.585" height="18.51" viewBox="0 0 17.585 18.51">
                                 <g id="Iconly_Bold_Home" data-name="Iconly/Bold/Home" transform="translate(-2.5 -2)">

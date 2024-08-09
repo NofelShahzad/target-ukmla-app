@@ -1,17 +1,28 @@
-aside.sidebar {
+/* aside.sidebar-wrapper {
     box-shadow: rgba(0, 0, 0, 0.05) 0rem 1.25rem 1.6875rem 0rem;
     margin-bottom: inherit;
     left: 0px;
-    /* width: 300px; */
+    width: 300px;
     width: 26vw;
     transform: translateX(0px);
     transition: width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms, background-color 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
     height: 100vh;
     position: sticky;
     top: 0;
+} */
+aside.sidebar-wrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 230px;
+    background: #ffff;
+    z-index: 100;
+    transition: all 0.5s ease;
+    border-right: 1px solid #C5C5C5;
 }
 
-aside.sidebar .logo-wrapper {
+aside.sidebar-wrapper .logo-wrapper {
     /* padding: 24px 32px 32px; */
     padding: 25px 0;
     text-align: center;
@@ -21,50 +32,50 @@ aside.sidebar .logo-wrapper {
     box-shadow: none;
     height: 90px;
 }
-aside.sidebar .logo-wrapper a{
+aside.sidebar-wrapper .logo-wrapper a{
     color: var(--text-dark);
     text-decoration: none;
     text-transform: uppercase;
 }
-aside.sidebar .logo-wrapper span{
+aside.sidebar-wrapper .logo-wrapper span{
     color: var(--themecolor);
 }
-aside.sidebar .sidebar-body{
+aside.sidebar-wrapper .sidebar-body{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: calc(100% - 90px);
 }
-aside.sidebar .sidebar-menu{
+aside.sidebar-wrapper .sidebar-menu{
     list-style-type: none;
     height: 50%;
     padding-left: 10px;
 }
-aside.sidebar .sidebar-menu li {
+aside.sidebar-wrapper .sidebar-menu li {
     padding: 5px 10px;
     position: relative;
 }
-aside.sidebar .sidebar-menu li a{
+aside.sidebar-wrapper .sidebar-menu li a{
     color: var(--text-dark);
     text-decoration: none;
     width: 100%;
     display: block;
     transition: all 0.15s ease-in-out;
 }
-aside.sidebar .sidebar-menu li a :is(img, i, svg){
+aside.sidebar-wrapper .sidebar-menu li a :is(img, i, svg){
     margin-right: 20px;
     fill: var(--text-dark);
 }
-aside.sidebar .sidebar-menu li a.active{
+aside.sidebar-wrapper .sidebar-menu li a.active{
     color: var(--active-color);
 }
-aside.sidebar .sidebar-menu li a.active svg{
+aside.sidebar-wrapper .sidebar-menu li a.active svg{
     fill: var(--active-color);
 }
-aside.sidebar .sidebar-menu li a.active:after{
+aside.sidebar-wrapper .sidebar-menu li a.active:after{
     content: "";
     position: absolute;
-    right: 0;
+    right: -2px;
     top: 50%;
     transform: translate(0, -50%);
     height: 30px;
@@ -73,12 +84,12 @@ aside.sidebar .sidebar-menu li a.active:after{
     background-color: var(--active-color);
     animation: move 1s ease-in-out infinite;
 }
-aside.sidebar .sidebar-social-links{
+aside.sidebar-wrapper .sidebar-social-links{
     /* padding: 0; */
     list-style-type: none;
     position: relative;
 }
-aside.sidebar .sidebar-social-links::before{
+aside.sidebar-wrapper .sidebar-social-links::before{
     content: '';
     position: absolute;
     top: -15px;
@@ -86,25 +97,35 @@ aside.sidebar .sidebar-social-links::before{
     width: 70%;
     background-color: #C5C5C5;
 }
-aside.sidebar .sidebar-social-links li{
+aside.sidebar-wrapper .sidebar-social-links li{
     padding: 5px 10px;
 }
-aside.sidebar .sidebar-social-links li a{
+aside.sidebar-wrapper .sidebar-social-links li a{
     text-decoration: none;
     color: var(--text-dark);
     display: inline-flex;
     /* gap: 10px; */
     width: 100%;
 }
-aside.sidebar .sidebar-social-links li a span{
+aside.sidebar-wrapper .sidebar-social-links li a span{
     padding-left: 20px;
 }
-aside.sidebar .sidebar-social-links li a .social-icon {
+aside.sidebar-wrapper .sidebar-social-links li a .social-icon {
     width: 18.5px;
 }
-aside.sidebar .sidebar-social-links li a:hover .social-icon svg {
+aside.sidebar-wrapper .sidebar-social-links li a:hover .social-icon svg {
     fill: var(--active-color);
 }
-aside.sidebar .sidebar-social-links li a:hover{
+aside.sidebar-wrapper .sidebar-social-links li a:hover{
     color: var(--active-color);
 }
+
+
+.sidebar-wrapper.close {
+    width: 78px;
+}
+
+.sidebar.close~.dashboard-wrapper {
+    left: 78px;
+    width: calc(100% - 78px);
+  }

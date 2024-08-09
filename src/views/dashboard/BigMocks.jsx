@@ -58,9 +58,9 @@ function BigMocks() {
   )
 }
 
-// export default BigMocks
+export default BigMocks
 
-const AuthenticatedDashboard = withAuth(BigMocks);
-const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
+// const AuthenticatedDashboard = withAuth(BigMocks);
+// const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
 
-export default LayoutAuthenticatedDashboard;
+// export default LayoutAuthenticatedDashboard;

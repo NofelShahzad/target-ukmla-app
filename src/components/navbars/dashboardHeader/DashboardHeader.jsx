@@ -26,7 +26,7 @@ function DashboardHeader() {
     <header className='dashboard-header-wrapper'>
       <div className='container-fluid'>
         <nav>
-          <div className='col-xl-6 search-field-container'>
+          <div className='col-xl-5 search-field-container'>
             <input type="text"
               defaultValue={navSearch}
               onChange={(e) => handleChange(e)}

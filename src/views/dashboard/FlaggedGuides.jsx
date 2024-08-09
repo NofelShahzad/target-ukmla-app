@@ -49,9 +49,9 @@ function FlaggedGuides() {
   )
 }
 
-// export default FlaggedGuides
+export default FlaggedGuides
 
-const AuthenticatedDashboard = withAuth(FlaggedGuides);
-const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
+// const AuthenticatedDashboard = withAuth(FlaggedGuides);
+// const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
 
-export default LayoutAuthenticatedDashboard;
+// export default LayoutAuthenticatedDashboard;

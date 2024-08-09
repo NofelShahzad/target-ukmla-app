@@ -59,8 +59,9 @@ function Dashboard() {
     </>
   )
 }
-const AuthenticatedDashboard = withAuth(Dashboard);
-const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
+// const AuthenticatedDashboard = withAuth(Dashboard);
+// const LayoutAuthenticatedDashboard = withLayout(AuthenticatedDashboard);
 
-export default LayoutAuthenticatedDashboard;
+// export default LayoutAuthenticatedDashboard;
 // export default withLayout(withAuth(Dashboard));
+export default Dashboard

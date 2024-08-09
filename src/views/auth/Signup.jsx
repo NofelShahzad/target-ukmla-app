@@ -112,8 +112,6 @@ function Signup() {
         setIsVerified(true);
         setRespData(data);
         
-        
-
       }
       if (error) {
         console.log("register-error::", error);
