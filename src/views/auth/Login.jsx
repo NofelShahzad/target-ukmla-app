@@ -59,11 +59,10 @@ function Login() {
     const handleSubmit = async(e) => {
         try {
             e.preventDefault();
-            console.log("Submit!");
             
-            setIsVerified(true);
             const {data , error} = await loginUser(loginData);
             if (data) {
+                setIsVerified(true);
                 console.log("data::",data)
                 setRespData(data);
             }

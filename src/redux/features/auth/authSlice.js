@@ -17,6 +17,8 @@ const authSlice = createSlice({
       },
       logoutUser: (state) => {
         state.user = null;
+        state.accessToken = null;
+        state.profile_image_base_path = null;
       },
     },
   })
