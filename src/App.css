@@ -324,15 +324,25 @@ button {
 
 /* Login Page Start */
 .err-msg{
+  position: relative;
   font-size: 14px;
   text-align: end;
-  margin-top: 5px;
+  padding-top: 10px;
   font-weight: 500;
   color: var(--err-text-color);
   padding-right: 15px;
 }
 .err-msg p {
   margin: 0;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.text-danger{
+  color: var(--err-text-color)!important;
+}
+input.input-error{
+  border-color: var(--err-text-color)!important;
 }
 .btn-continue{
   background: var(--btn-primary-bgrimary-bg) ;

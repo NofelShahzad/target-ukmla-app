@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import notCheckedIcon from '../../assets/icons/not-checked-icon.svg'
 import successCheckedIcon from '../../assets/icons/success-tick-icon.svg'
 import wrongCrossIcon from '../../assets/icons/wrong-cross-icon.svg'
@@ -31,6 +31,11 @@ function Signup() {
     hasLetter: false,
     hasNumber: false
   });
+  const [emailErr, setEmailErr] = useState(false);
+    const [emailErrMsg, setEmailErrMsg] = useState("");
+    const emailRef = useRef(null);
+    const emailMsgRef = useRef(null);
+
   
   const [respData,setRespData] = useState(null);
 
@@ -39,8 +44,12 @@ function Signup() {
   const [registerUser] = useRegisterUserMutation();
 
   const handleChangeInput = (e) => {
-
-    setSignupData({ ...signupData, [e.target.name]: e.target.value })
+    const {name,value} = e.target;
+    setSignupData({ ...signupData, [name]: value })
+    if (name==="email") {
+      setEmailErrMsg("");
+      setEmailErr(false);
+    }
   }
   const handleChangeCheck = (e) => {
     // console.log()
@@ -108,9 +117,19 @@ function Signup() {
       const { data, error } = await registerUser(body);
 
       if (data) {
-        setIsSubmitting(false);
-        setIsVerified(true);
-        setRespData(data);
+        // console.log("data::",data)
+        if (data?.response!=="error") {
+          setIsSubmitting(false);
+          setIsVerified(true);
+          setRespData(data);
+        }
+        if (data?.response==="error") {
+          if (data?.message?.email) {
+            setEmailErr(true);
+            setEmailErrMsg(data?.message?.email[0]);
+            
+          }
+        }
         
       }
       if (error) {
@@ -155,7 +174,10 @@ function Signup() {
               <div className="col-12">
                 <div className="field-wrapper">
                   <label className="form-label" htmlFor="email">Email</label>
-                  <input type="email" required className={`form-control ${signupData?.email.trim() ? 'not-empty' : ''}`} defaultValue={signupData?.email} onChange={(e) => handleChangeInput(e)} name='email' id='email' placeholder="Enter email address" />
+                  <input type="email" ref={emailRef} required className={`form-control ${signupData?.email.trim() ? 'not-empty' : ''} ${emailErr?' input-error':''}`} defaultValue={signupData?.email} onChange={(e) => handleChangeInput(e)} name='email' id='email' placeholder="Enter email address" />
+                  <div className="err-msg">
+                    <p className={`m-0 text-danger`} ref={emailMsgRef}>{emailErrMsg}</p>
+                  </div>
                 </div>
 
               </div>

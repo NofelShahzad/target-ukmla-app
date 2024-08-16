@@ -15,11 +15,12 @@ function Login() {
     const [isVerified, setIsVerified] = useState(false);
     const [submitDisable, setSubmitDisable] = useState(true);
     const [pswdErr, setPswdErr] = useState(false);
-    const [emailErr, setEmailErr] = useState(false);
     const [submitted, setSubmitted] = useState(true);
+    const [emailErr, setEmailErr] = useState(false);
+    const [emailErrMsg, setEmailErrMsg] = useState("");
     const emailRef = useRef(null);
-    const passwordRef = useRef(null);
     const emailMsgRef = useRef(null);
+    const passwordRef = useRef(null);
     const passwordMsgRef = useRef(null);
 
     const [respData,setRespData] = useState(null);
@@ -35,7 +36,12 @@ function Login() {
     })
 
     const handleChangeInput = (e) => {
-        setLoginData({ ...loginData, [e.target.name]: e.target.value })
+        const {name, value} = e.target
+        setLoginData({ ...loginData, [name]: value });
+        if (name==='email') {
+            setEmailErrMsg("");
+            setEmailErr(false)
+        }
     }
 
     useEffect(() => {
@@ -62,9 +68,14 @@ function Login() {
             
             const {data , error} = await loginUser(loginData);
             if (data) {
-                setIsVerified(true);
-                console.log("data::",data)
-                setRespData(data);
+                if (data?.response!=="error") {
+                    setIsVerified(true);
+                    console.log("data::",data)
+                    setRespData(data);
+                }
+                if (data?.response==="error") {
+                    setEmailErrMsg("Your email is incorrect!");
+                }
             }
             if (error) {
                 console.log("error::",error);
@@ -97,7 +108,7 @@ function Login() {
                                         <label className="form-label" htmlFor="email">Email</label>
                                         <input type="email" ref={emailRef} required className={`form-control ${loginData?.email.trim() ? 'not-empty' : ''}`} defaultValue={loginData?.email} onChange={(e) => handleChangeInput(e)} name='email' id='email' placeholder="Enter email address" />
                                         <div className="err-msg">
-                                            <p className={`opacity-0`} ref={emailMsgRef}>Your email is incorrect!</p>
+                                            <p className={`m-0 text-danger`} ref={emailMsgRef}>{emailErrMsg}</p>
                                         </div>
                                     </div>
                                 </div>
