@@ -13,11 +13,7 @@
     align-items: center;
     font-size: 16px;
 }
-.question-index-btn-wrapper button.active-index-btn{
-    background-color: var(--active-color);
-    border-color: var(--active-color);
-    color: var(--text-light);
-}
+
 .question-index-btn-wrapper button.wrong-index-btn{
     background-color: var(--wrong-question-btn-bg)!important;
     border-color: var(--wrong-question-btn-bg)!important;
@@ -31,4 +27,10 @@
 .question-index-btn-wrapper button.removed-index-btn{
     background-color: var(--removed-question-btn-bg)!important;
     border-color: var(--removed-question-btn-bg)!important;
+}
+
+.question-index-btn-wrapper button.active-index-btn{
+    background-color: var(--active-color)!important;
+    border-color: var(--active-color)!important;
+    color: var(--text-light)!important;
 }

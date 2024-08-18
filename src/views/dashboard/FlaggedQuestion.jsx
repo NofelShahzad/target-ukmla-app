@@ -22,7 +22,7 @@ function FlaggedQuestion() {
 
     useEffect(() => {
         if (data) {
-            console.log("data::",data)
+            // console.log("data::",data)
             if (data?.status) {
                 setAllFlaggedQuestions(data?.questions)
             }
@@ -40,7 +40,7 @@ function FlaggedQuestion() {
             setFlagModal(false);
             const {data, error} = await markFlag({question_id: actionID,type:'remove'});
             if (data) {
-                console.log("data::",data);
+                // console.log("data::",data);
             }
             if (error) {
                 console.log("error::",error);

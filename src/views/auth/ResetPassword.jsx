@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAddNewPasswordMutation, useForgetPasswordRequestMutation, useForgetPasswordVerifyPinMutation } from "../../redux/features/auth/authApi";
 import CreateNewPassword from "./CreateNewPassword";
 import { useNavigate } from "react-router-dom";
+import ButtonLoader from "../../components/loaders/ButtonLoader";
 
 function ResetPassword({title}) {
     const navigate = useNavigate();
@@ -39,11 +40,12 @@ function ResetPassword({title}) {
         try {
             e.preventDefault(); 
             setIsSubmitting(true);
-            console.log("submitting...");
+            // console.log("submitting...");
             if (!verifyOtp) {
+                // setIsSubmitting(true);
                 const {data, error} = await forgetPasswordRequest({email});
                 if (data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data?.status) {
                         // setIsVerified(true);
                         setVerifyOtp(true);
@@ -66,14 +68,14 @@ function ResetPassword({title}) {
             if (verifyOtp) {
                 const { data, error} = await forgetPasswordVerifyPin({email,pin:otp});
                 if (data) {
-                    console.log("data::",data);
+                    // console.log("data::",data);
                     if (data.status) {
-                        console.log("")
+                        // console.log("")
                         setIsSubmitting(false);
                         setIsVerified(true)
                     }
                     if (!data.status) {
-                        console.log("")
+                        // console.log("")
                         if (data.message) {
                             setOtpErrMsg(data.message);
                             setOtpErr(true);
@@ -149,7 +151,9 @@ function ResetPassword({title}) {
                         <div className='p-0 form-action-buttons-wrapper'>
                             <div className="col-12 py-4">
                                 <div className="form-action-buttons-inner-wrapper">
-                                    <button type='submit' disabled={submitDisable || isSubmitting}>Send email</button>
+                                    <button type='submit' disabled={submitDisable || isSubmitting}>
+                                        {isSubmitting? <ButtonLoader/>:'Send email'} 
+                                    </button>
                                 </div>
                             </div>
                         </div>

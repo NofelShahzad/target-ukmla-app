@@ -12,7 +12,7 @@ import ReactPortal from "../../../components/portal/ReactPortal";
 import closeBtn from '../../../assets/icons/dashboard/modal-close.svg';
 import LabValuesInfo from '../../../components/modals/LabValuesInfo'
 import { useGetAllQuestionsOfCatQuery, useLazyGetSingleQuestionQuery, useMarkFlagMutation, useQuestionAnswerMutation } from "../../../redux/features/questionnaire/questionnaireApiSlice";
-
+import ButtonLoader from '../../../components/loaders/ButtonLoader';
 
 // const questionNumbers = Array.from({ length: 95 }, (_, i) => i + 1);
 function Questionnaire() {
@@ -29,6 +29,9 @@ function Questionnaire() {
     // const [questionTitle,setQuestionTitle] = useState("");
     // const [questionCatDesc,setQuestionCatDesc] = useState("");
     const [apiCall,setApiCall] = useState(true);
+    const [isSubmitting,setIsSubmitting] = useState(false);
+    const [isGettingNext,setIsGettingNext] = useState(false);
+    const [isGettingPrevious,setIsGettingPrevious] = useState(false);
 
     const {data, error} = useGetAllQuestionsOfCatQuery(questionnaire_Id);
     const [questionAnswer] = useQuestionAnswerMutation();
@@ -45,6 +48,8 @@ function Questionnaire() {
                         setSingleQuestionDetails(data?.question);
                         setSelectedValue('');
                         setSelected(false);
+                        setIsGettingPrevious(false);
+                        setIsGettingNext(false)
                         setFlagMarked(data?.question?.is_flagged_count===1?true:false);
                         if (data?.question?.answer) {
                             setSelectedValue(data?.question?.answer?.option_id)
@@ -135,6 +140,7 @@ function Questionnaire() {
         try {
             e.preventDefault();
             setApiCall(true);
+            setIsSubmitting(true);
             const body = {
                 question_id: singleQuestionDetails?.id,
                 option_id: selectedValue,
@@ -153,9 +159,11 @@ function Questionnaire() {
                         }
               }  
               setApiCall(false);
+              setIsSubmitting(false);
             }
             if (error) {
                 console.log("error:",error);
+                setIsSubmitting(false);
             }
             
         } catch (err) {
@@ -169,6 +177,7 @@ function Questionnaire() {
     }
 
     const handleNextQuestion = () => {
+        setIsGettingNext(true);
         const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
         if (currentIndex < questionsCount.length - 1) {
             setActiveQuestionIndex(questionsCount[currentIndex + 1].slug);
@@ -176,6 +185,7 @@ function Questionnaire() {
     };
 
     const handlePreviousQuestion = () => {
+        setIsGettingPrevious(true);
         const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
         if (currentIndex > 0) {
             setActiveQuestionIndex(questionsCount[currentIndex - 1].slug);
@@ -213,19 +223,21 @@ function Questionnaire() {
                                             <div className="questionnaire-form-actions-btn-wrapper">
                                                 {!singleQuestionDetails?.answer && 
                                                     <div className="col-12 py-1">
-                                                        <button type="submit" className="btn btn-primary" disabled={!selected || apiCall}>Submit Answer</button>
+                                                        <button type="submit" className="btn btn-primary" disabled={!selected || apiCall || isSubmitting}>
+                                                            {isSubmitting? <ButtonLoader/>:'Submit Answer'}
+                                                        </button>
                                                     </div>
                                                 }
                                                 <div className="col-6 pe-1 pt-3">
                                                     <button type="button" className="btn btn-secondary" onClick={handlePreviousQuestion}
                                                         disabled={currentIndex === 0 || apiCall}>
-                                                            Previous Question
+                                                            {isGettingPrevious? <ButtonLoader/>:'Previous Question'}
                                                     </button>
                                                 </div>
                                                 <div className="col-6 ps-1 pt-3">
                                                     <button type="button" className="btn btn-primary" onClick={handleNextQuestion}
                                                         disabled={currentIndex === questionsCount.length - 1 || apiCall}>
-                                                            Next Question
+                                                            {isGettingNext? <ButtonLoader/>:'Next Question'}
                                                     </button>
                                                 </div>
                                             </div>

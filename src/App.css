@@ -38,6 +38,7 @@
   --wrong-question-btn-bg: #ea0000;
   --correct-question-btn-bg: #00B221;
   --removed-question-btn-bg: #555555;
+  --btn-loader: #007aff;
 }
 
 * {

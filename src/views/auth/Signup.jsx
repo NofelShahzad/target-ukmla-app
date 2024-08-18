@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 import { useRegisterUserMutation } from '../../redux/features/auth/authApi'
 import { useDispatch } from 'react-redux'
 import { setAuth } from '../../redux/features/auth/authSlice'
+import ButtonLoader from '../../components/loaders/ButtonLoader'
 
 function Signup() {
 
@@ -97,6 +98,7 @@ function Signup() {
 
   const handleSubmit = async (e) => {
     try {
+      setIsSubmitting(true);
       e.preventDefault();
       // console.log("submitted::>")
       // setIsSubmitting(true);
@@ -119,8 +121,8 @@ function Signup() {
       if (data) {
         // console.log("data::",data)
         if (data?.status) {
-          setIsSubmitting(false);
           setIsVerified(true);
+          // setIsSubmitting(false);
           setRespData(data);
         }
         if (!data?.status) {
@@ -130,9 +132,10 @@ function Signup() {
             
           }
         }
-        
+        setIsSubmitting(false);
       }
       if (error) {
+        setIsSubmitting(false);
         console.log("register-error::", error);
       }
 
@@ -237,7 +240,8 @@ function Signup() {
             <div className='form-action-buttons-wrapper'>
               <div className="col-7">
                 <div className="form-action-buttons-inner-wrapper">
-                  <button type='submit' disabled={submitDisable || isSubmitting}>Creat{isSubmitting ? 'ing' : 'e'} account</button>
+                  <button type='submit' disabled={submitDisable || isSubmitting}>
+                    {isSubmitting? <ButtonLoader/>:'Create acoount'}</button>
                   <Link to='/login' className="btn">Already have an account</Link>
 
                 </div>

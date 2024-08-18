@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAuth } from "../../redux/features/auth/authSlice";
 import { useLoginUserMutation, useRegisterUserMutation } from "../../redux/features/auth/authApi";
+import ButtonLoader from "../../components/loaders/ButtonLoader";
 
 
 function Login() {
@@ -70,10 +71,10 @@ function Login() {
     const handleSubmit = async(e) => {
         try {
             e.preventDefault();
-            
+            setIsSubmitting(true)
             const {data , error} = await loginUser(loginData);
             if (data) {
-                console.log("data::",data)
+                // console.log("data::",data)
                 if (data?.status) {
                     setIsVerified(true);
                     setRespData(data);
@@ -87,9 +88,15 @@ function Login() {
                         setPwdErrMsg(" Your password is incorrect!");
                         setPswdErr(true);
                     }
+                    if (data?.message && !Array.isArray(data?.message)) {
+                        setPwdErrMsg(data?.message);
+                        setPswdErr(true);
+                    }
                 }
+                setIsSubmitting(false);
             }
             if (error) {
+                setIsSubmitting(false);
                 console.log("error::",error);
             }
 
@@ -142,7 +149,9 @@ function Login() {
                                 <div className="col-12">
                                     <div className="forgot-password-container"><Link to='/reset-password'> Forgot Password?</Link></div>
                                     <div className="form-action-buttons-inner-wrapper">
-                                        <button type='submit' disabled={submitDisable || isSubmitting}>Sign in</button>
+                                        <button type='submit' disabled={submitDisable || isSubmitting}>
+                                            {isSubmitting? <ButtonLoader/>:'Sign in'}    
+                                        </button>
                                         <Link to='/signup' className="btn">Register for new account</Link>
 
                                     </div>
