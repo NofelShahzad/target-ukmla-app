@@ -1,11 +1,12 @@
 // import React from 'react'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FlaggedQuestionCard from "../../components/flaggedQuestionCard/FlaggedQuestionCard";
 import withAuth from "../../components/withAuth/withAuth";
 import withLayout from "../../components/withAuth/withLayout";
 import ReactPortal from "../../components/portal/ReactPortal";
 import UnflagQuestion from "../../components/modals/UnflagQuestion";
+import { useGetAlMarkedQuestionsQuery, useMarkFlagMutation } from "../../redux/features/questionnaire/questionnaireApiSlice";
 
 const mockContent='A 33 year old man presents with outward gaze and ptosis of his right eye. He also complains of seeing double. Which is the SINGLE most likely nerve to be affected?';
 // const guidContent ='Radial Nerve (C5 - T1) damages are frequently asked. The radial nerve can be damaged anywhere in its ourse.';
@@ -13,13 +14,45 @@ function FlaggedQuestion() {
     const [flagModal, setFlagModal] = useState(false);
     const [tab, setTab] = useState('question');
 
-    const handleFlagModal = () => {
+    const [allFlaggedQuestions,setAllFlaggedQuestions] = useState([]);
+    const [actionID,setActionID] = useState(null);
+
+    const {data, error} = useGetAlMarkedQuestionsQuery();
+    const [markFlag] = useMarkFlagMutation();
+
+    useEffect(() => {
+        if (data) {
+            console.log("data::",data)
+            if (data?.status) {
+                setAllFlaggedQuestions(data?.questions)
+            }
+        }
+    }, [data, error])
+
+
+    const handleFlagModal = (id) => {
         setFlagModal(prev => !prev);
+        setActionID(id);
+    }
+
+    const handleUnmarkFlag = async()=>{
+        try {
+            setFlagModal(false);
+            const {data, error} = await markFlag({question_id: actionID,type:'remove'});
+            if (data) {
+                console.log("data::",data);
+            }
+            if (error) {
+                console.log("error::",error);
+            }
+        } catch (err) {
+            console.log("err::",err)
+        }
     }
 
     return (
         <>
-            <div className="container-fluid all-flagged-page">
+            <div className="container-fluid all-flagged-page pb-4">
                 <div className='page-title-container'>
                     <h2 className="title">Flagged {tab}</h2>
                     <p>Text explaining what these are.</p>
@@ -40,14 +73,20 @@ function FlaggedQuestion() {
                     <div className="flagged-inner-wrapper">
                         {tab === 'question' &&
                             <>
+                                {
+                                    allFlaggedQuestions.map(item => {
+                                        return (
+                                            <FlaggedQuestionCard key={item?.id} flaggedQuestion={item} handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
+                                        )
+                                    })
+                                }
+                                {/* <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
-                                <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
-                                <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
-                                <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
+                                <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/> */}
 
                             </>
 
@@ -55,13 +94,13 @@ function FlaggedQuestion() {
                         {tab === 'mock' &&
                             <>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
+                                {/* <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
-                                <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
-                                <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
+                                <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/> */}
 
                             </>
 
@@ -85,7 +124,7 @@ function FlaggedQuestion() {
                 {flagModal &&
 
                     <ReactPortal wrapperId="external_modal_container">
-                        <UnflagQuestion closeModal={handleFlagModal} type={tab} />
+                        <UnflagQuestion closeModal={handleFlagModal} type={tab} handleUnmarkFlag={handleUnmarkFlag}/>
                     </ReactPortal>
 
                 }

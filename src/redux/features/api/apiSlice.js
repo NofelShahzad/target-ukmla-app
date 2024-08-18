@@ -7,8 +7,8 @@ const baseQuery = fetchBaseQuery({
     // credentials: true,
     // mode: 'no-cors',
     prepareHeaders: (headers, { getState }) => {
-      const stateToken = getState().auth.token;
-  
+      const stateToken = getState().auth.accessToken;
+      // console.log("stateToken::",stateToken)
       if (stateToken) {
         headers.set("Authorization", `Bearer ${stateToken || ""}`);
         
@@ -33,6 +33,7 @@ const baseQuery = fetchBaseQuery({
   const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: baseQueryWithSessionCheck,
+    keepUnusedDataFor: 5,
     endpoints: () => ({}),
   });
   

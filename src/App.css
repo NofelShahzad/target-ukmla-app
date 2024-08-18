@@ -450,6 +450,7 @@ input.input-error{
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
+  padding-bottom: 20px;
 }
 
 
@@ -464,6 +465,17 @@ input.input-error{
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid #D8D8D8;
+}
+.single-question-card .single-question-header .img-container{
+  height: 55px;
+  width: 55px;
+}
+.single-question-card .single-question-header .img-container img{
+
+    max-height: 100%;
+    width: auto;
+    max-width: 100%;
+
 }
 .single-question-card .single-question-header h2{
   font-size: 16px;
@@ -498,6 +510,8 @@ input.input-error{
 .question-status-info .question-status{
   width: 85%;
   height: 6px;
+  border-radius: 10px;
+  background-color: #f8f8f8;
 }
 .question-status-info .question-status .question-inner-status{
   height: 100%;
@@ -518,6 +532,7 @@ input.input-error{
 }
 .question-status-info .question-numbers{
   width: 15%;
+  padding-left: 5px;
 }
 
 /* LANDING END */
@@ -992,7 +1007,35 @@ input.input-error{
 .questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option .submitted-status-wrapper .submitted-status-inner-wrapper{
   height: 100%;
 }
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option.checked.wrong.disable {
+    border: 1px solid var(--wrong-color);
+}
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option.checked.disable {
+  background-color: #fff;
+  color: #000;
+}
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option.checked.wrong.disable .submitted-status-wrapper .submitted-status-inner-wrapper{
+  background-color: var(--wrong-color);
+}
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option.checked.correct.disable {
+  border: 1px solid var(--correct-color);
+}
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option.checked.correct.disable .submitted-status-wrapper .submitted-status-inner-wrapper{
+  background-color: var(--correct-color);
+}
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option.disable{
+  border: 1px solid #DEDEDE;
+}
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option.disable .submitted-status-wrapper .submitted-status-inner-wrapper{
+  background-color:#DEDEDE;
+}
 
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option.wrong.actual-correct.disable {
+  border: 1px solid var(--correct-color);
+}
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option.wrong.actual-correct.disable .submitted-status-wrapper .submitted-status-inner-wrapper{
+  background-color:#5DEF78;
+}
 
 .questionnaire-wrapper .questionnaire-inner-wrapper .notes-container{
   padding: 20px;
@@ -1004,7 +1047,7 @@ input.input-error{
 .questionnaire-wrapper .questionnaire-inner-wrapper .question-index-comments-wrapper .question-index-comments-inner-wrapper{
   background: var(--light-gray-bg);
   border-radius: 8px;
-  padding: 20px;
+  padding: 20px 25px;
 }
 
 .questionnaire-wrapper .questionnaire-inner-wrapper .question-index-comments-wrapper .question-index-comments-inner-wrapper .question-index-container{

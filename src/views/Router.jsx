@@ -1,14 +1,14 @@
 // Router.js
 // import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 // import Root from '../root/Root';
 import Signup from './auth/Signup';
 import Login from './auth/Login';
 // import ResetPassword from './auth/ResetPassword';
-// import CreateNewPassword from './auth/CreateNewPassword';
+import CreateNewPassword from './auth/CreateNewPassword';
 import ProtectedRoute from './auth/ProtectedRoute';
 import Dashboard from './dashboard/Dashboard';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import AuthenticatedLayout from '../layout/AuthenticatedLayout';
 // import BigMock from './frontSite/BigMock';
 import UnauthenticatedLayout from '../layout/UnauthenticatedLayout';
@@ -22,9 +22,58 @@ import FlaggedQuestion from './dashboard/FlaggedQuestion';
 import FlaggedGuides from './dashboard/FlaggedGuides';
 import Questionnaire from './dashboard/questionnaire/Questionnaire';
 import AuthenticatedLayout from '../layout/AuthenticatedLayout';
+import ResetPassword from './auth/ResetPassword';
+import { useEffect, useState } from 'react';
+import { setAuth } from '../redux/features/auth/authSlice';
+import { useGetLoggedInUserQuery } from '../redux/features/auth/authApi';
 
 const RouterWrapper = () => {
     const isUserAuthenticated = useSelector(state => !!state.auth.user);
+
+    const { data, isLoading, error } = useGetLoggedInUserQuery();
+
+  const [getuserisLoading, setGetuserisLoading] = useState(true);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+
+  useEffect(() => {
+    try {
+      // setGetuserisLoading(isLoading);
+      if (data) {
+        // console.log("data::",data);
+        if (data?.status) {
+            // console.log(data)
+          dispatch(setAuth(data))
+        }
+        // dispatch(setCredentials({...data,access_token: auth?.accessToken}));
+        setTimeout(() => {
+          setGetuserisLoading(false);
+        }, 3000);
+      }
+      if (error) {
+        // console.log("error::",error);
+        // console.log(error);
+        // dispatch(logOut());
+          setTimeout(() => {
+            setGetuserisLoading(true);
+          }, 4000);
+          
+        
+        // dispatch(logOut());
+        navigate(`/login`);
+        // navigate(`/${app_routes.signin}`);
+      }
+      
+    } catch (err) {
+      console.log("err",err)
+    }
+    finally{
+      setTimeout(() => {
+        setGetuserisLoading(false);
+      }, 4000);
+    }
+  }, [data,error,isLoading]);
 
     return (
         <Routes>
@@ -50,9 +99,9 @@ const RouterWrapper = () => {
                 <Route path="big-mock" element={<BigMock/>} />
                 <Route path="webinar" element={<div className="container"> <h3 className="my-4 text-center">Webinars</h3></div>} />
                 <Route path="contact-us" element={<div className="container"> <h3 className="my-4 text-center">Webinars</h3></div>} />
-
-                <Route path="reset-password" element={<ResetPassword />} />
-                <Route path="new-password" element={<CreateNewPassword />} /> */}
+ */}
+                <Route path="reset-password" element={<ResetPassword title={"Forget Password"}/>} />
+                <Route path="new-password" element={<CreateNewPassword />} />
             </Route>
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route
@@ -77,7 +126,8 @@ const RouterWrapper = () => {
                 </Route>
                 <Route path="webinars" element={<Webinars/>} />
                 <Route path="contactus" element={<ContactUs/>} />
-                <Route path=':questionnaire_Id/:question_Id' element={<Questionnaire/>}/>
+                {/* <Route path=':questionnaire_Id/:question_Id' element={<Questionnaire/>}/> */}
+                <Route path=':questionnaire_Id' element={<Questionnaire/>}/>
 
 
             </Route>

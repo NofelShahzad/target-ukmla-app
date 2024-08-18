@@ -118,12 +118,12 @@ function Signup() {
 
       if (data) {
         // console.log("data::",data)
-        if (data?.response!=="error") {
+        if (data?.status) {
           setIsSubmitting(false);
           setIsVerified(true);
           setRespData(data);
         }
-        if (data?.response==="error") {
+        if (!data?.status) {
           if (data?.message?.email) {
             setEmailErr(true);
             setEmailErrMsg(data?.message?.email[0]);

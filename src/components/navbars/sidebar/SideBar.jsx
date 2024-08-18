@@ -1,5 +1,5 @@
 import './SideBar.css'
-// import logo from '../../../assets/icons/dashboard/TARGET-UKMLA.svg'
+import logo from '../../../assets/logo/logo-svg-svg.png'
 // import homeIcon from '../../../assets/icons/home-icon.svg';
 // import questionBankIcon from '../../../assets/icons/question-bank.svg';
 // import bigMockIcon from '../../../assets/icons/big-mock.svg';
@@ -15,10 +15,12 @@ function SideBar({toogleSideBar, sidebar}) {
     return (
         <aside className={`sidebar-wrapper ${sidebar ? ' close' : ''}`}>
             <div className='logo-wrapper' onClick={toogleSideBar}>
-                <NavLink to='/'>
-                    {/* <img src={logo} width={'100%'} /> */}
-                    <span>Target</span> Ukmla
-                </NavLink>
+                {/* <NavLink to='/'> */}
+                <div className='logo-container'>
+                    <img src={logo} width={'100%'} />
+                </div>
+                    <span className='text-danger pe-1'>Target</span> <span className='text-primary'> Ukmla</span>
+                {/* </NavLink> */}
             </div>
             <div className='sidebar-body'>
                 <ul className='sidebar-menu'>
@@ -33,7 +35,7 @@ function SideBar({toogleSideBar, sidebar}) {
                                 </g>
                             </svg>
 
-                            Home
+                           <span> Home</span>
                         </NavLink>
                     </li>
                     <li>
@@ -50,7 +52,7 @@ function SideBar({toogleSideBar, sidebar}) {
                                 </g>
                             </svg>
 
-                            Question Bank
+                           <span> Question Bank</span>
                         </NavLink>
                     </li>
                     <li>
@@ -64,7 +66,7 @@ function SideBar({toogleSideBar, sidebar}) {
                                 </g>
                             </svg>
 
-                            Big Mock
+                            <span> Big Mock</span>
                         </NavLink>
                     </li>
                     <li>
@@ -78,7 +80,7 @@ function SideBar({toogleSideBar, sidebar}) {
                                 </g>
                             </svg>
 
-                            Webinars
+                           <span>  Webinars</span>
                         </NavLink>
                     </li>
                     <li>
@@ -92,7 +94,7 @@ function SideBar({toogleSideBar, sidebar}) {
                                 </g>
                             </svg>
 
-                            Contact Us
+                           <span> Contact Us</span>
                         </NavLink>
                     </li>
                 </ul>

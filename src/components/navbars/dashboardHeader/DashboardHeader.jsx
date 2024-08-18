@@ -10,15 +10,36 @@ import { Link } from 'react-router-dom';
 import NotificationList from './NotificationList';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../../../redux/features/auth/authSlice';
+import { useLogoutMutation } from '../../../redux/features/auth/authApi';
 function DashboardHeader() {
   const dispatch = useDispatch();
   const [navSearch, setNavSearch] = useState("");
+  const [logout] =  useLogoutMutation();
   const handleChange = (e) => {
     setNavSearch(e.target.value);
   }
 
-  const handleLogout = () => {
-    dispatch(logoutUser())
+  const handleLogout = async() => {
+    dispatch(logoutUser());
+    try {
+      const { data, error} = await logout();
+      if (data) {
+        // console.log("data::",data);
+        if (data?.status) {
+          // console.log(data?.status)
+          
+        }
+        if (!data?.status) {
+          // console.log(data?.status)
+        }
+      }
+      if (error) {
+        console.log("error::",error);
+      }
+      
+    } catch (err) {
+      console.log("err::",err);
+    }
   }
 
 
@@ -100,7 +121,7 @@ function DashboardHeader() {
 
                       </div>
                       <ul className='dropdown-submenu'>
-                        <li><Link to='/'> Flagged Questions</Link></li>
+                        <li><Link to='/questions-bank/flagged-questions'> Flagged Questions</Link></li>
                       </ul>
                     </div>
                   </li>

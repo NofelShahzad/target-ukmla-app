@@ -2,7 +2,7 @@
 import unflagQuestionIcon from '../../assets/icons/dashboard/unflag-question-icon.svg'
 
 // eslint-disable-next-line react/prop-types
-function UnflagQuestion({closeModal,type}) {
+function UnflagQuestion({closeModal,type,handleUnmarkFlag}) {
   return (
     <>
         <section className='unflag-modal-wrapper'>
@@ -13,7 +13,7 @@ function UnflagQuestion({closeModal,type}) {
             <div className='unflag-modal-body'>
                 <p>Are you sure want to unflag <br/> the {type}?</p>
                 <div className='action-buttons'>
-                        <button type='button' className='btn btn-primary'>Yes, Unflag</button>
+                        <button type='button' className='btn btn-primary' onClick={handleUnmarkFlag}>Yes, Unflag</button>
                         <button type='button' className='btn btn-secondary' onClick={()=>closeModal()}>No, Keep Flag</button>
                 </div>
             </div>

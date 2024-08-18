@@ -7,8 +7,9 @@ import successCheckedIcon from '../../assets/icons/success-tick-icon.svg';
 import wrongCrossIcon from '../../assets/icons/wrong-cross-icon.svg';
 import verifiedIcon from '../../assets/icons/verified-icon.svg';
 import { Link } from 'react-router-dom';
+// import { useAddNewPasswordMutation } from '../../redux/features/auth/authApi';
 
-function CreateNewPassword() {
+function CreateNewPassword({handleUpdatePassword}) {
     const [showPassword, setShowPassword] = useState(false);
     const [isVerified, setIsVerified] = useState(false);
     const [submitDisable, setSubmitDisable] = useState(true);
@@ -19,6 +20,10 @@ function CreateNewPassword() {
         hasLetter: false,
         hasNumber: false
     });
+
+    // const [addNewPassword] = useAddNewPasswordMutation();
+
+
     useEffect(() => {
         const hasLength = password.length >= 8;
         const hasLetter = /[a-zA-Z]/.test(password);
@@ -33,12 +38,19 @@ function CreateNewPassword() {
             setSubmitDisable(false)
         }else setSubmitDisable(true)
 
-    }, [password])
+    }, [password]);
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        setIsVerified(true);
-        setIsSubmitting(true);
+        try {
+            e.preventDefault();
+            setIsVerified(true);
+            setIsSubmitting(true);
+            handleUpdatePassword(password);
+            // const {data, error } = await addNewPassword();
+            
+        } catch (err) {
+            console.log("err::",err);
+        }
     }
 
 

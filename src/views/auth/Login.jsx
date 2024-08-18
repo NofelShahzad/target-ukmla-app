@@ -18,6 +18,7 @@ function Login() {
     const [submitted, setSubmitted] = useState(true);
     const [emailErr, setEmailErr] = useState(false);
     const [emailErrMsg, setEmailErrMsg] = useState("");
+    const [pwdErrMsg, setPwdErrMsg] = useState("");
     const emailRef = useRef(null);
     const emailMsgRef = useRef(null);
     const passwordRef = useRef(null);
@@ -40,7 +41,11 @@ function Login() {
         setLoginData({ ...loginData, [name]: value });
         if (name==='email') {
             setEmailErrMsg("");
-            setEmailErr(false)
+            setEmailErr(false);
+        }
+        if (name==='password') {
+            setPwdErrMsg("");
+            setPswdErr(false);
         }
     }
 
@@ -68,13 +73,20 @@ function Login() {
             
             const {data , error} = await loginUser(loginData);
             if (data) {
-                if (data?.response!=="error") {
+                console.log("data::",data)
+                if (data?.status) {
                     setIsVerified(true);
-                    console.log("data::",data)
                     setRespData(data);
                 }
-                if (data?.response==="error") {
-                    setEmailErrMsg("Your email is incorrect!");
+                if (!data?.status) {
+                    if (data?.message?.email) {
+                        setEmailErrMsg("Your email is incorrect!");
+                        setEmailErr(true);
+                    }
+                    if (data?.message?.password) {
+                        setPwdErrMsg(" Your password is incorrect!");
+                        setPswdErr(true);
+                    }
                 }
             }
             if (error) {
@@ -106,7 +118,7 @@ function Login() {
                                 <div className="col-12">
                                     <div className="field-wrapper">
                                         <label className="form-label" htmlFor="email">Email</label>
-                                        <input type="email" ref={emailRef} required className={`form-control ${loginData?.email.trim() ? 'not-empty' : ''}`} defaultValue={loginData?.email} onChange={(e) => handleChangeInput(e)} name='email' id='email' placeholder="Enter email address" />
+                                        <input type="email" ref={emailRef} required className={`form-control ${loginData?.email.trim() ? 'not-empty' : ''} ${emailErr?' input-error':''}`} defaultValue={loginData?.email} onChange={(e) => handleChangeInput(e)} name='email' id='email' placeholder="Enter email address" />
                                         <div className="err-msg">
                                             <p className={`m-0 text-danger`} ref={emailMsgRef}>{emailErrMsg}</p>
                                         </div>
@@ -116,11 +128,11 @@ function Login() {
                                     <div className="field-wrapper ">
                                         <label className="form-label" htmlFor="password">Password</label>
                                         <div className="password-wrapper">
-                                            <input type={!showPassword ? 'password' : 'text'} ref={passwordRef} required className={`form-control ${loginData?.password.trim() ? 'not-empty' : ''}`} defaultValue={loginData?.password} onChange={(e) => handleChangeInput(e)} name='password' id='password' placeholder="Enter password" />
+                                            <input type={!showPassword ? 'password' : 'text'} ref={passwordRef} required className={`form-control ${loginData?.password.trim() ? 'not-empty' : ''} ${pswdErr?' input-error':''}`} defaultValue={loginData?.password} onChange={(e) => handleChangeInput(e)} name='password' id='password' placeholder="Enter password" />
                                             <img src={showPassword ? eyeHide : loginData?.password.trim() ? eyeBoldIcon : eyeIcon} onClick={() => setShowPassword(prevShow => !prevShow)} alt="eye" />
                                         </div>
                                         <div className="err-msg">
-                                            <p className={`opacity-0`} ref={passwordMsgRef}>Your password is incorrect!</p>
+                                            <p className={`m-0 text-danger`} ref={passwordMsgRef}>{pwdErrMsg}</p>
                                         </div>
                                     </div>
                                 </div>
