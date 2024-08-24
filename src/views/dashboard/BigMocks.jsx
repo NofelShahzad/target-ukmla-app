@@ -4,17 +4,17 @@ import BigmocksCard from "../../components/bigmocksCard/BigmocksCard";
 import withAuth from "../../components/withAuth/withAuth";
 import withLayout from "../../components/withAuth/withLayout";
 import april from '../../assets/images/dashboard/bigmocks/april.webp'
-import october from '../../assets/images/dashboard/bigmocks/october.webp'
-import january from '../../assets/images/dashboard/bigmocks/january.webp'
-import july from '../../assets/images/dashboard/bigmocks/july.webp'
-import may from '../../assets/images/dashboard/bigmocks/may.webp'
+// import october from '../../assets/images/dashboard/bigmocks/october.webp'
+// import january from '../../assets/images/dashboard/bigmocks/january.webp'
+// import july from '../../assets/images/dashboard/bigmocks/july.webp'
+// import may from '../../assets/images/dashboard/bigmocks/may.webp'
 import { useEffect, useState } from "react";
 import ReactPortal from "../../components/portal/ReactPortal";
 
 import closeBtn from '../../assets/icons/dashboard/modal-close.svg'
 import BigmockInfo from "../../components/modals/BigmockInfo";
 import { useGetAllMocksQuery } from "../../redux/features/mocks/MocksApiSlice";
-import { errorMessage } from "../../components/toastMessages/ToastifyMsg";
+import { errorMessage, successMessage } from "../../components/toastMessages/ToastifyMsg";
 
 
 
@@ -25,6 +25,8 @@ function BigMocks() {
     const [allMocks,setAllMocks] = useState([]);
     const {data,error} = useGetAllMocksQuery();
     const [isLoading,setIsLoading] = useState(true);
+
+    const [buyMockPlan] = useBuyMockPlanMutation();
 
     useEffect(() => {
       if (data) {
@@ -42,8 +44,6 @@ function BigMocks() {
     }, [data, error])
 
 
-
-
     const handleBigmockModal = (detail) => {
         setDetailModal(prev => !prev);
         setbigMockDetail(detail);
@@ -52,9 +52,21 @@ function BigMocks() {
         setDetailModal(false);
     }
 
-    const handlePurchaseBigMock = async()=>{
+    const handlePurchaseBigMock = async(id)=>{
       try {
-        
+        const body = {
+          mock_id: id,
+          days : 30
+        } 
+        const {data, error} = await buyMockPlan(body);
+        if (data) {
+          if (data?.status) {
+            successMessage(data?.message);
+          }
+          if (!data?.status) {
+            errorMessage(data?.message);
+          }
+        }
       } catch (err) {
         console.log("err::",err);
       }
