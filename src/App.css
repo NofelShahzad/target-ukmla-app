@@ -58,6 +58,9 @@ body{
   color: var(--text-dark);
   /* background-color: #FBFFF4; */
 }
+.text-primary{
+  color: var(--text-primary);
+}
 input,textarea{
   transition: all 0.15s ease-in-out;
 }
@@ -365,7 +368,13 @@ input.input-error{
   border: 1px solid var(--err-text-color);
   color: var(--err-text-color);
 }
-
+.emtpy-mg-container {
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
 
 /* -------------------DASHBOARD CSS START------------------*/
 /* LANDING START */
@@ -507,9 +516,12 @@ input.input-error{
   width: 100%;
   display: flex;
   align-items: center;
+  padding: 5px 0;
+  font-weight: 500;
+  font-size: 12px;
 }
 .question-status-info .question-status{
-  width: 85%;
+  width: 80%;
   height: 6px;
   border-radius: 10px;
   background-color: #f8f8f8;
@@ -532,8 +544,8 @@ input.input-error{
   background-color: var(--removed-color);
 }
 .question-status-info .question-numbers{
-  width: 15%;
-  padding-left: 5px;
+  width: 20%;
+  padding-left: 10px;
 }
 
 /* LANDING END */

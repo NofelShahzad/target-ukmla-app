@@ -13,6 +13,7 @@ import closeBtn from '../../../assets/icons/dashboard/modal-close.svg';
 import LabValuesInfo from '../../../components/modals/LabValuesInfo'
 import { useGetAllQuestionsOfCatQuery, useLazyGetSingleQuestionQuery, useMarkFlagMutation, useQuestionAnswerMutation } from "../../../redux/features/questionnaire/questionnaireApiSlice";
 import ButtonLoader from '../../../components/loaders/ButtonLoader';
+import { errorMessage, successMessage } from "../../../components/toastMessages/ToastifyMsg";
 
 // const questionNumbers = Array.from({ length: 95 }, (_, i) => i + 1);
 function Questionnaire() {
@@ -117,9 +118,11 @@ function Questionnaire() {
                 if (data?.status) {
                     setFlagMarked(!flagMarked);
                     // console.log(data?.status)
+                    successMessage(data?.message);
                 }
                 if (!data?.status) {
                     console.log(data?.status)
+                    errorMessage(data?.message)
                 }
                 setApiCall(false);
             }

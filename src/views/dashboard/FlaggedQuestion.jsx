@@ -7,6 +7,7 @@ import withLayout from "../../components/withAuth/withLayout";
 import ReactPortal from "../../components/portal/ReactPortal";
 import UnflagQuestion from "../../components/modals/UnflagQuestion";
 import { useGetAlMarkedQuestionsQuery, useMarkFlagMutation } from "../../redux/features/questionnaire/questionnaireApiSlice";
+import { errorMessage, successMessage } from "../../components/toastMessages/ToastifyMsg";
 
 const mockContent='A 33 year old man presents with outward gaze and ptosis of his right eye. He also complains of seeing double. Which is the SINGLE most likely nerve to be affected?';
 // const guidContent ='Radial Nerve (C5 - T1) damages are frequently asked. The radial nerve can be damaged anywhere in its ourse.';
@@ -41,6 +42,13 @@ function FlaggedQuestion() {
             const {data, error} = await markFlag({question_id: actionID,type:'remove'});
             if (data) {
                 // console.log("data::",data);
+                if (data?.status) {
+                    successMessage(data?.message);
+                }
+                if (!data?.status) {
+                    errorMessage(data?.message);
+                }
+
             }
             if (error) {
                 console.log("error::",error);
@@ -79,6 +87,9 @@ function FlaggedQuestion() {
                                             <FlaggedQuestionCard key={item?.id} flaggedQuestion={item} handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
                                         )
                                     })
+                                }
+                                {
+                                    !allFlaggedQuestions.length && <div className="emtpy-mg-container"><p>No flagged questions found.</p></div>
                                 }
                                 {/* <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
                                 <FlaggedQuestionCard handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>

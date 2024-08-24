@@ -1,3 +1,7 @@
 :root{
 
 }
+
+.Toastify__close-button{
+    width: unset!important;
+}

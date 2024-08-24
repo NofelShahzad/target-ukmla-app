@@ -14,6 +14,7 @@
 .bigmocks-card .bigmocks-inner-card img{
     width: 176px;
     height: 177px;
+    border-radius: 8px;
 }
 
 .bigmocks-card .bigmocks-inner-card .bigmocks-card-body {
@@ -25,6 +26,7 @@
     /* min-height: 277px; */
     min-height: 150px;
     padding-left: 15px;
+    width: 100%;
 }
 
 .bigmocks-card .bigmocks-inner-card .bigmocks-card-body .card-title-wrapper .title {

@@ -8,21 +8,56 @@ import october from '../../assets/images/dashboard/bigmocks/october.webp'
 import january from '../../assets/images/dashboard/bigmocks/january.webp'
 import july from '../../assets/images/dashboard/bigmocks/july.webp'
 import may from '../../assets/images/dashboard/bigmocks/may.webp'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactPortal from "../../components/portal/ReactPortal";
 
 import closeBtn from '../../assets/icons/dashboard/modal-close.svg'
 import BigmockInfo from "../../components/modals/BigmockInfo";
+import { useGetAllMocksQuery } from "../../redux/features/mocks/MocksApiSlice";
+import { errorMessage } from "../../components/toastMessages/ToastifyMsg";
 
 
 
 // import
 function BigMocks() {
   const [detailModal, setDetailModal] = useState(false);
-    // const [bigmockDetail,setbigmockDetail] = useState();
+    const [bigMockDetail,setbigMockDetail] = useState();
+    const [allMocks,setAllMocks] = useState([]);
+    const {data,error} = useGetAllMocksQuery();
+    const [isLoading,setIsLoading] = useState(true);
 
-    const handleBigmockModal = () => {
+    useEffect(() => {
+      if (data) {
+        // console.log("data::",data)
+        if (data?.status) {
+          setAllMocks(data?.mocks);
+          setIsLoading(false);
+        }
+      }
+      if (error) {
+        if (error?.data?.message) {
+           errorMessage(error?.data?.message);
+        }
+      }
+    }, [data, error])
+
+
+
+
+    const handleBigmockModal = (detail) => {
         setDetailModal(prev => !prev);
+        setbigMockDetail(detail);
+    }
+    const handleCloseBigmockModal = () => {
+        setDetailModal(false);
+    }
+
+    const handlePurchaseBigMock = async()=>{
+      try {
+        
+      } catch (err) {
+        console.log("err::",err);
+      }
     }
   return (
     <>
@@ -32,10 +67,22 @@ function BigMocks() {
           <p>Text explaining what these are.</p>
         </div>
 
-        <section className="bigmocks-wrapper">
+        <section className="bigmocks-wrapper pb-3">
           <div className="bigmocks-inner-wrapper">
-              <BigmocksCard imgSrc={april} handleBigmockModal={handleBigmockModal}/>
-              <BigmocksCard imgSrc={october} handleBigmockModal={handleBigmockModal}/>
+              {allMocks.length >0 &&
+                  allMocks.map(mock=>
+                    <BigmocksCard key={mock?.slug} imgSrc={april} mockDetail={mock} handleBigmockModal={handleBigmockModal}/>
+                  )
+              }
+              {
+                !allMocks.length >0 && !isLoading &&
+                <div className="no-mocks-found">
+                  <p>No big mocks found.</p>
+                </div>
+              }
+              
+
+              {/* <BigmocksCard imgSrc={october} handleBigmockModal={handleBigmockModal}/>
               <BigmocksCard imgSrc={january} handleBigmockModal={handleBigmockModal}/>
               <BigmocksCard imgSrc={july} handleBigmockModal={handleBigmockModal}/>
               <BigmocksCard imgSrc={may} handleBigmockModal={handleBigmockModal}/>
@@ -43,14 +90,14 @@ function BigMocks() {
               <BigmocksCard imgSrc={october} handleBigmockModal={handleBigmockModal}/>
               <BigmocksCard imgSrc={january} handleBigmockModal={handleBigmockModal}/>
               <BigmocksCard imgSrc={july} handleBigmockModal={handleBigmockModal}/>
-              <BigmocksCard imgSrc={may} handleBigmockModal={handleBigmockModal}/>
+              <BigmocksCard imgSrc={may} handleBigmockModal={handleBigmockModal}/> */}
 
           </div>
         </section>
       </div>
       {detailModal &&
         <ReactPortal wrapperId="external_modal_container">
-          <BigmockInfo closeBtn={closeBtn} closeModal={handleBigmockModal}/>
+          <BigmockInfo closeBtn={closeBtn} bigMockDetail={bigMockDetail} closeModal={handleCloseBigmockModal}/>
         </ReactPortal>
 
       }
