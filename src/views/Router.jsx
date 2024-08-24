@@ -26,6 +26,7 @@ import ResetPassword from './auth/ResetPassword';
 import { useEffect, useState } from 'react';
 import { setAuth } from '../redux/features/auth/authSlice';
 import { useGetLoggedInUserQuery } from '../redux/features/auth/authApi';
+import PracticeMocks from './dashboard/practice-mocks/PracticeMocks';
 
 const RouterWrapper = () => {
     const isUserAuthenticated = useSelector(state => !!state.auth.user);
@@ -124,10 +125,15 @@ const RouterWrapper = () => {
                     <Route index element={<BigMocks/>}/>
                     <Route path='detail/:id' element={<BigmockDetail/>}/>
                 </Route>
+                <Route path='practice-mocks'>
+                  <Route index element={<PracticeMocks/>}/>
+                </Route>
                 <Route path="webinars" element={<Webinars/>} />
                 <Route path="contactus" element={<ContactUs/>} />
                 {/* <Route path=':questionnaire_Id/:question_Id' element={<Questionnaire/>}/> */}
-                <Route path=':questionnaire_Id' element={<Questionnaire/>}/>
+                <Route path=':questionnaire_Id' element={<Questionnaire isMock={false}/>}/>
+                <Route path='/mock/:mock_id' element={<Questionnaire isMock={true}/>}/>
+                <Route path='/practice/:practice_id' element={<Questionnaire isMock={true}/>}/>
 
 
             </Route>

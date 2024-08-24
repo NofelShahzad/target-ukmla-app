@@ -1,7 +1,7 @@
 import apiSlice from "../api/apiSlice";
 
 export const questionnaireApiSlice = apiSlice.injectEndpoints({
-    tagType: ["update_question_count","all_marked_questions"],
+    tagType: ["all_marked_questions"],
     endpoints: (builder) => ({
         allQuestionsCategories: builder.query({
             query: () => `/categories`
@@ -19,15 +19,15 @@ export const questionnaireApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body
             }),
-            invalidatesTags: ["update_question_count"],
+            invalidatesTags: ["update_question_count","mock_all_quesion_count"],
         }),
         markFlag: builder.mutation({
             query: (body) => ({
                 url: `questions/mark-as-flagged`,
                 method: 'POST',
                 body
-                }),
-                invalidatesTags: ["all_marked_questions"],
+            }),
+            invalidatesTags: ["all_marked_questions","update_question_count"],
         }),
         getAlMarkedQuestions: builder.query({
             query: () => `/questions/flagged`,

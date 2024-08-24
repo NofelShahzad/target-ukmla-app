@@ -12,6 +12,12 @@
     justify-content: center;
     align-items: center;
     font-size: 16px;
+    position: relative;
+}
+.question-index-btn-wrapper button .btn-flagged-question-container{
+    position: absolute;
+    top: -6px;
+    left: 3px;
 }
 
 .question-index-btn-wrapper button.wrong-index-btn{

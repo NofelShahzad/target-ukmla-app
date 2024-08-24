@@ -77,7 +77,7 @@ function DashboardHeader() {
                     </Link>
                   </li>
                   <li>
-                    <Link className="nav-link" to="/">
+                    <Link className="nav-link" to="/big-mocks">
                       <div className='dropmenu-item'><span>Big Mock </span> </div>
                     </Link>
                   </li>

@@ -11,9 +11,9 @@ import april from '../../assets/images/dashboard/bigmocks/april.webp'
 import { useEffect, useState } from "react";
 import ReactPortal from "../../components/portal/ReactPortal";
 
-import closeBtn from '../../assets/icons/dashboard/modal-close.svg'
+import closeBtn from '../../assets/icons/dashboard/modal-close.svg';
 import BigmockInfo from "../../components/modals/BigmockInfo";
-import { useGetAllMocksQuery } from "../../redux/features/mocks/MocksApiSlice";
+import { useBuyMockPlanMutation, useGetAllMocksQuery } from "../../redux/features/mocks/MocksApiSlice";
 import { errorMessage, successMessage } from "../../components/toastMessages/ToastifyMsg";
 
 
@@ -25,6 +25,13 @@ function BigMocks() {
     const [allMocks,setAllMocks] = useState([]);
     const {data,error} = useGetAllMocksQuery();
     const [isLoading,setIsLoading] = useState(true);
+    const [isPurchasing,setIsPurchasing] = useState({
+      id: null,
+      loading: false,
+    });
+
+    const [confirmPurchaseModal,setConfirmPurchaseModal] = useState(false);
+    const [purchaseId,setPurchaseId] = useState(null);
 
     const [buyMockPlan] = useBuyMockPlanMutation();
 
@@ -32,7 +39,9 @@ function BigMocks() {
       if (data) {
         // console.log("data::",data)
         if (data?.status) {
-          setAllMocks(data?.mocks);
+          const purchased=data?.purchased_mocks?.map(pur=>({...pur,purchase :true}))
+          const not_purchased=data?.mocks?.map(pur=>({...pur,purchase :false}))
+          setAllMocks([...purchased,...not_purchased]);
           setIsLoading(false);
         }
       }
@@ -52,10 +61,15 @@ function BigMocks() {
         setDetailModal(false);
     }
 
-    const handlePurchaseBigMock = async(id)=>{
+    const handlePurchaseBigMock = async()=>{
       try {
+        setIsPurchasing({
+          id:purchaseId?.id,
+          loading:true,
+        })
+        setConfirmPurchaseModal(false);
         const body = {
-          mock_id: id,
+          mock_id: purchaseId?.id,
           days : 30
         } 
         const {data, error} = await buyMockPlan(body);
@@ -66,10 +80,28 @@ function BigMocks() {
           if (!data?.status) {
             errorMessage(data?.message);
           }
+          setIsPurchasing({
+            id:null,
+            loading: false,
+          })
+        }
+        if (error) {
+          if (error?.data?.message) {
+              errorMessage(error?.data?.message);
+            }
+            setIsPurchasing({
+              id:null,
+              loading: false,
+            })
         }
       } catch (err) {
         console.log("err::",err);
       }
+    }
+
+    const handleConfirmPurchase = (purchaseMock)=>{
+      setConfirmPurchaseModal(true);
+      setPurchaseId(purchaseMock);
     }
   return (
     <>
@@ -83,26 +115,23 @@ function BigMocks() {
           <div className="bigmocks-inner-wrapper">
               {allMocks.length >0 &&
                   allMocks.map(mock=>
-                    <BigmocksCard key={mock?.slug} imgSrc={april} mockDetail={mock} handleBigmockModal={handleBigmockModal}/>
+                    <BigmocksCard key={mock?.slug} 
+                      mockDetail={mock} 
+                      handleBigmockModal={handleBigmockModal} 
+                      handlePurchaseBigMock={handlePurchaseBigMock} 
+                      isPurchasing={isPurchasing}
+                      type={"mock"}
+                      handleConfirmPurchase={handleConfirmPurchase}
+                      />
                   )
               }
               {
                 !allMocks.length >0 && !isLoading &&
-                <div className="no-mocks-found">
-                  <p>No big mocks found.</p>
+                <div className="emtpy-mg-container">
+                    <p>No big mocks found.</p>
                 </div>
               }
               
-
-              {/* <BigmocksCard imgSrc={october} handleBigmockModal={handleBigmockModal}/>
-              <BigmocksCard imgSrc={january} handleBigmockModal={handleBigmockModal}/>
-              <BigmocksCard imgSrc={july} handleBigmockModal={handleBigmockModal}/>
-              <BigmocksCard imgSrc={may} handleBigmockModal={handleBigmockModal}/>
-              <BigmocksCard imgSrc={april} handleBigmockModal={handleBigmockModal}/>
-              <BigmocksCard imgSrc={october} handleBigmockModal={handleBigmockModal}/>
-              <BigmocksCard imgSrc={january} handleBigmockModal={handleBigmockModal}/>
-              <BigmocksCard imgSrc={july} handleBigmockModal={handleBigmockModal}/>
-              <BigmocksCard imgSrc={may} handleBigmockModal={handleBigmockModal}/> */}
 
           </div>
         </section>
@@ -112,6 +141,27 @@ function BigMocks() {
           <BigmockInfo closeBtn={closeBtn} bigMockDetail={bigMockDetail} closeModal={handleCloseBigmockModal}/>
         </ReactPortal>
 
+      }
+  
+      {confirmPurchaseModal &&
+        <ReactPortal wrapperId="external_modal_container">
+        <section className='detail-modal'>
+          <div className='close-btn-container'>
+            <img src={closeBtn} alt='close'  onClick={()=>setConfirmPurchaseModal(false)}/>
+          </div>
+          <div className='title-wrapper'>
+            <h2 className='title'>{purchaseId?.name}</h2>
+            {/* <div className='date-time-wrapper'><span>18th May 2024 (9:00 AM to 11:00 AM UK time)</span></div> */}
+          </div>
+          <div className='description'>
+            <p className="text-balance">Are you sure you want to purchase <strong>{purchaseId?.name}</strong> mock exam <br/> for <strong>£{purchaseId?.price}</strong>?</p>
+          </div>
+          <div className="modal-footer-custom">
+            <button className="btn btn-primary mb-2" onClick={()=>handlePurchaseBigMock()}>Yes</button>
+            <button className="btn btn-secondary" onClick={()=>setConfirmPurchaseModal(false)}>No</button>
+          </div>
+        </section>
+        </ReactPortal>
       }
     </>
   )

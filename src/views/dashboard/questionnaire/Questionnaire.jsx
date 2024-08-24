@@ -14,10 +14,11 @@ import LabValuesInfo from '../../../components/modals/LabValuesInfo'
 import { useGetAllQuestionsOfCatQuery, useLazyGetSingleQuestionQuery, useMarkFlagMutation, useQuestionAnswerMutation } from "../../../redux/features/questionnaire/questionnaireApiSlice";
 import ButtonLoader from '../../../components/loaders/ButtonLoader';
 import { errorMessage, successMessage } from "../../../components/toastMessages/ToastifyMsg";
+import { useGetAllQuesionOfMockQuery } from "../../../redux/features/mocks/MocksApiSlice";
 
 // const questionNumbers = Array.from({ length: 95 }, (_, i) => i + 1);
-function Questionnaire() {
-    const { questionnaire_Id, question_Id } = useParams();
+function Questionnaire({isMock}) {
+    const { questionnaire_Id, question_Id, mock_id, practice_id } = useParams();
     const [selectedValue, setSelectedValue] = useState('');
     const [flagMarked,setFlagMarked] = useState(false);
     const [selected, setSelected] = useState(false);
@@ -27,16 +28,21 @@ function Questionnaire() {
     const [getSingleQuestion] = useLazyGetSingleQuestionQuery();
     const [singleQuestionDetails,setSingleQuestionDetails] = useState(null);
     const [questionCatTitle,setQuestionCatTitle] = useState("");
+    const [parentId,setParentId] = useState(null);
     // const [questionTitle,setQuestionTitle] = useState("");
     // const [questionCatDesc,setQuestionCatDesc] = useState("");
+    // console.log("mock_id::",mock_id)
     const [apiCall,setApiCall] = useState(true);
     const [isSubmitting,setIsSubmitting] = useState(false);
     const [isGettingNext,setIsGettingNext] = useState(false);
     const [isGettingPrevious,setIsGettingPrevious] = useState(false);
 
-    const {data, error} = useGetAllQuestionsOfCatQuery(questionnaire_Id);
+    const {data, error} = useGetAllQuestionsOfCatQuery(questionnaire_Id,{skip:isMock});
+    const {data:mockData, error:mockError} = useGetAllQuesionOfMockQuery(mock_id??practice_id ,{skip:!isMock});
     const [questionAnswer] = useQuestionAnswerMutation();
     const [markFlag] = useMarkFlagMutation();
+
+    const [removedQuestion,setRemovedQuestion] = useState(false);
     
     const handleGetSingleQuestion = async()=>{
         try {
@@ -49,18 +55,20 @@ function Questionnaire() {
                         setSingleQuestionDetails(data?.question);
                         setSelectedValue('');
                         setSelected(false);
-                        setIsGettingPrevious(false);
-                        setIsGettingNext(false)
+                        
                         setFlagMarked(data?.question?.is_flagged_count===1?true:false);
                         if (data?.question?.answer) {
                             setSelectedValue(data?.question?.answer?.option_id)
                         }
+                        setRemovedQuestion(false);
                     }
                     if (!data?.status) {
-                        console.log(data?.status)
-                        
+                        // console.log(data?.status)
+                        setRemovedQuestion(true);
                     }
                     setApiCall(false);
+                    setIsGettingPrevious(false);
+                    setIsGettingNext(false);
                 }
                 if (error) {
                     console.log("error::",error);
@@ -77,6 +85,7 @@ function Questionnaire() {
         if (data) {
             // console.log("data::",data);
             if (data?.status) {
+                setParentId(data?.category?.id);
                 setQuestionsCount(data?.questions)
                 setActiveQuestionIndex(activeQuestionIndex ? activeQuestionIndex:data?.questions[0]?.slug);
                 setQuestionCatTitle(data?.category?.name);
@@ -90,6 +99,26 @@ function Questionnaire() {
             console.log("error::",error)
         }
     }, [data,error])
+
+    useEffect(() => {
+        if (mockData) {
+            // console.log("mockData::",mockData);
+            if (mockData?.status) {
+                setParentId(mockData?.mock?.id)
+                setQuestionsCount(mockData?.questions)
+                setActiveQuestionIndex(activeQuestionIndex ? activeQuestionIndex:mockData?.questions[0]?.slug);
+                setQuestionCatTitle(mockData?.mock?.name);
+            }
+            if (!mockData?.status) {
+                console.log(mockData?.status)
+                errorMessage(mockData?.message);
+            }
+            setApiCall(false)
+        }
+        if (mockError) {
+            console.log("mockError::",mockError)
+        }
+    }, [mockData,mockError])
 
     useEffect(() => {
         handleGetSingleQuestion()
@@ -147,6 +176,8 @@ function Questionnaire() {
             const body = {
                 question_id: singleQuestionDetails?.id,
                 option_id: selectedValue,
+                parent_id: parentId,
+                type: questionnaire_Id?"category":mock_id?"big-mocks":"practice-mocks"
             }
 
             const {data,error} = await questionAnswer(body);
@@ -207,48 +238,65 @@ function Questionnaire() {
                             <div className="question-notes-wrapper">
                                 <div className="question-container">
                                     <form action="" onSubmit={handleSubmitAnswer}>
-                                        <div className="question-header">
-                                            <h2 className="questionnaire-title">
-                                                {questionCatTitle}
-                                                    {/* Anatomy <span>(AN 3331)</span> */}
-                                                </h2>
-                                            <div className="flag-action">
-                                                <button type="button" className={flagMarked?'flag-marked':''} onClick={handleFlagMark} disabled={apiCall}>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                                        <path id="flag" d="M10,2A2,2,0,0,0,8,0H0V16H1.333V8.667H6.667v.667a2,2,0,0,0,2,2H16V2.667H10ZM1.333,1.333H8A.667.667,0,0,1,8.667,2V7.333H1.333ZM14.667,4v6h-6A.667.667,0,0,1,8,9.333V8.667h2V4Z" />
-                                                    </svg>
-                                                    <span>{flagMarked?'Unmark':'Mark'} Flag</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div className="question-body">
-                                            <QuestionnaireQuestion selectedValue={selectedValue} handleChange={handleChange} questionDetails={singleQuestionDetails}/>
-                                            <div className="questionnaire-form-actions-btn-wrapper">
-                                                {!singleQuestionDetails?.answer && 
-                                                    <div className="col-12 py-1">
-                                                        <button type="submit" className="btn btn-primary" disabled={!selected || apiCall || isSubmitting}>
-                                                            {isSubmitting? <ButtonLoader/>:'Submit Answer'}
-                                                        </button>
+                                        
+                                       
+                                                <div className="question-header">
+                                                    {!removedQuestion &&
+                                                        <>
+                                                            <h2 className="questionnaire-title">
+                                                                {questionCatTitle}
+                                                                    {/* Anatomy <span>(AN 3331)</span> */}
+                                                                </h2>
+                                                            <div className="flag-action">
+                                                                <button type="button" className={flagMarked?'flag-marked':''} onClick={handleFlagMark} disabled={apiCall}>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                                                        <path id="flag" d="M10,2A2,2,0,0,0,8,0H0V16H1.333V8.667H6.667v.667a2,2,0,0,0,2,2H16V2.667H10ZM1.333,1.333H8A.667.667,0,0,1,8.667,2V7.333H1.333ZM14.667,4v6h-6A.667.667,0,0,1,8,9.333V8.667h2V4Z" />
+                                                                    </svg>
+                                                                    <span>{flagMarked?'Unmark':'Mark'} Flag</span>
+                                                                </button>
+                                                            </div>
+                                                        
+                                                        </>
+
+                                                    }
+                                                </div>
+                                           
+                                                <div className="question-body">
+                                                    {!removedQuestion &&
+                                                        <QuestionnaireQuestion selectedValue={selectedValue} handleChange={handleChange} questionDetails={singleQuestionDetails}/>
+                                                    }
+                                                    {removedQuestion && 
+                                                        <div className="removed-question">
+                                                            <p>This question has been removed.</p>
+                                                        </div>
+
+                                                    }
+                                                    <div className="questionnaire-form-actions-btn-wrapper">
+                                                        {!singleQuestionDetails?.answer && !removedQuestion &&
+                                                            <div className="col-12 py-1">
+                                                                <button type="submit" className="btn btn-primary" disabled={!selected || apiCall || isSubmitting}>
+                                                                    {isSubmitting? <ButtonLoader/>:'Submit Answer'}
+                                                                </button>
+                                                            </div>
+                                                        }
+                                                        <div className="col-6 pe-1 pt-3">
+                                                            <button type="button" className="btn btn-secondary" onClick={handlePreviousQuestion}
+                                                                disabled={currentIndex === 0 || apiCall}>
+                                                                    {isGettingPrevious? <ButtonLoader/>:'Previous Question'}
+                                                            </button>
+                                                        </div>
+                                                        <div className="col-6 ps-1 pt-3">
+                                                            <button type="button" className="btn btn-primary" onClick={handleNextQuestion}
+                                                                disabled={currentIndex === questionsCount.length - 1 || apiCall}>
+                                                                    {isGettingNext? <ButtonLoader/>:'Next Question'}
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                }
-                                                <div className="col-6 pe-1 pt-3">
-                                                    <button type="button" className="btn btn-secondary" onClick={handlePreviousQuestion}
-                                                        disabled={currentIndex === 0 || apiCall}>
-                                                            {isGettingPrevious? <ButtonLoader/>:'Previous Question'}
-                                                    </button>
                                                 </div>
-                                                <div className="col-6 ps-1 pt-3">
-                                                    <button type="button" className="btn btn-primary" onClick={handleNextQuestion}
-                                                        disabled={currentIndex === questionsCount.length - 1 || apiCall}>
-                                                            {isGettingNext? <ButtonLoader/>:'Next Question'}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </form>
 
                                 </div>
-                                {singleQuestionDetails?.description &&
+                                {singleQuestionDetails?.description && !removedQuestion &&
                                     <div className="notes-container">
                                         <div className="notes-inner-container">
                                             <div className="notes-description">
@@ -297,22 +345,25 @@ function Questionnaire() {
                                     <div className="col-12 py-4">
                                         <button type="button" className="btn btn-primary" onClick={()=>setLabValuesModal(true)}>Lab Values</button>
                                     </div>
-                                    <div className="question-comment-container">
-                                        <div className="question-comment-inner-container">
-                                            <QuestionAllComments />
+                                    {!removedQuestion &&
+                                        <div className="question-comment-container">
+                                            <div className="question-comment-inner-container">
+                                                <QuestionAllComments />
 
-                                            <div className="post-comment">
-                                                <form action="" onSubmit={handleSubmitComment}>
-                                                    <div className="col-12">
-                                                        <textarea name="" id=""rows="5" placeholder="Write a comment as Adam Bial"></textarea>
-                                                    </div>
-                                                    <div className="col-12 py-2">
-                                                        <button type="submit" className="btn btn-primary">Post Comment</button>
-                                                    </div>
-                                                </form>
+                                                <div className="post-comment">
+                                                    <form action="" onSubmit={handleSubmitComment}>
+                                                        <div className="col-12">
+                                                            <textarea name="" id=""rows="5" placeholder="Write a comment as Adam Bial"></textarea>
+                                                        </div>
+                                                        <div className="col-12 py-2">
+                                                            <button type="submit" className="btn btn-primary">Post Comment</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                        
+                                    }
                                 </div>
                             </div>
                         </div>

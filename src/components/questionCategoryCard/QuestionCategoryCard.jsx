@@ -31,10 +31,14 @@ function QuestionCategoryCard({  title,questionData }) {
                         <h2>{questionData?.name}</h2>
                     </div>
                     <div className="single-question-body">
-                        <QuestionCardStautsInfo type={'correct'} percentage={ (questionData?.correct_answers_count/questionData?.published_questions_count)*100} />
+                        {/* <QuestionCardStautsInfo type={'correct'} percentage={ (questionData?.correct_answers_count/questionData?.published_questions_count)*100} />
                         <QuestionCardStautsInfo type={'wrong'} percentage={(questionData?.wrong_answers_count/questionData?.published_questions_count)*100} />
-                        <QuestionCardStautsInfo type={'not-attempt'} percentage={questionData?.published_questions_count-(questionData?.correct_answers_count+questionData?.wrong_answers_count)} />
-                        <QuestionCardStautsInfo type={'removed-by-admin'} percentage={'0'} />
+                        <QuestionCardStautsInfo type={'not-attempt'} percentage={(((questionData?.published_questions_count-(questionData?.correct_answers_count+questionData?.wrong_answers_count)/questionData?.published_questions_count))/questionData?.published_questions_count)*100} />
+                        <QuestionCardStautsInfo type={'removed-by-admin'} percentage={'0'} /> */}
+                        <QuestionCardStautsInfo type={'correct'} percentage={(questionData?.correct_answers_count / questionData?.published_questions_count) * 100} />
+                        <QuestionCardStautsInfo type={'wrong'} percentage={(questionData?.wrong_answers_count / questionData?.published_questions_count) * 100} />
+                        <QuestionCardStautsInfo type={'not-attempt'} percentage={((questionData?.published_questions_count - (questionData?.correct_answers_count + questionData?.wrong_answers_count)) / questionData?.published_questions_count) * 100} />
+                        <QuestionCardStautsInfo type={'removed-by-admin'} percentage={0} />
 
                     </div>
                     <div className="single-question-footer">

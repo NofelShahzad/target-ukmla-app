@@ -853,6 +853,16 @@ input.input-error{
   border-radius: 8px;
   /* padding: 20px; */
   margin-bottom: 20px;
+
+}
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .removed-question{
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .removed-question{
+  font: normal normal normal 18px/27px Poppins;
+  color: var(--err-text-color);
 }
 .questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-header{
   display: flex;
@@ -960,6 +970,7 @@ input.input-error{
   /* display: none; */
   accent-color: #000;
   z-index: 9;
+  height: 20px;
 }
 .questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option input[type="radio"]:focus-visible{
   outline: none;

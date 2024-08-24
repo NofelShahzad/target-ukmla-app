@@ -3,13 +3,24 @@ import { useNavigate } from 'react-router-dom'
 import './BigmocksCard.css'
 import emptyImage from '../../assets/empty-images/no-image.png'
 import { VITE_REACT_APP_BASE_URL } from '../../config';
+import ButtonLoader from '../loaders/ButtonLoader';
+
+import { Markup } from 'react-render-markup'
 
 // eslint-disable-next-line react/prop-types
-function BigmocksCard({handleBigmockModal,mockDetail}) {
+function BigmocksCard({handleBigmockModal, mockDetail, isPurchasing,type,handleConfirmPurchase}) {
   const navigate = useNavigate();
 
+  // console.log("mockDetail::",mockDetail)
   const handleNavigate = () => {
-    navigate(`detail/3252`);
+    if (!mockDetail?.purchase) {
+      // handlePurchaseBigMock(mockDetail?.id)
+      handleConfirmPurchase(mockDetail)
+    }
+    if (mockDetail?.purchase) {
+      // navigate(`detail/3252`);
+      navigate(`/mock/${mockDetail?.slug}`);
+    }
   }
   
   return (
@@ -25,15 +36,23 @@ function BigmocksCard({handleBigmockModal,mockDetail}) {
                                   <h2 className="title">{mockDetail?.name} </h2>
                               </div>
                               <div className="description">
-                            <p>{mockDetail?.description} </p>
+                              <Markup markup={mockDetail?.description} />
+                            {/* <p>{mockDetail?.description} </p> */}
                               </div>
                               <div className="bigmocks-card-footer">
                                 <div className='col-6 pe-1'> 
                                   <button type='button' className='btn btn-detail' onClick={()=>handleBigmockModal(mockDetail)}>More Info</button>
                                 </div>
-                                <div className='col-6 ps-1'>
-                                  <button type='button' className='btn btn-primary' onClickCapture={()=>handleNavigate()}>Pruchase</button>
-                                </div>
+                                {type ==="mock" &&
+                                  <div className='col-6 ps-1'>
+                                    <button type='button' className='btn btn-primary' disabled={(isPurchasing?.id===mockDetail?.id && isPurchasing?.loading) || (mockDetail?.purchase && mockDetail?.published_questions_count <1 )} onClick={()=>handleNavigate()}>{isPurchasing?.id===mockDetail?.id && isPurchasing?.loading ?<ButtonLoader/>:mockDetail?.purchase? <>Questions<span className='fs-small'>({mockDetail?.published_questions_count})</span></> :'Pruchase'}</button>
+                                  </div>
+                                }
+                                {type === "practice" &&
+                                  <div className='col-6 ps-1'>
+                                    <button type='button' className='btn btn-primary' disabled={(mockDetail?.published_questions_count <1 )}  onClick={()=>navigate(`/practice/${mockDetail?.slug}`)}>Questions<span className='fs-small'>({mockDetail?.published_questions_count})</span></button>
+                                  </div>
+                                }
                               </div>
                           </div>
                       </div>

@@ -5,3 +5,10 @@
 .Toastify__close-button{
     width: unset!important;
 }
+.fs-small{
+    font-size: 12px;
+}
+.modal-footer-custom {
+    width: 50%;
+    margin-inline: auto;
+}
