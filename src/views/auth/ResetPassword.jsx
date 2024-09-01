@@ -4,6 +4,7 @@ import { useAddNewPasswordMutation, useForgetPasswordRequestMutation, useForgetP
 import CreateNewPassword from "./CreateNewPassword";
 import { useNavigate } from "react-router-dom";
 import ButtonLoader from "../../components/loaders/ButtonLoader";
+import { errorMessage } from "../../components/toastMessages/ToastifyMsg";
 
 function ResetPassword({title}) {
     const navigate = useNavigate();
@@ -42,6 +43,8 @@ function ResetPassword({title}) {
             setIsSubmitting(true);
             // console.log("submitting...");
             if (!verifyOtp) {
+                setEmailErr(false);
+                setEmailErrMsg("");
                 // setIsSubmitting(true);
                 const {data, error} = await forgetPasswordRequest({email});
                 if (data) {
@@ -52,20 +55,23 @@ function ResetPassword({title}) {
                         // setIsVerified(true)
                     }
                     if (!data?.status) {
-                        console.log(data?.status)
-                        if (data?.message?.email) {
-                            setEmailErrMsg(data?.message?.email[0]);
+                        // console.log(data?.status)
+                        if (data?.errors?.email) {
+                            setEmailErrMsg(data?.errors?.email[0]);
                             setEmailErr(true);
                         }
                     }
                 }
                 if (error) {
                     console.log(error);
+                    errorMessage(error?.data?.message);
                 }
                 setIsSubmitting(false);
                 
             }
             if (verifyOtp) {
+                setOtpErr(false);
+                setOtpErrMsg("");
                 const { data, error} = await forgetPasswordVerifyPin({email,pin:otp});
                 if (data) {
                     // console.log("data::",data);
@@ -141,7 +147,7 @@ function ResetPassword({title}) {
                             <div className="col-12">
                                 <div className="field-wrapper pb-3">
                                     <label className="form-label" htmlFor="otp">Otp</label>
-                                    <input type="text" ref={otpRef} required className={`form-control ${otp.trim() ? 'not-empty' : ''}`} defaultValue={otp} onChange={(e) => setOtp(e.target.value)} name='otp' id='otp' placeholder="Enter OTP" />
+                                    <input type="text" ref={otpRef} required className={`form-control ${otp.trim() ? 'not-empty' : ''} ${otpErr?' input-error':''}`} defaultValue={otp} onChange={(e) => setOtp(e.target.value)} name='otp' id='otp' placeholder="Enter OTP" />
                                     <div className="err-msg">
                                         <p className={`m-0 text-danger`} ref={otpMsgRef}>{otpErrMsg} </p>
                                     </div>

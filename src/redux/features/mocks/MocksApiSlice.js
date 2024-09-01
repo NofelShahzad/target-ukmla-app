@@ -21,6 +21,13 @@ export const mocksApiSlice = apiSlice.injectEndpoints({
                 body
             }),
             invalidatesTags: ["big_mocks"],
+        }),
+        resetMock: builder.mutation({
+            query: (body) => ({
+                url: `mocks/reset-mock`,
+                method: 'POST',
+                body
+            }),
         })
     })
 })
@@ -30,5 +37,6 @@ export const {
     useGetAllPracticeMocksQuery,
     useGetAllQuesionOfMockQuery,
     useLazyGetAllQuesionOfMockQuery,
-    useBuyMockPlanMutation
+    useBuyMockPlanMutation,
+    useResetMockMutation,
 }= mocksApiSlice;

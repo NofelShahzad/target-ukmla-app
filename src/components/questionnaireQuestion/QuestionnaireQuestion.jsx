@@ -19,11 +19,7 @@ function QuestionnaireQuestion({ selectedValue, handleChange, questionDetails })
                         {
                             questionDetails?.options?.map((opt, index) => (
                                 <label key={opt?.id}
-                                    className={`radio-option ${selectedValue === opt?.id ? 'checked' : ''} 
-                                                    ${questionDetails?.answer?.correct === 'yes' ? 'correct' : ''} 
-                                                    ${questionDetails?.answer?.correct === 'no' ? 'wrong' : ''} 
-                                                    ${questionDetails?.answer?.correct === 'no' && opt?.correct === 'yes' ? 'actual-correct' : ''} 
-                                                    ${questionDetails?.answer ? 'disable' : ''}`}
+                                    className={`radio-option ${selectedValue === opt?.id ? 'checked' : ''} ${questionDetails?.answer?.correct === 'yes' ? 'correct' : ''} ${questionDetails?.answer?.correct === 'no' ? 'wrong' : ''} ${questionDetails?.answer?.correct === 'no' && opt?.correct === 'yes' ? 'actual-correct' : ''} ${questionDetails?.answer ? 'disable' : ''} ${selectedValue !== opt?.id?'user-submitted':''}`}
                                     htmlFor={opt?.id}>
 
                                     <input type="radio"
@@ -33,7 +29,7 @@ function QuestionnaireQuestion({ selectedValue, handleChange, questionDetails })
                                         value={opt?.id}
                                         checked={selectedValue === opt?.id}
                                         onChange={(e) => handleChange(e)}
-                                        disabled={!!questionDetails?.answer} />
+                                        disabled={!!questionDetails?.answer && selectedValue !== opt?.id} />
 
                                     <div className="question-label-result col-11">
                                         <p>{alphabets[index]}. {opt?.description}</p>

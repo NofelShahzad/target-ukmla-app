@@ -126,9 +126,9 @@ function Signup() {
           setRespData(data);
         }
         if (!data?.status) {
-          if (data?.message?.email) {
+          if (data?.errors?.email) {
             setEmailErr(true);
-            setEmailErrMsg(data?.message?.email[0]);
+            setEmailErrMsg(data?.errors?.email[0]);
             
           }
         }

@@ -39,6 +39,7 @@ export const questionnaireApiSlice = apiSlice.injectEndpoints({
 export const {
     useAllQuestionsCategoriesQuery,
     useGetAllQuestionsOfCatQuery,
+    useGetSingleQuestionQuery,
     useLazyGetSingleQuestionQuery,
     useQuestionAnswerMutation,
     useMarkFlagMutation,

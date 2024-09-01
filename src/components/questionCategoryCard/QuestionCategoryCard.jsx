@@ -42,7 +42,7 @@ function QuestionCategoryCard({  title,questionData }) {
 
                     </div>
                     <div className="single-question-footer">
-                        <Link to={`/${questionData?.slug}`}>View Details</Link>
+                        <Link to={`/${questionData?.slug}/${questionData?.question?.slug}`}>View Details</Link>
                     </div>
 
                 </div>

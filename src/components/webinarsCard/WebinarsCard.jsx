@@ -2,7 +2,7 @@
 // import { Link } from 'react-router-dom'
 import './WebinarsCard.css'
 // eslint-disable-next-line react/prop-types
-function WebinarsCard({imgSrc,handleWebinarModal}) {
+function WebinarsCard({imgSrc,handleWebinarModal, handleConfirmPurchase}) {
   return (
     <>
         <div className='col-sm-12 col-xl-6 col-12'>
@@ -44,7 +44,7 @@ function WebinarsCard({imgSrc,handleWebinarModal}) {
                                             <button type='button' className='btn btn-detail' onClick={()=>handleWebinarModal()}>More Info</button>
                                         </div>
                                         <div className='col-6 ps-1'>
-                                            <button type='button' className='btn btn-primary'>Register</button>
+                                            <button type='button' className='btn btn-primary' onClick={()=>handleConfirmPurchase("wata")}>Register</button>
                                         </div>
                                     </div>
                             </div>

@@ -71,7 +71,11 @@ function Login() {
     const handleSubmit = async(e) => {
         try {
             e.preventDefault();
-            setIsSubmitting(true)
+            setIsSubmitting(true);
+            setEmailErr(false);
+            setEmailErrMsg("");
+            setPswdErr(false);
+            setPwdErrMsg("");
             const {data , error} = await loginUser(loginData);
             if (data) {
                 // console.log("data::",data)
@@ -80,11 +84,11 @@ function Login() {
                     setRespData(data);
                 }
                 if (!data?.status) {
-                    if (data?.message?.email) {
+                    if (data?.errors?.email) {
                         setEmailErrMsg("Your email is incorrect!");
                         setEmailErr(true);
                     }
-                    if (data?.message?.password) {
+                    if (data?.errors?.password) {
                         setPwdErrMsg(" Your password is incorrect!");
                         setPswdErr(true);
                     }

@@ -19,7 +19,7 @@ function BigmocksCard({handleBigmockModal, mockDetail, isPurchasing,type,handleC
     }
     if (mockDetail?.purchase) {
       // navigate(`detail/3252`);
-      navigate(`/mock/${mockDetail?.slug}`);
+      navigate(`/mock/${mockDetail?.slug}/${mockDetail?.question?.slug}`);
     }
   }
   
@@ -50,7 +50,7 @@ function BigmocksCard({handleBigmockModal, mockDetail, isPurchasing,type,handleC
                                 }
                                 {type === "practice" &&
                                   <div className='col-6 ps-1'>
-                                    <button type='button' className='btn btn-primary' disabled={(mockDetail?.published_questions_count <1 )}  onClick={()=>navigate(`/practice/${mockDetail?.slug}`)}>Questions<span className='fs-small'>({mockDetail?.published_questions_count})</span></button>
+                                    <button type='button' className='btn btn-primary' disabled={(mockDetail?.published_questions_count <1 )}  onClick={()=>navigate(`/practice/${mockDetail?.slug}/${mockDetail?.question?.slug}`)}>Questions<span className='fs-small'>({mockDetail?.published_questions_count})</span></button>
                                   </div>
                                 }
                               </div>

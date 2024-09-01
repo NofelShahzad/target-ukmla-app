@@ -1,6 +1,6 @@
 // import React from 'react'
 
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 // import withAuth from "../../../components/withAuth/withAuth";
 // import withLayout from "../../../components/withAuth/withLayout";
 import { Markup } from 'react-render-markup'
@@ -11,14 +11,15 @@ import QuestionAllComments from "../../../components/questionnaireQuestion/Quest
 import ReactPortal from "../../../components/portal/ReactPortal";
 import closeBtn from '../../../assets/icons/dashboard/modal-close.svg';
 import LabValuesInfo from '../../../components/modals/LabValuesInfo'
-import { useGetAllQuestionsOfCatQuery, useLazyGetSingleQuestionQuery, useMarkFlagMutation, useQuestionAnswerMutation } from "../../../redux/features/questionnaire/questionnaireApiSlice";
+import { useGetAllQuestionsOfCatQuery, useGetSingleQuestionQuery, useLazyGetSingleQuestionQuery, useMarkFlagMutation, useQuestionAnswerMutation } from "../../../redux/features/questionnaire/questionnaireApiSlice";
 import ButtonLoader from '../../../components/loaders/ButtonLoader';
 import { errorMessage, successMessage } from "../../../components/toastMessages/ToastifyMsg";
-import { useGetAllQuesionOfMockQuery } from "../../../redux/features/mocks/MocksApiSlice";
+import { useGetAllQuesionOfMockQuery, useResetMockMutation } from "../../../redux/features/mocks/MocksApiSlice";
 
 // const questionNumbers = Array.from({ length: 95 }, (_, i) => i + 1);
-function Questionnaire({isMock}) {
+function Questionnaire({isMock,type}) {
     const { questionnaire_Id, question_Id, mock_id, practice_id } = useParams();
+    const navigate = useNavigate();
     const [selectedValue, setSelectedValue] = useState('');
     const [flagMarked,setFlagMarked] = useState(false);
     const [selected, setSelected] = useState(false);
@@ -37,13 +38,45 @@ function Questionnaire({isMock}) {
     const [isGettingNext,setIsGettingNext] = useState(false);
     const [isGettingPrevious,setIsGettingPrevious] = useState(false);
 
+    const {data: getSingleQuestionData, error: getSingleQuestionError } = useGetSingleQuestionQuery(question_Id)
     const {data, error} = useGetAllQuestionsOfCatQuery(questionnaire_Id,{skip:isMock});
     const {data:mockData, error:mockError} = useGetAllQuesionOfMockQuery(mock_id??practice_id ,{skip:!isMock});
     const [questionAnswer] = useQuestionAnswerMutation();
     const [markFlag] = useMarkFlagMutation();
+    const [resetMock] = useResetMockMutation();
 
     const [removedQuestion,setRemovedQuestion] = useState(false);
     
+    useEffect(() => {
+        if (getSingleQuestionData) {
+            if (getSingleQuestionData.status) {
+                // console.log("getSingleQuestionData::",getSingleQuestionData);
+                setSingleQuestionDetails(getSingleQuestionData?.question);
+                setSelectedValue('');
+                setSelected(false);
+                setActiveQuestionIndex(question_Id);
+                setFlagMarked(getSingleQuestionData?.question?.is_flagged_count === 1 ? true : false);
+                if (getSingleQuestionData?.question?.answer) {
+                    setSelectedValue(getSingleQuestionData?.question?.answer?.option_id)
+                }
+                setRemovedQuestion(false);
+            }
+            if (!getSingleQuestionData.status) {
+                setRemovedQuestion(true);
+            }
+            setApiCall(false);
+            setIsGettingPrevious(false);
+            setIsGettingNext(false);
+        }
+        if (getSingleQuestionError) {
+            // console.log("getSingleQuestionError::", getSingleQuestionError);
+            errorMessage(error?.data?.message);
+            setApiCall(false);
+            setIsGettingPrevious(false);
+            setIsGettingNext(false);
+        }
+    }, [getSingleQuestionData, getSingleQuestionError])
+
     const handleGetSingleQuestion = async()=>{
         try {
             if (activeQuestionIndex) {
@@ -92,8 +125,9 @@ function Questionnaire({isMock}) {
             }
             if (!data?.status) {
                 console.log(data?.status)
+                errorMessage(data?.message)
             }
-            setApiCall(false)
+            setApiCall(false);
         }
         if (error) {
             console.log("error::",error)
@@ -110,19 +144,25 @@ function Questionnaire({isMock}) {
                 setQuestionCatTitle(mockData?.mock?.name);
             }
             if (!mockData?.status) {
-                console.log(mockData?.status)
+                // console.log(mockData?.status)
                 errorMessage(mockData?.message);
             }
-            setApiCall(false)
+            setApiCall(false);
+            setIsGettingPrevious(false);
+            setIsGettingNext(false);
         }
         if (mockError) {
-            console.log("mockError::",mockError)
+            console.log("mockError::",mockError);
+            errorMessage(error?.data?.message);
+            setApiCall(false);
+            setIsGettingPrevious(false);
+            setIsGettingNext(false);
         }
     }, [mockData,mockError])
 
-    useEffect(() => {
-        handleGetSingleQuestion()
-    }, [activeQuestionIndex])
+    // useEffect(() => {
+    //     handleGetSingleQuestion()
+    // }, [activeQuestionIndex])
 
 
     const handleCloseLabValuesModal = useCallback(() => {
@@ -165,8 +205,13 @@ function Questionnaire({isMock}) {
     
     const handleChangeQuestion = (questionNumber)=>{
         setActiveQuestionIndex(questionNumber);
-        // handleGetSingleQuestion(questionNumber)
+        navigate(getNewUrl(questionNumber));
     }
+    const getNewUrl = (questionNumber) => {
+        if (type === "category") return `/${questionnaire_Id}/${questionNumber}`;
+        if (type === "mock") return `/mock/${mock_id}/${questionNumber}`;
+        if (type === "practice") return `/practice/${practice_id}/${questionNumber}`;
+    };
 
     const handleSubmitAnswer = async (e) => {
         try {
@@ -210,21 +255,65 @@ function Questionnaire({isMock}) {
         console.log("Comment Submitted")
     }
 
+    // const handleNextQuestion = () => {
+    //     setIsGettingNext(true);
+    //     const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
+    //     if (currentIndex < questionsCount.length - 1) {
+    //         setActiveQuestionIndex(questionsCount[currentIndex + 1].slug);
+    //     }
+    // };
+
+    // const handlePreviousQuestion = () => {
+    //     setIsGettingPrevious(true);
+    //     const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
+    //     if (currentIndex > 0) {
+    //         setActiveQuestionIndex(questionsCount[currentIndex - 1].slug);
+    //     }
+    // };
     const handleNextQuestion = () => {
-        setIsGettingNext(true);
         const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
         if (currentIndex < questionsCount.length - 1) {
-            setActiveQuestionIndex(questionsCount[currentIndex + 1].slug);
+            setIsGettingNext(true);
+            handleChangeQuestion(questionsCount[currentIndex + 1].slug);
         }
     };
 
     const handlePreviousQuestion = () => {
-        setIsGettingPrevious(true);
         const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
         if (currentIndex > 0) {
-            setActiveQuestionIndex(questionsCount[currentIndex - 1].slug);
+            setIsGettingPrevious(true);
+            handleChangeQuestion(questionsCount[currentIndex - 1].slug);
         }
     };
+    const [confirmResetMockModal,setConfirmResetMockModal] = useState(false);
+
+    const handleConfirmPurchase = ()=>{
+        setConfirmResetMockModal(true);
+        // setPurchaseId(purchaseWebinar);
+      }
+
+
+
+    const handleResetMock = async()=> {
+        try {
+            const body = {slug:mock_id??practice_id}
+            const { data, error} = await resetMock(body);
+            if (data) {
+                if (data?.status) {
+                    successMessage(data?.message);
+                }
+                if (!data?.status) {
+                    errorMessage(data?.message);
+                }
+            }
+            if (error) {
+                errorMessage(error?.data?.message);
+                console.log("error",error);
+            }
+        } catch (err) {
+            console.log("err::",err);
+        }
+    }
     
     const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
 
@@ -286,7 +375,7 @@ function Questionnaire({isMock}) {
                                                             </button>
                                                         </div>
                                                         <div className="col-6 ps-1 pt-3">
-                                                            <button type="button" className="btn btn-primary" onClick={handleNextQuestion}
+                                                            <button type="button" className={`btn ${isGettingNext?'btn-secondary':'btn-primary'}`} onClick={handleNextQuestion}
                                                                 disabled={currentIndex === questionsCount.length - 1 || apiCall}>
                                                                     {isGettingNext? <ButtonLoader/>:'Next Question'}
                                                             </button>
@@ -296,7 +385,7 @@ function Questionnaire({isMock}) {
                                     </form>
 
                                 </div>
-                                {singleQuestionDetails?.description && !removedQuestion &&
+                                {singleQuestionDetails?.description && singleQuestionDetails?.answer && 
                                     <div className="notes-container">
                                         <div className="notes-inner-container">
                                             <div className="notes-description">
@@ -327,6 +416,11 @@ function Questionnaire({isMock}) {
                         <div className="col-md-5 col-lg-5 col-xxl-4 col-12 ps-1">
                             <div className="question-index-comments-wrapper">
                                 <div className="question-index-comments-inner-wrapper">
+                                    {(type === "practice" || type === "mock") &&
+                                        <div className="reset-questionnaire-container">
+                                            <button onClick={handleConfirmPurchase}>Reset Mock</button>
+                                        </div>
+                                    }
                                     <div className="question-index-container">
                                        
                                        {/* {questionNumbers.map(number=>(<QuestionNumberButton key={number} handleChangeQuestion={handleChangeQuestion} number={number} activeQuestionIndex={activeQuestionIndex}/>) )} */}
@@ -342,10 +436,12 @@ function Questionnaire({isMock}) {
                                         />)
                                        }
                                     </div>
-                                    <div className="col-12 py-4">
-                                        <button type="button" className="btn btn-primary" onClick={()=>setLabValuesModal(true)}>Lab Values</button>
-                                    </div>
-                                    {!removedQuestion &&
+                                    {!removedQuestion && 
+                                        <div className="col-12 py-4">
+                                            <button type="button" className="btn btn-primary" onClick={()=>setLabValuesModal(true)}>Lab Values</button>
+                                        </div>
+                                    }
+                                    {!removedQuestion && singleQuestionDetails?.answer && 
                                         <div className="question-comment-container">
                                             <div className="question-comment-inner-container">
                                                 <QuestionAllComments />
@@ -375,6 +471,26 @@ function Questionnaire({isMock}) {
             {labValuesModal &&
                 <ReactPortal wrapperId="external_modal_container">
                         <LabValuesInfo closeBtn={closeBtn} handleModal={handleCloseLabValuesModal}/>
+                </ReactPortal>
+            }
+            {confirmResetMockModal &&
+                <ReactPortal wrapperId="external_modal_container">
+                    <section className='detail-modal'>
+                        <div className='close-btn-container'>
+                            <img src={closeBtn} alt='close' onClick={() => setConfirmResetMockModal(false)} />
+                        </div>
+                        <div className='title-wrapper'>
+                            <h2 className='title'>Reset Mock</h2>
+                            {/* <div className='date-time-wrapper'><span>18th May 2024 (9:00 AM to 11:00 AM UK time)</span></div> */}
+                        </div>
+                        <div className='description'>
+                            <p className="text-balance">Are you sure you want to reset this mock exam ?</p>
+                        </div>
+                        <div className="modal-footer-custom">
+                            <button className="btn btn-primary mb-2" onClick={() => handleResetMock()}>Yes</button>
+                            <button className="btn btn-secondary" onClick={() => setConfirmResetMockModal(false)}>No</button>
+                        </div>
+                    </section>
                 </ReactPortal>
             }
         </>

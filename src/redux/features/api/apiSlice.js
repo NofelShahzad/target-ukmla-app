@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { VITE_REACT_APP_API_BASE_URL } from "../../../config";
+import { logoutUser } from "../auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
     // baseUrl: import.meta.env.VITE_REACT_APP_API_BASE_URL,
@@ -22,9 +23,9 @@ const baseQuery = fetchBaseQuery({
 
   const baseQueryWithSessionCheck = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions)
-    // if (result?.data?.message === "Please provide token" || result?.error?.data?.error?.message === "jwt expired") {
-    //   api.dispatch(logoutUser());
-    // }
+    if (result?.error?.status === 401 ) {
+      api.dispatch(logoutUser());
+    }
     // console.log("baseQueryWithSessionCheck",result )
     return result
   }

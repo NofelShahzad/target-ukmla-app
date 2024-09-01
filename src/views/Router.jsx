@@ -113,9 +113,9 @@ const RouterWrapper = () => {
                     </ProtectedRoute>
                 }
             >
-                <Route index element={<Dashboard />} />
-                <Route path="questions-bank" >
                     <Route index element={<QuestionsBank/>} />
+                <Route path="questions-bank" >
+                <Route index element={<Dashboard />} />
                     <Route path='comments' element={<AllComments/>}/>
                     <Route path='flagged-questions' element={<FlaggedQuestion/>}/>
                     <Route path='flagged-guides' element={<FlaggedGuides/>}/>
@@ -130,10 +130,10 @@ const RouterWrapper = () => {
                 </Route>
                 <Route path="webinars" element={<Webinars/>} />
                 <Route path="contactus" element={<ContactUs/>} />
-                {/* <Route path=':questionnaire_Id/:question_Id' element={<Questionnaire/>}/> */}
-                <Route path=':questionnaire_Id' element={<Questionnaire isMock={false}/>}/>
-                <Route path='/mock/:mock_id' element={<Questionnaire isMock={true}/>}/>
-                <Route path='/practice/:practice_id' element={<Questionnaire isMock={true}/>}/>
+                <Route path=':questionnaire_Id/:question_Id' element={<Questionnaire isMock={false} type={"category"}/>}/>
+                {/* <Route path=':questionnaire_Id' element={<Questionnaire isMock={false}/>}/> */}
+                <Route path='/mock/:mock_id/:question_Id' element={<Questionnaire isMock={true} type={"mock"}/>}/>
+                <Route path='/practice/:practice_id/:question_Id' element={<Questionnaire isMock={true} type={"practice"}/>}/>
 
 
             </Route>
