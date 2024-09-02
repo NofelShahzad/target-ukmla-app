@@ -6,7 +6,7 @@ import './WebinarsCard.css'
 import moment from "moment/moment";
 
 // eslint-disable-next-line react/prop-types
-function WebinarsCard({imgSrc,handleWebinarModal, handleConfirmPurchase, webinar, isPurchasing}) {
+function WebinarsCard({imgSrc,handleOpenWebinarModal, handleConfirmPurchase, webinar, isPurchasing}) {
 
 
     const handleJoinWebinar = ()=>{
@@ -53,7 +53,7 @@ function WebinarsCard({imgSrc,handleWebinarModal, handleConfirmPurchase, webinar
                                     
                                     <div className="webinar-card-footer">
                                         <div className='col-6 pe-1'>
-                                            <button type='button' className='btn btn-detail' onClick={()=>handleWebinarModal()}>More Info</button>
+                                            <button type='button' className='btn btn-detail' onClick={()=>handleOpenWebinarModal(webinar)}>More Info</button>
                                         </div>
                                         <div className='col-6 ps-1'>
                                             {!webinar?.purchased &&

@@ -19,7 +19,7 @@ import moment from "moment/moment";
 function Webinars() {
     const [allWebinars,setAllWebinars] = useState([]);
     const [detailModal, setDetailModal] = useState(false);
-    // const [webinarDetail,setWebinarDetail] = useState();
+    const [webinarDetail,setWebinarDetail] = useState();
     const [confirmPurchaseModal, setConfirmPurchaseModal] = useState(false);
     const [purchaseId, setPurchaseId] = useState(null);
 
@@ -51,8 +51,12 @@ function Webinars() {
         }
     }, [data, error])
 
-    const handleWebinarModal = () => {
-        setDetailModal(prev => !prev);
+    const handleOpenWebinarModal = (singleWebinar) => {
+        setDetailModal(true);
+        setWebinarDetail(singleWebinar);
+    }
+    const handleCloseWebinarModal = () => {
+        setDetailModal(false);
     }
     const handleConfirmPurchase = (purchaseWebinar) => {
         setConfirmPurchaseModal(true);
@@ -109,7 +113,7 @@ function Webinars() {
                             allWebinars?.map(webinar=>
                                 <WebinarsCard key={webinar?.id} imgSrc={babiesImg} 
                                 webinar={webinar} 
-                                handleWebinarModal={handleWebinarModal} 
+                                handleOpenWebinarModal={handleOpenWebinarModal} 
                                 handleConfirmPurchase={handleConfirmPurchase} 
                                 isPurchasing={isPurchasing}
                                 />
@@ -129,7 +133,7 @@ function Webinars() {
             </div>
             {detailModal &&
                 <ReactPortal wrapperId="external_modal_container">
-                    <WebinarsInfo closeBtn={closeBtn} handleWebinarModal={handleWebinarModal} />
+                    <WebinarsInfo closeBtn={closeBtn} webinarDetail={webinarDetail} handleCloseWebinarModal={handleCloseWebinarModal} handleOpenWebinarModal={handleOpenWebinarModal} />
                 </ReactPortal>
             }
 
