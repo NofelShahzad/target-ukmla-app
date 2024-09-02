@@ -1,8 +1,18 @@
 // import React from 'react'
 // import { Link } from 'react-router-dom'
+import { Markup } from 'react-render-markup';
+import ButtonLoader from '../loaders/ButtonLoader';
 import './WebinarsCard.css'
+import moment from "moment/moment";
+
 // eslint-disable-next-line react/prop-types
-function WebinarsCard({imgSrc,handleWebinarModal, handleConfirmPurchase}) {
+function WebinarsCard({imgSrc,handleWebinarModal, handleConfirmPurchase, webinar, isPurchasing}) {
+
+
+    const handleJoinWebinar = ()=>{
+        console.log("webinar_link::",webinar?.webinar_link)
+        window.open(webinar?.webinar_link, '_blank');
+    }
   return (
     <>
         <div className='col-sm-12 col-xl-6 col-12'>
@@ -13,11 +23,13 @@ function WebinarsCard({imgSrc,handleWebinarModal, handleConfirmPurchase}) {
                             </div>
                             <div className='webinar-card-body'>
                                     <div className='card-title-wrapper'>
-                                            <h2 className='title'>Babies in PLAB - 11th May 2024</h2>
-                                            <span className='date-time-wrapper'>(9:00 AM to 11:00 AM UK time)</span>
+                                        {/* Babies in PLAB - 11th May 2024 */}
+                                            <h2 className='title'> {webinar?.name} </h2>
+                                            <span className='date-time-wrapper'>({moment(webinar?.webinar_start_at).format('LT') } to {moment(webinar?.webinar_end_at).format('LT') }  UK time)</span>
                                     </div>
                                     <div className='description'>
-                                        <p>Join Dr.Dom, our expert pediatrician, to better understand pediatric questions and ensure you feel confident to tackle this challenging topic on exam day.</p>
+                                        {/* <p>{webinar?.description}</p> */}
+                                        <Markup markup={webinar?.description} />
                                     </div>
                                     <div className='speaker-container'>
                                         <table>
@@ -30,9 +42,9 @@ function WebinarsCard({imgSrc,handleWebinarModal, handleConfirmPurchase}) {
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Dr. Dom Carr</td>
-                                                    <td>11th May 2024</td>
-                                                    <td>£25 Per Webinar</td>
+                                                    <td>{webinar?.speaker}</td>
+                                                    <td>{moment(webinar?.webinar_start_at).format('ll')}</td>
+                                                    <td>£{webinar?.price} Per Webinar</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -44,7 +56,18 @@ function WebinarsCard({imgSrc,handleWebinarModal, handleConfirmPurchase}) {
                                             <button type='button' className='btn btn-detail' onClick={()=>handleWebinarModal()}>More Info</button>
                                         </div>
                                         <div className='col-6 ps-1'>
-                                            <button type='button' className='btn btn-primary' onClick={()=>handleConfirmPurchase("wata")}>Register</button>
+                                            {!webinar?.purchased &&
+                                                <button type='button' className={`btn btn-primary`} 
+                                                disabled={(isPurchasing?.id===webinar?.id && isPurchasing?.loading )} onClick={()=>handleConfirmPurchase(webinar)} >
+                                                    {isPurchasing?.id===webinar?.id && isPurchasing?.loading ?<ButtonLoader/>: webinar?.purchased?  "Join":'Register' }
+                                                </button>
+                                            }
+                                            {webinar?.purchased &&
+                                                <button type='button' className={`btn btn-primary`} 
+                                                disabled={((!webinar?.webinar_link && webinar?.purchased))} onClick={handleJoinWebinar} >
+                                                    {webinar?.purchased &&  "Join" }
+                                                </button>
+                                            }
                                         </div>
                                     </div>
                             </div>

@@ -1,22 +1,55 @@
 // import React from 'react'
 import WebinarsCard from '../../components/webinarsCard/WebinarsCard';
-import withAuth from '../../components/withAuth/withAuth';
-import withLayout from '../../components/withAuth/withLayout';
+// import withAuth from '../../components/withAuth/withAuth';
+// import withLayout from '../../components/withAuth/withLayout';
+// import lastMintRev from '../../assets/images/dashboard/webinars/last-mint-revision.webp'
+// import ogEssential from '../../assets/images/dashboard/webinars/o&g-essential.webp'
+// import ecg from '../../assets/images/dashboard/webinars/ecg.webp'
 import babiesImg from '../../assets/images/dashboard/webinars/babies.webp'
-import lastMintRev from '../../assets/images/dashboard/webinars/last-mint-revision.webp'
-import ogEssential from '../../assets/images/dashboard/webinars/o&g-essential.webp'
-import ecg from '../../assets/images/dashboard/webinars/ecg.webp'
 import closeBtn from '../../assets/icons/dashboard/modal-close.svg'
 import ReactPortal from '../../components/portal/ReactPortal';
 import { useState } from 'react';
 import WebinarsInfo from '../../components/modals/WebinarsInfo';
+import { useAllWebinarsQuery, useBuyWebinarMutation } from '../../redux/features/webinar/webinarsApiSlice';
+import { useEffect } from 'react';
 // import img from '../../assets/images/dashboard/webinars/babies.png'
-function Webinars() {
+import { errorMessage, successMessage } from "../../components/toastMessages/ToastifyMsg";
+import moment from "moment/moment";
 
+function Webinars() {
+    const [allWebinars,setAllWebinars] = useState([]);
     const [detailModal, setDetailModal] = useState(false);
     // const [webinarDetail,setWebinarDetail] = useState();
     const [confirmPurchaseModal, setConfirmPurchaseModal] = useState(false);
     const [purchaseId, setPurchaseId] = useState(null);
+
+    const {data, error } = useAllWebinarsQuery();
+
+    const [buyWebinar] = useBuyWebinarMutation();
+    const [isPurchasing,setIsPurchasing] = useState({
+        id: null,
+        loading: false,
+      });
+
+    useEffect(() => {
+        try {
+            if (data) {
+                if (data?.status) {
+                    // console.log("data::",data);
+                    setAllWebinars(data?.webinars);
+                }
+                if (!data?.status) {
+                    errorMessage(data?.message)
+                }
+            }
+            if (error) {
+                console.log("error::",error);
+                errorMessage(error?.data?.message);
+            }
+        } catch (err) {
+            console.log("err::",err)
+        }
+    }, [data, error])
 
     const handleWebinarModal = () => {
         setDetailModal(prev => !prev);
@@ -24,10 +57,41 @@ function Webinars() {
     const handleConfirmPurchase = (purchaseWebinar) => {
         setConfirmPurchaseModal(true);
         setPurchaseId(purchaseWebinar);
+        // console.log("purchaseWebinar::",purchaseWebinar)
     }
 
-    const handlePurchaseWebinar = () => {
-
+    const handlePurchaseWebinar = async() => {
+        try {
+            setIsPurchasing({
+                id:purchaseId?.id,
+                loading:true,
+              })
+              setConfirmPurchaseModal(false);
+            const body = {webinar_id: purchaseId?.id}
+            const {data, error} = await buyWebinar(body);
+            if (data) {
+                if (data?.status) {
+                    successMessage(data?.message);
+                }
+                if (!data?.status) {
+                    errorMessage(data?.message);
+                }
+                setIsPurchasing({
+                    id:null,
+                    loading: false,
+                  })
+            }
+            if (error) {
+                console.log("error:",error);
+                errorMessage(error?.data?.message);
+                setIsPurchasing({
+                    id:null,
+                    loading: false,
+                  })
+            }
+        } catch (err) {
+            console.log("err::",err);
+        }
     }
 
 
@@ -41,14 +105,25 @@ function Webinars() {
 
                 <section className='webinars-wrapper'>
                     <div className='webinars-inner-wrapper'>
-                        <WebinarsCard imgSrc={babiesImg} handleWebinarModal={handleWebinarModal} handleConfirmPurchase={handleConfirmPurchase} />
-                        <WebinarsCard imgSrc={lastMintRev} handleWebinarModal={handleWebinarModal} handleConfirmPurchase={handleConfirmPurchase} />
+                        {
+                            allWebinars?.map(webinar=>
+                                <WebinarsCard key={webinar?.id} imgSrc={babiesImg} 
+                                webinar={webinar} 
+                                handleWebinarModal={handleWebinarModal} 
+                                handleConfirmPurchase={handleConfirmPurchase} 
+                                isPurchasing={isPurchasing}
+                                />
+                            )
+                        }
+                        
+                        
+                        {/* <WebinarsCard imgSrc={lastMintRev} handleWebinarModal={handleWebinarModal} handleConfirmPurchase={handleConfirmPurchase} />
                         <WebinarsCard imgSrc={ogEssential} handleWebinarModal={handleWebinarModal} handleConfirmPurchase={handleConfirmPurchase} />
                         <WebinarsCard imgSrc={ecg} handleWebinarModal={handleWebinarModal} handleConfirmPurchase={handleConfirmPurchase} />
                         <WebinarsCard imgSrc={babiesImg} handleWebinarModal={handleWebinarModal} handleConfirmPurchase={handleConfirmPurchase} />
                         <WebinarsCard imgSrc={lastMintRev} handleWebinarModal={handleWebinarModal} handleConfirmPurchase={handleConfirmPurchase} />
                         <WebinarsCard imgSrc={ogEssential} handleWebinarModal={handleWebinarModal} handleConfirmPurchase={handleConfirmPurchase} />
-                        <WebinarsCard imgSrc={ecg} handleWebinarModal={handleWebinarModal} handleConfirmPurchase={handleConfirmPurchase} />
+                        <WebinarsCard imgSrc={ecg} handleWebinarModal={handleWebinarModal} handleConfirmPurchase={handleConfirmPurchase} /> */}
                     </div>
                 </section>
             </div>
@@ -69,7 +144,7 @@ function Webinars() {
                             {/* <div className='date-time-wrapper'><span>18th May 2024 (9:00 AM to 11:00 AM UK time)</span></div> */}
                         </div>
                         <div className='description'>
-                            <p className="text-balance">Are you sure you want to purchase <strong>{purchaseId?.name}</strong> mock exam <br /> for <strong>£{purchaseId?.price}</strong>?</p>
+                            <p className="text-balance mb-2">Are you sure you want to register in webinar of speaker<br />  <strong>{purchaseId?.speaker}</strong> at {moment(purchaseId?.webinar_start_at).format('ll') } for <strong>£{purchaseId?.price}</strong>?</p>
                         </div>
                         <div className="modal-footer-custom">
                             <button className="btn btn-primary mb-2" onClick={() => handlePurchaseWebinar()}>Yes</button>
