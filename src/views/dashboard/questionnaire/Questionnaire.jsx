@@ -14,39 +14,45 @@ import LabValuesInfo from '../../../components/modals/LabValuesInfo'
 import { useGetAllQuestionsOfCatQuery, useGetSingleQuestionQuery, useLazyGetSingleQuestionQuery, useMarkFlagMutation, useQuestionAnswerMutation } from "../../../redux/features/questionnaire/questionnaireApiSlice";
 import ButtonLoader from '../../../components/loaders/ButtonLoader';
 import { errorMessage, successMessage } from "../../../components/toastMessages/ToastifyMsg";
-import { useGetAllQuesionOfMockQuery, useResetMockMutation } from "../../../redux/features/mocks/MocksApiSlice";
+import { useFinishMockTimerMutation, useGetAllQuesionOfMockQuery, useMockTimeCheckerMutation, useResetMockMutation, useStartMockTimerMutation } from "../../../redux/features/mocks/MocksApiSlice";
+import Timer from "../../../components/timer/Timer";
 
 // const questionNumbers = Array.from({ length: 95 }, (_, i) => i + 1);
-function Questionnaire({isMock,type}) {
+function Questionnaire({ isMock, type }) {
     const { questionnaire_Id, question_Id, mock_id, practice_id } = useParams();
     const navigate = useNavigate();
     const [selectedValue, setSelectedValue] = useState('');
-    const [flagMarked,setFlagMarked] = useState(false);
+    const [flagMarked, setFlagMarked] = useState(false);
     const [selected, setSelected] = useState(false);
-    const [activeQuestionIndex,setActiveQuestionIndex] = useState(null);
-    const [labValuesModal,setLabValuesModal] = useState(false);
-    const [questionsCount,setQuestionsCount] = useState([]);
+    const [activeQuestionIndex, setActiveQuestionIndex] = useState(null);
+    const [labValuesModal, setLabValuesModal] = useState(false);
+    const [questionsCount, setQuestionsCount] = useState([]);
     const [getSingleQuestion] = useLazyGetSingleQuestionQuery();
-    const [singleQuestionDetails,setSingleQuestionDetails] = useState(null);
-    const [questionCatTitle,setQuestionCatTitle] = useState("");
-    const [parentId,setParentId] = useState(null);
-    // const [questionTitle,setQuestionTitle] = useState("");
+    const [singleQuestionDetails, setSingleQuestionDetails] = useState(null);
+    const [questionCatTitle, setQuestionCatTitle] = useState("");
+    const [parentId, setParentId] = useState(null);
+    const [mockDetail,setMockDetail] = useState(null);
     // const [questionCatDesc,setQuestionCatDesc] = useState("");
     // console.log("mock_id::",mock_id)
-    const [apiCall,setApiCall] = useState(true);
-    const [isSubmitting,setIsSubmitting] = useState(false);
-    const [isGettingNext,setIsGettingNext] = useState(false);
-    const [isGettingPrevious,setIsGettingPrevious] = useState(false);
+    const [apiCall, setApiCall] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isGettingNext, setIsGettingNext] = useState(false);
+    const [isGettingPrevious, setIsGettingPrevious] = useState(false);
+    const [timeLeft, setTimeLeft] = useState(0);
+    const [isRunning, setIsRunning] = useState(false);
 
-    const {data: getSingleQuestionData, error: getSingleQuestionError } = useGetSingleQuestionQuery(question_Id)
-    const {data, error} = useGetAllQuestionsOfCatQuery(questionnaire_Id,{skip:isMock});
-    const {data:mockData, error:mockError} = useGetAllQuesionOfMockQuery(mock_id??practice_id ,{skip:!isMock});
+    const { data: getSingleQuestionData, error: getSingleQuestionError } = useGetSingleQuestionQuery(question_Id)
+    const { data, error } = useGetAllQuestionsOfCatQuery(questionnaire_Id, { skip: isMock });
+    const { data: mockData, error: mockError } = useGetAllQuesionOfMockQuery(mock_id ?? practice_id, { skip: !isMock });
     const [questionAnswer] = useQuestionAnswerMutation();
     const [markFlag] = useMarkFlagMutation();
     const [resetMock] = useResetMockMutation();
+    const  [startMockTimer] = useStartMockTimerMutation();
+    const [finsihMockTimer] = useFinishMockTimerMutation();
+    const [mockTimeChecker] = useMockTimeCheckerMutation();
 
-    const [removedQuestion,setRemovedQuestion] = useState(false);
-    
+    const [removedQuestion, setRemovedQuestion] = useState(false);
+
     useEffect(() => {
         if (getSingleQuestionData) {
             if (getSingleQuestionData.status) {
@@ -77,19 +83,19 @@ function Questionnaire({isMock,type}) {
         }
     }, [getSingleQuestionData, getSingleQuestionError])
 
-    const handleGetSingleQuestion = async()=>{
+    const handleGetSingleQuestion = async () => {
         try {
             if (activeQuestionIndex) {
                 setApiCall(true);
-                const {data,error} = await getSingleQuestion(activeQuestionIndex);
+                const { data, error } = await getSingleQuestion(activeQuestionIndex);
                 if (data) {
                     // console.log("getSingleQuestion::data::",data);
                     if (data?.status) {
                         setSingleQuestionDetails(data?.question);
                         setSelectedValue('');
                         setSelected(false);
-                        
-                        setFlagMarked(data?.question?.is_flagged_count===1?true:false);
+
+                        setFlagMarked(data?.question?.is_flagged_count === 1 ? true : false);
                         if (data?.question?.answer) {
                             setSelectedValue(data?.question?.answer?.option_id)
                         }
@@ -104,12 +110,12 @@ function Questionnaire({isMock,type}) {
                     setIsGettingNext(false);
                 }
                 if (error) {
-                    console.log("error::",error);
+                    console.log("error::", error);
                 }
             }
-            
+
         } catch (err) {
-            console.log("err::",err);
+            console.log("err::", err);
         }
     }
 
@@ -120,7 +126,7 @@ function Questionnaire({isMock,type}) {
             if (data?.status) {
                 setParentId(data?.category?.id);
                 setQuestionsCount(data?.questions)
-                setActiveQuestionIndex(activeQuestionIndex ? activeQuestionIndex:data?.questions[0]?.slug);
+                setActiveQuestionIndex(activeQuestionIndex ? activeQuestionIndex : data?.questions[0]?.slug);
                 setQuestionCatTitle(data?.category?.name);
             }
             if (!data?.status) {
@@ -130,17 +136,18 @@ function Questionnaire({isMock,type}) {
             setApiCall(false);
         }
         if (error) {
-            console.log("error::",error)
+            console.log("error::", error)
         }
-    }, [data,error])
+    }, [data, error])
 
     useEffect(() => {
         if (mockData) {
-            // console.log("mockData::",mockData);
             if (mockData?.status) {
+                setMockDetail(mockData?.mock);
+                setTimeLeft(mockData?.mock?.duration);
                 setParentId(mockData?.mock?.id)
                 setQuestionsCount(mockData?.questions)
-                setActiveQuestionIndex(activeQuestionIndex ? activeQuestionIndex:mockData?.questions[0]?.slug);
+                setActiveQuestionIndex(activeQuestionIndex ? activeQuestionIndex : mockData?.questions[0]?.slug);
                 setQuestionCatTitle(mockData?.mock?.name);
             }
             if (!mockData?.status) {
@@ -152,13 +159,13 @@ function Questionnaire({isMock,type}) {
             setIsGettingNext(false);
         }
         if (mockError) {
-            console.log("mockError::",mockError);
+            console.log("mockError::", mockError);
             errorMessage(error?.data?.message);
             setApiCall(false);
             setIsGettingPrevious(false);
             setIsGettingNext(false);
         }
-    }, [mockData,mockError])
+    }, [mockData, mockError])
 
     // useEffect(() => {
     //     handleGetSingleQuestion()
@@ -167,8 +174,8 @@ function Questionnaire({isMock,type}) {
 
     const handleCloseLabValuesModal = useCallback(() => {
         setLabValuesModal(false)
-      },[])
-    
+    }, [])
+
 
     const handleChange = (event) => {
         setSelectedValue(JSON.parse(event.target.value));
@@ -177,11 +184,11 @@ function Questionnaire({isMock,type}) {
     };
 
 
-    const handleFlagMark= async()=>{
+    const handleFlagMark = async () => {
         try {
             // console.log("single::",singleQuestionDetails?.id)
             setApiCall(true);
-            const {data, error} = await markFlag({question_id:singleQuestionDetails?.id,type: !flagMarked?"add":"remove"});
+            const { data, error } = await markFlag({ question_id: singleQuestionDetails?.id, type: !flagMarked ? "add" : "remove" });
             if (data) {
                 // console.log("data::",data);
                 if (data?.status) {
@@ -196,14 +203,14 @@ function Questionnaire({isMock,type}) {
                 setApiCall(false);
             }
             if (error) {
-                console.log("error::",error)
+                console.log("error::", error)
             }
         } catch (err) {
-            console.log("err::",err);
+            console.log("err::", err);
         }
     }
-    
-    const handleChangeQuestion = (questionNumber)=>{
+
+    const handleChangeQuestion = (questionNumber) => {
         setActiveQuestionIndex(questionNumber);
         navigate(getNewUrl(questionNumber));
     }
@@ -222,54 +229,40 @@ function Questionnaire({isMock,type}) {
                 question_id: singleQuestionDetails?.id,
                 option_id: selectedValue,
                 parent_id: parentId,
-                type: questionnaire_Id?"category":mock_id?"big-mocks":"practice-mocks"
+                type: questionnaire_Id ? "category" : mock_id ? "big-mocks" : "practice-mocks"
             }
 
-            const {data,error} = await questionAnswer(body);
+            const { data, error } = await questionAnswer(body);
             if (data) {
                 // console.log("data::",data)
-              if (data?.status) {
-                setSingleQuestionDetails(data?.question);
-                        setSelectedValue('');
-                        setSelected(false);
-                        setFlagMarked(data?.question?.is_flagged_count===1?true:false)
-                        if (data?.question?.answer) {
-                            setSelectedValue(data?.question?.answer?.option_id)
-                        }
-              }  
-              setApiCall(false);
-              setIsSubmitting(false);
-            }
-            if (error) {
-                console.log("error:",error);
+                if (data?.status) {
+                    setSingleQuestionDetails(data?.question);
+                    setSelectedValue('');
+                    setSelected(false);
+                    setFlagMarked(data?.question?.is_flagged_count === 1 ? true : false)
+                    if (data?.question?.answer) {
+                        setSelectedValue(data?.question?.answer?.option_id)
+                    }
+                }
+                setApiCall(false);
                 setIsSubmitting(false);
             }
-            
+            if (error) {
+                console.log("error:", error);
+                setIsSubmitting(false);
+            }
+
         } catch (err) {
-            console.log("err::",err);
+            console.log("err::", err);
         }
     }
 
-    const handleSubmitComment = async (e)=>{
+    const handleSubmitComment = async (e) => {
         e.preventDefault();
         console.log("Comment Submitted")
     }
 
-    // const handleNextQuestion = () => {
-    //     setIsGettingNext(true);
-    //     const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
-    //     if (currentIndex < questionsCount.length - 1) {
-    //         setActiveQuestionIndex(questionsCount[currentIndex + 1].slug);
-    //     }
-    // };
 
-    // const handlePreviousQuestion = () => {
-    //     setIsGettingPrevious(true);
-    //     const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
-    //     if (currentIndex > 0) {
-    //         setActiveQuestionIndex(questionsCount[currentIndex - 1].slug);
-    //     }
-    // };
     const handleNextQuestion = () => {
         const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
         if (currentIndex < questionsCount.length - 1) {
@@ -285,19 +278,19 @@ function Questionnaire({isMock,type}) {
             handleChangeQuestion(questionsCount[currentIndex - 1].slug);
         }
     };
-    const [confirmResetMockModal,setConfirmResetMockModal] = useState(false);
+    const [confirmResetMockModal, setConfirmResetMockModal] = useState(false);
 
-    const handleConfirmPurchase = ()=>{
+    const handleConfirmPurchase = () => {
         setConfirmResetMockModal(true);
         // setPurchaseId(purchaseWebinar);
-      }
+    }
 
 
 
-    const handleResetMock = async()=> {
+    const handleResetMock = async () => {
         try {
-            const body = {slug:mock_id??practice_id}
-            const { data, error} = await resetMock(body);
+            const body = { slug: mock_id ?? practice_id }
+            const { data, error } = await resetMock(body);
             if (data) {
                 if (data?.status) {
                     successMessage(data?.message);
@@ -308,15 +301,187 @@ function Questionnaire({isMock,type}) {
             }
             if (error) {
                 errorMessage(error?.data?.message);
-                console.log("error",error);
+                console.log("error", error);
+            }
+        } catch (err) {
+            console.log("err::", err);
+        }
+    }
+
+    const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
+// console.log("mockDetail::",mockDetail)
+
+   
+const [isTimerCalled,setIsTimerCalled] = useState(false); 
+const [isConnectionLost, setIsConnectionLost] = useState(false);
+const [mockTimeCheckerInterval, setMockTimeCheckerInterval] = useState(null);
+
+    // Timer logic
+
+useEffect(() => {
+    let timerId;
+    if (isRunning && timeLeft > 0) {
+        timerId = setInterval(() => {
+            setTimeLeft(prevTime => prevTime - 1);
+        }, 1000);
+    }
+    return () => clearInterval(timerId);
+}, [isRunning, timeLeft]);
+
+    useEffect(() => {
+        const startTimer = async () => {
+            try {
+                const { data, error } = await startMockTimer({ mock_id: mockDetail?.id });
+                if (data && data?.status) {
+                    setIsRunning(true);
+                    setIsTimerCalled(true);
+                }
+                if (error) {
+                    console.log("Error:", error);
+                }
+            } catch (err) {
+                console.log("Error::", err);
+            }
+        };
+
+        if (type === "mock" && !isRunning && mockDetail?.id && !isTimerCalled) {
+            startTimer();
+        }
+    }, [mockDetail, isRunning, type, isTimerCalled]);
+
+// Handle API call every 10 seconds to check connection status
+// useEffect(() => {
+//   const handleMockTimeChecker = async () => {
+//     try {
+//       const { data, error } = await mockTimeChecker({mock_id:mockDetail?.id}); // API call
+//       if (data) {
+//         setIsConnectionLost(false);
+//         if (!isRunning) setIsRunning(true); // Resume timer if it was stopped
+//       }
+//       if (error) {
+//         setIsConnectionLost(true);
+//         setIsRunning(false); // Pause the timer on error
+//       }
+//     } catch (err) {
+//       console.log("Error::", err);
+//       setIsConnectionLost(true);
+//       setIsRunning(false); // Pause timer when no connection
+//     }
+//   };
+
+//   console.log("mockDetail?.id::",mockDetail?.id)
+//   console.log("mockTimeCheckerInterval::",mockTimeCheckerInterval)
+//   if (isRunning && mockTimeCheckerInterval && mockDetail?.id) {
+//     // Set interval only if the timer is running and no interval is set
+//     const intervalId = setInterval(handleMockTimeChecker, 5000);
+//     setMockTimeCheckerInterval(intervalId);
+//   }
+
+//   return () => {
+//     if (mockTimeCheckerInterval) clearInterval(mockTimeCheckerInterval); // Cleanup on unmount or pause
+//   };
+// }, [isRunning, mockTimeCheckerInterval, mockDetail?.id]);
+
+    const handleStartTimer = () => {
+        if (!isConnectionLost) setIsRunning(true); // Only start if there's no connection issue
+    };
+  
+    // const handleStartTimer = async() => {
+    //     try {
+    //         const {data, error} = await startMockTimer({mock_id:mockDetail?.id});
+    //         if (data) {
+    //             if (data?.status) {
+    //                 console.log(data);
+    //             }
+    //         }
+    //         if (error) {
+    //             console.log("err:",error);
+    //         }
+    //     } catch (err) {
+    //         console.log("err::",err);
+    //     }
+    //     setIsRunning(true);
+     
+    // };
+  
+    const handlePauseTimer = () => {
+      setIsRunning(false);
+    };
+  
+    const handleFinishSave = async() => {
+        try {
+
+            const { data, error } = await finsihMockTimer({mock_id: mockDetail?.id});
+            if (data) {
+                if (data?.status) {
+                    successMessage(data?.message);
+                    navigate(`/big-mocks`);
+                }
+                if (!data?.status) {
+                    errorMessage(data?.message);
+                }
+            }
+            if (error) {
+                errorMessage(error?.data?.message);
+            }
+            
+        } catch (err) {
+            console.log("err::",err);
+        }
+        
+        setIsRunning(false);
+        if (mockTimeCheckerInterval) {
+          clearInterval(mockTimeCheckerInterval); // Clear interval on finish
+          setMockTimeCheckerInterval(null);
+        }
+        // Additional logic to handle finish save
+      };
+
+    
+
+    useEffect(() => {
+        const handleMockTimeChecker = async () => {
+          try {
+            const { data, error } = await mockTimeChecker({mock_id:mockDetail?.id}); // API call
+            if (data) {
+              setIsConnectionLost(false);
+              if (!isRunning) setIsRunning(true); // Resume timer if it was stopped
+            }
+            if (error) {
+              setIsConnectionLost(true);
+              setIsRunning(false); // Pause the timer on error
+            }
+          } catch (err) {
+            console.log("Error::", err);
+            setIsConnectionLost(true);
+            setIsRunning(false); // Pause timer when no connection
+          }
+        };
+    
+        // Call the function immediately and then every 10 seconds
+        if (mockDetail?.id) {
+            handleMockTimeChecker();
+        
+        }
+        const intervalId = setInterval(handleMockTimeChecker, 10000);
+    
+        return () => clearInterval(intervalId); // Cleanup on component unmount
+      }, [isRunning, mockDetail?.id]);
+
+
+      const handleMockTimeChecker = async()=>{
+        try {
+            const {data,error} = mockTimeChecker();
+            if (data) {
+                console.log("data::",data);
+            }
+            if (error) {
+                console.log("error::",error);
             }
         } catch (err) {
             console.log("err::",err);
         }
     }
-    
-    const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
-
     return (
         <>
             <div className="container-fluid">
@@ -326,66 +491,66 @@ function Questionnaire({isMock,type}) {
                         <div className="col-md-7 col-lg-7 col-xxl-8 col-12 pe-lg-2 pe-0">
                             <div className="question-notes-wrapper">
                                 <div className="question-container">
-                                    <form action="" onSubmit={handleSubmitAnswer}>
-                                        
-                                       
-                                                <div className="question-header">
-                                                    {!removedQuestion &&
-                                                        <>
-                                                            <h2 className="questionnaire-title">
-                                                                {questionCatTitle}
-                                                                    {/* Anatomy <span>(AN 3331)</span> */}
-                                                                </h2>
-                                                            <div className="flag-action">
-                                                                <button type="button" className={flagMarked?'flag-marked':''} onClick={handleFlagMark} disabled={apiCall}>
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                                                        <path id="flag" d="M10,2A2,2,0,0,0,8,0H0V16H1.333V8.667H6.667v.667a2,2,0,0,0,2,2H16V2.667H10ZM1.333,1.333H8A.667.667,0,0,1,8.667,2V7.333H1.333ZM14.667,4v6h-6A.667.667,0,0,1,8,9.333V8.667h2V4Z" />
-                                                                    </svg>
-                                                                    <span>{flagMarked?'Unmark':'Mark'} Flag</span>
-                                                                </button>
-                                                            </div>
-                                                        
-                                                        </>
+                                    <form onSubmit={handleSubmitAnswer}>
 
-                                                    }
-                                                </div>
-                                           
-                                                <div className="question-body">
-                                                    {!removedQuestion &&
-                                                        <QuestionnaireQuestion selectedValue={selectedValue} handleChange={handleChange} questionDetails={singleQuestionDetails}/>
-                                                    }
-                                                    {removedQuestion && 
-                                                        <div className="removed-question">
-                                                            <p>This question has been removed.</p>
-                                                        </div>
 
-                                                    }
-                                                    <div className="questionnaire-form-actions-btn-wrapper">
-                                                        {!singleQuestionDetails?.answer && !removedQuestion &&
-                                                            <div className="col-12 py-1">
-                                                                <button type="submit" className="btn btn-primary" disabled={!selected || apiCall || isSubmitting}>
-                                                                    {isSubmitting? <ButtonLoader/>:'Submit Answer'}
-                                                                </button>
-                                                            </div>
-                                                        }
-                                                        <div className="col-6 pe-1 pt-3">
-                                                            <button type="button" className="btn btn-secondary" onClick={handlePreviousQuestion}
-                                                                disabled={currentIndex === 0 || apiCall}>
-                                                                    {isGettingPrevious? <ButtonLoader/>:'Previous Question'}
-                                                            </button>
-                                                        </div>
-                                                        <div className="col-6 ps-1 pt-3">
-                                                            <button type="button" className={`btn ${isGettingNext?'btn-secondary':'btn-primary'}`} onClick={handleNextQuestion}
-                                                                disabled={currentIndex === questionsCount.length - 1 || apiCall}>
-                                                                    {isGettingNext? <ButtonLoader/>:'Next Question'}
-                                                            </button>
-                                                        </div>
+                                        <div className="question-header">
+                                            {!removedQuestion &&
+                                                <>
+                                                    <h2 className="questionnaire-title">
+                                                        {questionCatTitle}
+                                                        {/* Anatomy <span>(AN 3331)</span> */}
+                                                    </h2>
+                                                    <div className="flag-action">
+                                                        <button type="button" className={flagMarked ? 'flag-marked' : ''} onClick={handleFlagMark} disabled={apiCall}>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                                                <path id="flag" d="M10,2A2,2,0,0,0,8,0H0V16H1.333V8.667H6.667v.667a2,2,0,0,0,2,2H16V2.667H10ZM1.333,1.333H8A.667.667,0,0,1,8.667,2V7.333H1.333ZM14.667,4v6h-6A.667.667,0,0,1,8,9.333V8.667h2V4Z" />
+                                                            </svg>
+                                                            <span>{flagMarked ? 'Unmark' : 'Mark'} Flag</span>
+                                                        </button>
                                                     </div>
+
+                                                </>
+
+                                            }
+                                        </div>
+
+                                        <div className="question-body">
+                                            {!removedQuestion &&
+                                                <QuestionnaireQuestion selectedValue={selectedValue} handleChange={handleChange} questionDetails={singleQuestionDetails} />
+                                            }
+                                            {removedQuestion &&
+                                                <div className="removed-question">
+                                                    <p>This question has been removed.</p>
                                                 </div>
+
+                                            }
+                                            <div className="questionnaire-form-actions-btn-wrapper">
+                                                {!singleQuestionDetails?.answer && !removedQuestion &&
+                                                    <div className="col-12 py-1">
+                                                        <button type="submit" className="btn btn-primary" disabled={!selected || apiCall || isSubmitting}>
+                                                            {isSubmitting ? <ButtonLoader /> : 'Submit Answer'}
+                                                        </button>
+                                                    </div>
+                                                }
+                                                <div className="col-6 pe-1 pt-3">
+                                                    <button type="button" className="btn btn-secondary" onClick={handlePreviousQuestion}
+                                                        disabled={currentIndex === 0 || apiCall}>
+                                                        {isGettingPrevious ? <ButtonLoader /> : 'Previous Question'}
+                                                    </button>
+                                                </div>
+                                                <div className="col-6 ps-1 pt-3">
+                                                    <button type="button" className={`btn ${isGettingNext ? 'btn-secondary' : 'btn-primary'}`} onClick={handleNextQuestion}
+                                                        disabled={currentIndex === questionsCount.length - 1 || apiCall}>
+                                                        {isGettingNext ? <ButtonLoader /> : 'Next Question'}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </form>
 
                                 </div>
-                                {singleQuestionDetails?.description && singleQuestionDetails?.answer && 
+                                {singleQuestionDetails?.description && singleQuestionDetails?.answer &&
                                     <div className="notes-container">
                                         <div className="notes-inner-container">
                                             <div className="notes-description">
@@ -416,32 +581,44 @@ function Questionnaire({isMock,type}) {
                         <div className="col-md-5 col-lg-5 col-xxl-4 col-12 ps-1">
                             <div className="question-index-comments-wrapper">
                                 <div className="question-index-comments-inner-wrapper">
-                                    {(type === "practice" || type === "mock") &&
+                                    {/* {(type === "practice" || type === "mock") &&
                                         <div className="reset-questionnaire-container">
                                             <button onClick={handleConfirmPurchase}>Reset Mock</button>
                                         </div>
+                                    } */}
+                                    {(type === "practice" || type === "mock") && 
+                                        <Timer
+                                            handleStart={handleStartTimer}
+                                            handlePause={handlePauseTimer}
+                                            handleFinishSave={handleFinishSave}
+                                            timeLeft={timeLeft}
+                                            isRunning={isRunning}
+                                            type={type}
+                                        />
+
                                     }
+
                                     <div className="question-index-container">
-                                       
-                                       {/* {questionNumbers.map(number=>(<QuestionNumberButton key={number} handleChangeQuestion={handleChangeQuestion} number={number} activeQuestionIndex={activeQuestionIndex}/>) )} */}
-                                       {
-                                        questionsCount?.map((questCountDetails,key)=>
-                                        
-                                        <QuestionNumberButton key={questCountDetails?.id} 
-                                            handleChangeQuestion={handleChangeQuestion} 
-                                            number={key+1} 
-                                            activeQuestionIndex={activeQuestionIndex}
-                                            questCountDetails={questCountDetails}
-                                            apiCall={apiCall}
-                                        />)
-                                       }
+
+                                        {/* {questionNumbers.map(number=>(<QuestionNumberButton key={number} handleChangeQuestion={handleChangeQuestion} number={number} activeQuestionIndex={activeQuestionIndex}/>) )} */}
+                                        {
+                                            questionsCount?.map((questCountDetails, key) =>
+
+                                                <QuestionNumberButton key={questCountDetails?.id}
+                                                    handleChangeQuestion={handleChangeQuestion}
+                                                    number={key + 1}
+                                                    activeQuestionIndex={activeQuestionIndex}
+                                                    questCountDetails={questCountDetails}
+                                                    apiCall={apiCall}
+                                                />)
+                                        }
                                     </div>
-                                    {!removedQuestion && 
+                                    {!removedQuestion &&
                                         <div className="col-12 py-4">
-                                            <button type="button" className="btn btn-primary" onClick={()=>setLabValuesModal(true)}>Lab Values</button>
+                                            <button type="button" className="btn btn-primary" onClick={() => setLabValuesModal(true)}>Lab Values</button>
                                         </div>
                                     }
-                                    {!removedQuestion && singleQuestionDetails?.answer && 
+                                    {!removedQuestion && singleQuestionDetails?.answer &&
                                         <div className="question-comment-container">
                                             <div className="question-comment-inner-container">
                                                 <QuestionAllComments />
@@ -449,7 +626,7 @@ function Questionnaire({isMock,type}) {
                                                 <div className="post-comment">
                                                     <form action="" onSubmit={handleSubmitComment}>
                                                         <div className="col-12">
-                                                            <textarea name="" id=""rows="5" placeholder="Write a comment as Adam Bial"></textarea>
+                                                            <textarea name="" id="" rows="5" placeholder="Write a comment as Adam Bial"></textarea>
                                                         </div>
                                                         <div className="col-12 py-2">
                                                             <button type="submit" className="btn btn-primary">Post Comment</button>
@@ -458,7 +635,7 @@ function Questionnaire({isMock,type}) {
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     }
                                 </div>
                             </div>
@@ -470,7 +647,7 @@ function Questionnaire({isMock,type}) {
 
             {labValuesModal &&
                 <ReactPortal wrapperId="external_modal_container">
-                        <LabValuesInfo closeBtn={closeBtn} handleModal={handleCloseLabValuesModal}/>
+                    <LabValuesInfo closeBtn={closeBtn} handleModal={handleCloseLabValuesModal} />
                 </ReactPortal>
             }
             {confirmResetMockModal &&
@@ -507,7 +684,7 @@ function Questionnaire({isMock,type}) {
 
 export default Questionnaire
 
-  {/* <div className="questionnaire-question-container">
+{/* <div className="questionnaire-question-container">
                                                 <p>A 26 year old man presents to the Emergency Department complaining of difficulty in raising his arm above his head following a minor traffic accident a week ago, where he injured his left shoulder. On examination, there is noticeable winging of the scapula on the affected side when he presses against the wall with his hands. There is also weakness in forward flexion of the arm at the shoulder. Sensory examination is normal. Which nerve is most likely injured?</p>
                                                 <div className="question-single-option">
                                     
@@ -560,3 +737,20 @@ export default Questionnaire
                                                 </div>
 
                                             </div> */}
+
+
+                                                // const handleNextQuestion = () => {
+    //     setIsGettingNext(true);
+    //     const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
+    //     if (currentIndex < questionsCount.length - 1) {
+    //         setActiveQuestionIndex(questionsCount[currentIndex + 1].slug);
+    //     }
+    // };
+
+    // const handlePreviousQuestion = () => {
+    //     setIsGettingPrevious(true);
+    //     const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
+    //     if (currentIndex > 0) {
+    //         setActiveQuestionIndex(questionsCount[currentIndex - 1].slug);
+    //     }
+    // };

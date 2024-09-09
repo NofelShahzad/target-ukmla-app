@@ -28,7 +28,31 @@ export const mocksApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body
             }),
-        })
+        }),
+        getSingleMock: builder.query({
+            query: (id) => `/mock/${id}`
+        }),
+        startMockTimer: builder.mutation({
+            query: (body) => ({
+                url: `/mock/start-mock`,
+                method: 'POST',
+                body
+            }),
+        }), 
+        finishMockTimer: builder.mutation({
+            query: (body) => ({
+                url: `/mock/finish-mock`,
+                method: 'POST',
+                body
+            }),
+        }), 
+        mockTimeChecker: builder.mutation({
+            query: (body) => ({
+                url: `/mock/playing-mock`,
+                method: 'POST',
+                body
+            }),
+        }), 
     })
 })
 
@@ -39,4 +63,8 @@ export const {
     useLazyGetAllQuesionOfMockQuery,
     useBuyMockPlanMutation,
     useResetMockMutation,
+    useGetSingleMockQuery,
+    useStartMockTimerMutation,
+    useFinishMockTimerMutation,
+    useMockTimeCheckerMutation,
 }= mocksApiSlice;

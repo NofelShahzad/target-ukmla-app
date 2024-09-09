@@ -13,13 +13,15 @@ function BigmocksCard({handleBigmockModal, mockDetail, isPurchasing,type,handleC
 
   // console.log("mockDetail::",mockDetail)
   const handleNavigate = () => {
+    // console.log(":::mock_id",mockDetail)
     if (!mockDetail?.purchase) {
       // handlePurchaseBigMock(mockDetail?.id)
       handleConfirmPurchase(mockDetail)
     }
     if (mockDetail?.purchase) {
-      // navigate(`detail/3252`);
-      navigate(`/mock/${mockDetail?.slug}/${mockDetail?.question?.slug}`);
+      
+      navigate(`/big-mocks/detail/${mockDetail?.slug}`);
+      // navigate(`/mock/${mockDetail?.slug}/${mockDetail?.question?.slug}`);
     }
   }
   
@@ -45,12 +47,12 @@ function BigmocksCard({handleBigmockModal, mockDetail, isPurchasing,type,handleC
                                 </div>
                                 {type ==="mock" &&
                                   <div className='col-6 ps-1'>
-                                    <button type='button' className='btn btn-primary' disabled={(isPurchasing?.id===mockDetail?.id && isPurchasing?.loading) || (mockDetail?.purchase && mockDetail?.published_questions_count <1 )} onClick={()=>handleNavigate()}>{isPurchasing?.id===mockDetail?.id && isPurchasing?.loading ?<ButtonLoader/>:mockDetail?.purchase? <>Questions<span className='fs-small'>({mockDetail?.published_questions_count})</span></> :'Pruchase'}</button>
+                                    <button type='button' className='btn btn-primary' disabled={(isPurchasing?.id===mockDetail?.id && isPurchasing?.loading) || (mockDetail?.purchase && mockDetail?.published_questions_count <1 )} onClick={()=>handleNavigate()}>{isPurchasing?.id===mockDetail?.id && isPurchasing?.loading ?<ButtonLoader/>:mockDetail?.purchase? <>Mock</> :'Pruchase'}</button>
                                   </div>
                                 }
                                 {type === "practice" &&
                                   <div className='col-6 ps-1'>
-                                    <button type='button' className='btn btn-primary' disabled={(mockDetail?.published_questions_count <1 )}  onClick={()=>navigate(`/practice/${mockDetail?.slug}/${mockDetail?.question?.slug}`)}>Questions<span className='fs-small'>({mockDetail?.published_questions_count})</span></button>
+                                    <button type='button' className='btn btn-primary' disabled={(mockDetail?.published_questions_count <1 )}  onClick={()=>navigate(`/practice/${mockDetail?.slug}/${mockDetail?.question?.slug}`)}>Questions</button>
                                   </div>
                                 }
                               </div>

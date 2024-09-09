@@ -123,7 +123,7 @@ const RouterWrapper = () => {
                 </Route>
                 <Route path="big-mocks"  >
                     <Route index element={<BigMocks/>}/>
-                    <Route path='detail/:id' element={<BigmockDetail/>}/>
+                    <Route path='detail/:mock_id' element={<BigmockDetail/>}/>
                 </Route>
                 <Route path='practice-mocks'>
                   <Route index element={<PracticeMocks/>}/>

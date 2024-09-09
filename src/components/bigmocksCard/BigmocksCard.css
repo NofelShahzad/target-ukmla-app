@@ -82,9 +82,19 @@
     height: 416px;
 }
 .bigmock-detail-page .bigmocks-card .bigmocks-inner-card .bigmocks-card-body{
-    min-height: 416px;
+    min-height: unset;
+    display: block;
 }
-
+.bigmock-detail-page .bigmocks-card .bigmocks-inner-card{
+    border: unset;
+}
 .bigmock-detail-page .bigmocks-card .bigmocks-inner-card .price-details{
     font-size: 13px;
+}
+.bigmock-detail-page .bigmocks-card .bigmocks-inner-card .bigmocks-card-body .bigmocks-card-footer{
+    width: unset;
+    padding: 20px 0;
+}
+.bigmock-detail-page .bigmocks-card .bigmocks-inner-card .bigmocks-card-body .bigmocks-card-footer .btn-primary{
+    width: fit-content;
 }

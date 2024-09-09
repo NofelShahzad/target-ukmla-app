@@ -1,0 +1,8 @@
+.timer-wrapper{
+    padding: 10px 0 20px;
+}
+.timer-wrapper .timer-action{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
