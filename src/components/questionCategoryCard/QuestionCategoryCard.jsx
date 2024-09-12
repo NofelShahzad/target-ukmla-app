@@ -10,6 +10,7 @@ function QuestionCategoryCard({  title,questionData }) {
     return (
         <>
             <div className="col-sm-6 col-md-4 col-lg-3 col-xxl-2 col-12">
+                <Link className="text-decoration-none" to={`/${questionData?.slug}/${questionData?.question?.slug}`}>
                 <div className="single-question-card">
                     <div className="single-question-header">
                         <div className="img-container">
@@ -41,11 +42,11 @@ function QuestionCategoryCard({  title,questionData }) {
                         <QuestionCardStautsInfo type={'removed-by-admin'} percentage={0} />
 
                     </div>
-                    <div className="single-question-footer">
-                        <Link to={`/${questionData?.slug}/${questionData?.question?.slug}`}>View Details</Link>
-                    </div>
-
+                    {/* <div className="single-question-footer">
+                        <Link to={`/${questionData?.slug}/${questionData?.question?.slug}`}>View</Link>
+                    </div> */}
                 </div>
+                </Link>
             </div>
         </>
     )

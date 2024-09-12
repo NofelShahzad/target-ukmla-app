@@ -466,7 +466,7 @@ input.input-error{
 
 .single-question-card{
   /* width: 200px; */
-  height: 303px;
+  height: 275px;
   margin: 5px;
   background: #FFFFFF;
   border-radius: 10px;
@@ -474,8 +474,14 @@ input.input-error{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  color: #000;
   border: 1px solid #D8D8D8;
+  transition: all 0.15s ease-in-out;
 }
+/* .single-question-card:hover{
+  border-color: var(--active-color);
+  color: var(--active-color);
+} */
 .single-question-card .single-question-header .img-container{
   height: 55px;
   width: 55px;

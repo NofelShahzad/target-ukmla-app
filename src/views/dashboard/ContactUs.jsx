@@ -2,11 +2,13 @@
 
 import withAuth from "../../components/withAuth/withAuth";
 import withLayout from "../../components/withAuth/withLayout";
+import Contactus from "../frontSite/contactus/Contactus";
 
 function ContactUs() {
   return (
     <>
-     <h3 className="my-4 text-center">Dashboard contactus</h3>
+     {/* <h3 className="my-4 text-center">Dashboard contactus</h3> */}
+     <Contactus/>
     </>
   )
 }

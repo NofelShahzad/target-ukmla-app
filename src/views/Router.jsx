@@ -27,6 +27,8 @@ import { useEffect, useState } from 'react';
 import { setAuth } from '../redux/features/auth/authSlice';
 import { useGetLoggedInUserQuery } from '../redux/features/auth/authApi';
 import PracticeMocks from './dashboard/practice-mocks/PracticeMocks';
+import BigMock from './frontSite/BigMock';
+import Contactus from './frontSite/contactus/Contactus';
 
 const RouterWrapper = () => {
     const isUserAuthenticated = useSelector(state => !!state.auth.user);
@@ -89,18 +91,19 @@ const RouterWrapper = () => {
                 <Route path="signup" element={<Signup />} />
                 {/* <Route path="login" element={<Login />} /> */}
                 <Route
-                    path="/login"
+                    path="/login" 
                     element={
                         <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/">
                             <Login />
                         </ProtectedRoute>
                     }
                 />
-                {/* <Route path="question-bank" element={<div className="container"> <h3 className="my-4 text-center">Question Bank</h3></div>} />
-                <Route path="big-mock" element={<BigMock/>} />
+                <Route path="/home" element={ <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/"><div className="container"> <h3 className="my-4 text-center">Home</h3></div></ProtectedRoute>} />
+                <Route path="question-bank" element={<div className="container"> <h3 className="my-4 text-center">Question Bank</h3></div>} />
+                <Route path="mocks" element={<BigMock/>} />
                 <Route path="webinar" element={<div className="container"> <h3 className="my-4 text-center">Webinars</h3></div>} />
-                <Route path="contact-us" element={<div className="container"> <h3 className="my-4 text-center">Webinars</h3></div>} />
- */}
+                <Route path="contact-us" element={<Contactus/>} />
+
                 <Route path="reset-password" element={<ResetPassword title={"Forget Password"}/>} />
                 <Route path="new-password" element={<CreateNewPassword />} />
             </Route>

@@ -47,7 +47,14 @@ export const authApi = apiSlice.injectEndpoints({
         }),
         getLoggedInUser: builder.query({
             query: () =>   `user`
-        })
+        }),
+        contactus: builder.mutation({
+            query: (body)=>({
+                url: `/send-message`,
+                method: "POST",
+                body
+            })
+        }),
 
 
     }),
@@ -61,5 +68,6 @@ export const {
     useForgetPasswordVerifyPinMutation,
     useAddNewPasswordMutation,
     useLogoutMutation,
-    useGetLoggedInUserQuery
+    useGetLoggedInUserQuery,
+    useContactusMutation
 } = authApi; 

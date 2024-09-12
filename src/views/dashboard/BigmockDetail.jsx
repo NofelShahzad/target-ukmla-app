@@ -43,7 +43,7 @@ function BigmockDetail() {
                 </div>
                 <div className="col-12">
                     <div className="bigmocks-card">
-                        <div className="bigmocks-inner-card">
+                        <div className="bigmocks-inner-card px-2">
                             {/* <div className="bigmocks-img">
                                 <img src={babiesImg} />
                             </div> */}
@@ -73,6 +73,14 @@ function BigmockDetail() {
 
                             </div>
                         </div>
+                    </div>
+                    <div className="bigmocks-logs d-flex flex-wrap gap-2 px-4">
+                        {singleMock?.logs && 
+                            singleMock?.logs.map((mockLog,index)=>
+                            <div key={mockLog?.id} className="col-2">
+                                <button className="btn btn-secondary" disabled>Mock {index+1}</button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

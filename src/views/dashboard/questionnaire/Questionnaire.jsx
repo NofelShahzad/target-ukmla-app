@@ -318,37 +318,104 @@ const [mockTimeCheckerInterval, setMockTimeCheckerInterval] = useState(null);
 
     // Timer logic
 
-useEffect(() => {
-    let timerId;
-    if (isRunning && timeLeft > 0) {
-        timerId = setInterval(() => {
-            setTimeLeft(prevTime => prevTime - 1);
-        }, 1000);
-    }
-    return () => clearInterval(timerId);
-}, [isRunning, timeLeft]);
 
-    useEffect(() => {
-        const startTimer = async () => {
-            try {
-                const { data, error } = await startMockTimer({ mock_id: mockDetail?.id });
-                if (data && data?.status) {
-                    setIsRunning(true);
-                    setIsTimerCalled(true);
-                }
-                if (error) {
-                    console.log("Error:", error);
-                }
-            } catch (err) {
-                console.log("Error::", err);
-            }
-        };
+    // useEffect(() => {
+    //     let timerId;
+    //     if (isRunning && timeLeft > 0) {
+    //         timerId = setInterval(() => {
+    //             setTimeLeft((prevTime) => prevTime - 1);
+    //         }, 1000);
+    //     } else {
+    //         clearInterval(timerId);
+    //     }
+    //     return () => clearInterval(timerId);
+    // }, [isRunning, timeLeft]);
+    
+    // useEffect(() => {
+    //     const startTimer = async () => {
+    //         try {
+    //             const { data, error } = await startMockTimer({ mock_id: mockDetail?.id });
+    //             if (data && data?.status) {
+    //                 setIsRunning(true);
+    //                 setIsTimerCalled(true);
+    //             }
+    //             if (error) {
+    //                 console.log("Error:", error);
+    //             }
+    //         } catch (err) {
+    //             console.log("Error::", err);
+    //         }
+    //     };
+    
+    //     if ((type === "mock" || type === "practice") && !isRunning && mockDetail?.id && !isTimerCalled) {
+    //         startTimer();
+    //     }
+    // }, [mockDetail, isRunning, type, isTimerCalled]);
+    
+    // // Handle API call every 5 seconds to check connection status
+    // useEffect(() => {
+    //     const handleMockTimeChecker = async () => {
+    //         try {
+    //             const { data, error } = await mockTimeChecker({ mock_id: mockDetail?.id });
+    //             if (data) {
+    //                 setIsConnectionLost(false);
+    //                 if (!isRunning) setIsRunning(true); // Resume timer if it was stopped
+    //             }
+    //             if (error) {
+    //                 setIsConnectionLost(true);
+    //                 setIsRunning(false); // Pause the timer on error
+    //             }
+    //         } catch (err) {
+    //             console.log("Error::", err);
+    //             setIsConnectionLost(true);
+    //             setIsRunning(false); // Pause timer when no connection
+    //         }
+    //     };
+    
+    //     // Start API checking interval only if timer is running
+    //     if (isRunning && !mockTimeCheckerInterval) {
+    //         const intervalId = setInterval(handleMockTimeChecker, 5000);
+    //         setMockTimeCheckerInterval(intervalId);
+    //     }
+    
+    //     // Clear interval on pause or when unmounted
+    //     return () => {
+    //         if (mockTimeCheckerInterval) clearInterval(mockTimeCheckerInterval);
+    //     };
+    // }, [isRunning, mockDetail?.id, mockTimeCheckerInterval]);
+// ---------------------------------------------------------------
 
-        if (type === "mock" && !isRunning && mockDetail?.id && !isTimerCalled) {
-            startTimer();
-        }
-    }, [mockDetail, isRunning, type, isTimerCalled]);
+// useEffect(() => {
+//     let timerId;
+//     if (isRunning && timeLeft > 0) {
+//         timerId = setInterval(() => {
+//             setTimeLeft(prevTime => prevTime - 1);
+//         }, 1000);
+//     }
+//     return () => clearInterval(timerId);
+// }, [isRunning, timeLeft]);
 
+//     useEffect(() => {
+//         const startTimer = async () => {
+//             try {
+//                 const { data, error } = await startMockTimer({ mock_id: mockDetail?.id });
+//                 if (data && data?.status) {
+//                     setIsRunning(true);
+//                     setIsTimerCalled(true);
+//                 }
+//                 if (error) {
+//                     console.log("Error:", error);
+//                 }
+//             } catch (err) {
+//                 console.log("Error::", err);
+//             }
+//         };
+
+//         if (type === "mock" && !isRunning && mockDetail?.id && !isTimerCalled) {
+//             startTimer();
+//         }
+//     }, [mockDetail, isRunning, type, isTimerCalled]);
+// ============================================================
 // Handle API call every 10 seconds to check connection status
 // useEffect(() => {
 //   const handleMockTimeChecker = async () => {
@@ -382,9 +449,14 @@ useEffect(() => {
 //   };
 // }, [isRunning, mockTimeCheckerInterval, mockDetail?.id]);
 
-    const handleStartTimer = () => {
-        if (!isConnectionLost) setIsRunning(true); // Only start if there's no connection issue
-    };
+    // const handleStartTimer = () => {
+    //     if (!isConnectionLost) setIsRunning(true); // Only start if there's no connection issue
+    // };
+    // const handleStartTimer = () => {
+    //     if (!isConnectionLost) {
+    //         setIsRunning(true); // Start both timer and API calls
+    //     }
+    // };
   
     // const handleStartTimer = async() => {
     //     try {
@@ -404,69 +476,78 @@ useEffect(() => {
      
     // };
   
-    const handlePauseTimer = () => {
-      setIsRunning(false);
-    };
+    // const handlePauseTimer = () => {
+    //   setIsRunning(false);
+    // };
+
+    // const handlePauseTimer = () => {
+    //     setIsRunning(false); // Pause both timer and API calls
+    //     if (mockTimeCheckerInterval) {
+    //         // console.log("mockTimeCheckerInterval::",mockTimeCheckerInterval)
+    //         clearInterval(mockTimeCheckerInterval); // Stop API calls when paused
+    //         setMockTimeCheckerInterval(null);
+    //     }
+    // };
   
-    const handleFinishSave = async() => {
-        try {
+    // const handleFinishSave = async() => {
+    //     try {
 
-            const { data, error } = await finsihMockTimer({mock_id: mockDetail?.id});
-            if (data) {
-                if (data?.status) {
-                    successMessage(data?.message);
-                    navigate(`/big-mocks`);
-                }
-                if (!data?.status) {
-                    errorMessage(data?.message);
-                }
-            }
-            if (error) {
-                errorMessage(error?.data?.message);
-            }
+    //         const { data, error } = await finsihMockTimer({mock_id: mockDetail?.id});
+    //         if (data) {
+    //             if (data?.status) {
+    //                 successMessage(data?.message);
+    //                 navigate(`/big-mocks`);
+    //             }
+    //             if (!data?.status) {
+    //                 errorMessage(data?.message);
+    //             }
+    //         }
+    //         if (error) {
+    //             errorMessage(error?.data?.message);
+    //         }
             
-        } catch (err) {
-            console.log("err::",err);
-        }
+    //     } catch (err) {
+    //         console.log("err::",err);
+    //     }
         
-        setIsRunning(false);
-        if (mockTimeCheckerInterval) {
-          clearInterval(mockTimeCheckerInterval); // Clear interval on finish
-          setMockTimeCheckerInterval(null);
-        }
-        // Additional logic to handle finish save
-      };
+    //     setIsRunning(false);
+    //     if (mockTimeCheckerInterval) {
+    //       clearInterval(mockTimeCheckerInterval); // Clear interval on finish
+    //       setMockTimeCheckerInterval(null);
+    //     }
+    //     // Additional logic to handle finish save
+    //   };
 
     
 
-    useEffect(() => {
-        const handleMockTimeChecker = async () => {
-          try {
-            const { data, error } = await mockTimeChecker({mock_id:mockDetail?.id}); // API call
-            if (data) {
-              setIsConnectionLost(false);
-              if (!isRunning) setIsRunning(true); // Resume timer if it was stopped
-            }
-            if (error) {
-              setIsConnectionLost(true);
-              setIsRunning(false); // Pause the timer on error
-            }
-          } catch (err) {
-            console.log("Error::", err);
-            setIsConnectionLost(true);
-            setIsRunning(false); // Pause timer when no connection
-          }
-        };
+    // useEffect(() => {
+    //     const handleMockTimeChecker = async () => {
+    //       try {
+    //         const { data, error } = await mockTimeChecker({mock_id:mockDetail?.id}); // API call
+    //         if (data) {
+    //           setIsConnectionLost(false);
+    //           if (!isRunning) setIsRunning(true); // Resume timer if it was stopped
+    //         }
+    //         if (error) {
+    //           setIsConnectionLost(true);
+    //           setIsRunning(false); // Pause the timer on error
+    //         }
+    //       } catch (err) {
+    //         console.log("Error::", err);
+    //         setIsConnectionLost(true);
+    //         setIsRunning(false); // Pause timer when no connection
+    //       }
+    //     };
     
-        // Call the function immediately and then every 10 seconds
-        if (mockDetail?.id) {
-            handleMockTimeChecker();
+    //     // Call the function immediately and then every 10 seconds
+    //     if (mockDetail?.id) {
+    //         handleMockTimeChecker();
         
-        }
-        const intervalId = setInterval(handleMockTimeChecker, 10000);
+    //     }
+    //     const intervalId = setInterval(handleMockTimeChecker, 10000);
     
-        return () => clearInterval(intervalId); // Cleanup on component unmount
-      }, [isRunning, mockDetail?.id]);
+    //     return () => clearInterval(intervalId); // Cleanup on component unmount
+    //   }, [isRunning, mockDetail?.id]);
 
 
       const handleMockTimeChecker = async()=>{
@@ -482,6 +563,150 @@ useEffect(() => {
             console.log("err::",err);
         }
     }
+
+//====================================----------------________________________-------------===========================
+
+
+// const [isTimerCalled, setIsTimerCalled] = useState(false);
+// const [isConnectionLost, setIsConnectionLost] = useState(false);
+// const [mockTimeCheckerInterval, setMockTimeCheckerInterval] = useState(null);
+
+// Timer logic
+useEffect(() => {
+    let timerId;
+    if (isRunning && timeLeft > 0) {
+        timerId = setInterval(() => {
+            setTimeLeft((prevTime) => prevTime - 1);
+        }, 1000);
+    } else {
+        clearInterval(timerId);  // Clear interval when paused or finished
+    }
+    return () => clearInterval(timerId);  // Cleanup interval on component unmount
+}, [isRunning, timeLeft]);
+
+// Start timer when `mock` type and not running yet
+useEffect(() => {
+    const startTimer = async () => {
+        try {
+            const { data, error } = await startMockTimer({ mock_id: mockDetail?.id });
+            if (data && data?.status) {
+                setIsRunning(true);
+                setIsTimerCalled(true);
+            }
+            if (error) {
+                console.log("Error:", error);
+            }
+        } catch (err) {
+            console.log("Error::", err);
+        }
+    };
+
+    if ((type === "mock" || type === "practice") && !isRunning && mockDetail?.id && !isTimerCalled) {
+        startTimer();
+    }
+}, [mockDetail, isRunning, type, isTimerCalled]);
+
+// Handle API calls every 5 seconds to check connection status
+useEffect(() => {
+    const handleMockTimeChecker = async () => {
+        if (!isRunning || (type === "practice" && !isRunning)) return; // Only run the checker if the timer is running
+
+        try {
+            const { data, error } = await mockTimeChecker({ mock_id: mockDetail?.id });
+            if (data) {
+                setIsConnectionLost(false);
+                if (!isRunning) setIsRunning(true); // Resume timer if it was stopped
+            }
+            if (error) {
+                setIsConnectionLost(true);
+                setIsRunning(false); // Pause the timer on error
+            }
+        } catch (err) {
+            console.log("Error::", err);
+            setIsConnectionLost(true);
+            setIsRunning(false); // Pause timer when no connection
+        }
+    };
+
+    // Start interval only if timer is running and type is not "practice" or is running in "practice"
+    if (isRunning && !mockTimeCheckerInterval && (type === "mock" || type === "practice")) {
+        const intervalId = setInterval(handleMockTimeChecker, 5000);
+        setMockTimeCheckerInterval(intervalId);
+    }
+
+    return () => {
+        if (mockTimeCheckerInterval) {
+            clearInterval(mockTimeCheckerInterval);  // Clear the interval when timer pauses
+            setMockTimeCheckerInterval(null);
+        }
+    };
+}, [isRunning, mockDetail?.id, mockTimeCheckerInterval, type]);
+
+// Handle Start, Pause, and Finish for the timer
+const handleStartTimer = () => {
+    if (!isConnectionLost) {
+        setIsRunning(true); // Start both the timer and the API checker
+    }
+};
+
+const handlePauseTimer = async() => {
+    if (type === "practice") {
+        setIsRunning(false); // Pause both the timer and the API checker only for "practice"
+        if (mockTimeCheckerInterval) {
+            clearInterval(mockTimeCheckerInterval); // Stop API calls when paused
+            setMockTimeCheckerInterval(null);
+        }
+        try {
+            const { data, error } = await mockTimeChecker({ mock_id: mockDetail?.id });
+            if (data) {
+                setIsConnectionLost(false);
+                if (!isRunning) setIsRunning(true); // Resume timer if it was stopped
+            }
+            if (error) {
+                setIsConnectionLost(true);
+                setIsRunning(false); // Pause the timer on error
+            }
+        } catch (err) {
+            console.log("Error::", err);
+            setIsConnectionLost(true);
+            setIsRunning(false); // Pause timer when no connection
+        }
+    }
+};
+
+const handleFinishSave = async () => {
+    try {
+        const { data, error } = await finsihMockTimer({ mock_id: mockDetail?.id });
+        if (data) {
+            if (data?.status) {
+                successMessage(data?.message);
+                if (type === "mock") {
+                    navigate(`/big-mocks`);
+                }
+                if (type === "practice") {
+                    navigate(`/practice-mocks`);
+                }
+            } else {
+                errorMessage(data?.message);
+            }
+        }
+        if (error) {
+            errorMessage(error?.data?.message);
+        }
+    } catch (err) {
+        console.log("err::", err);
+    }
+
+    // Stop the timer and clear the API interval
+    setIsRunning(false);
+    if (mockTimeCheckerInterval) {
+        clearInterval(mockTimeCheckerInterval);
+        setMockTimeCheckerInterval(null);
+    }
+};
+
+
+
     return (
         <>
             <div className="container-fluid">
@@ -517,7 +742,7 @@ useEffect(() => {
 
                                         <div className="question-body">
                                             {!removedQuestion &&
-                                                <QuestionnaireQuestion selectedValue={selectedValue} handleChange={handleChange} questionDetails={singleQuestionDetails} />
+                                                <QuestionnaireQuestion selectedValue={selectedValue} handleChange={handleChange} questionDetails={singleQuestionDetails} isTimmerRunning={isRunning} />
                                             }
                                             {removedQuestion &&
                                                 <div className="removed-question">
@@ -528,20 +753,20 @@ useEffect(() => {
                                             <div className="questionnaire-form-actions-btn-wrapper">
                                                 {!singleQuestionDetails?.answer && !removedQuestion &&
                                                     <div className="col-12 py-1">
-                                                        <button type="submit" className="btn btn-primary" disabled={!selected || apiCall || isSubmitting}>
+                                                        <button type="submit" className="btn btn-primary" disabled={!selected || apiCall || isSubmitting || !isRunning}>
                                                             {isSubmitting ? <ButtonLoader /> : 'Submit Answer'}
                                                         </button>
                                                     </div>
                                                 }
                                                 <div className="col-6 pe-1 pt-3">
                                                     <button type="button" className="btn btn-secondary" onClick={handlePreviousQuestion}
-                                                        disabled={currentIndex === 0 || apiCall}>
+                                                        disabled={currentIndex === 0 || apiCall || !isRunning}>
                                                         {isGettingPrevious ? <ButtonLoader /> : 'Previous Question'}
                                                     </button>
                                                 </div>
                                                 <div className="col-6 ps-1 pt-3">
                                                     <button type="button" className={`btn ${isGettingNext ? 'btn-secondary' : 'btn-primary'}`} onClick={handleNextQuestion}
-                                                        disabled={currentIndex === questionsCount.length - 1 || apiCall}>
+                                                        disabled={currentIndex === questionsCount.length - 1 || apiCall || !isRunning}>
                                                         {isGettingNext ? <ButtonLoader /> : 'Next Question'}
                                                     </button>
                                                 </div>
@@ -610,6 +835,7 @@ useEffect(() => {
                                                     activeQuestionIndex={activeQuestionIndex}
                                                     questCountDetails={questCountDetails}
                                                     apiCall={apiCall}
+                                                    isTimmerRunning={isRunning}
                                                 />)
                                         }
                                     </div>

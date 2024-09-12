@@ -30,7 +30,7 @@ function Navbar() {
 
             <ul className={`header-ul ${toogleHamburger ? 'show' : ''}`} >
               <li>
-                <NavLink to="/">
+                <NavLink to="/home">
                   Home
                 </NavLink>
               </li>
@@ -38,13 +38,21 @@ function Navbar() {
                 <NavLink to="/question-bank">
                   Question Bank</NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink to="/big-mock">
                   Big Mock</NavLink>
+              </li> */}
+              <li>
+                <NavLink to="/webinar" >
+                  Webinars</NavLink>
               </li>
               <li>
-                <NavLink to="/webinar" className="webinars">
-                  Webinars</NavLink>
+                <NavLink to="/mocks">
+                  Mocks</NavLink>
+              </li>
+              <li>
+                <NavLink to="/contact-us">
+                  Contact us</NavLink>
               </li>
              
               <li>

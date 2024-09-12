@@ -107,6 +107,9 @@
     .header ul {
         display: none
     }
+    .header ul li a.active:after{
+        background-color: transparent;
+    }
     .header ul.show{
         display: flex;
     }
@@ -126,7 +129,7 @@
         height: 100vh;
         padding-left: 0;
         z-index: 1;
-        background-color: var(--backdrop);
+        background-color: var(--backdrop-color);
         -webkit-animation: showHide .5s ease-in alternate;
         animation: showHide .5s ease-in alternate;
     }
