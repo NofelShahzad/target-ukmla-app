@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom"
 // import withAuth from "../../../components/withAuth/withAuth";
 // import withLayout from "../../../components/withAuth/withLayout";
 import { Markup } from 'react-render-markup'
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import QuestionnaireQuestion from "../../../components/questionnaireQuestion/QuestionnaireQuestion";
 import QuestionNumberButton from "../../../components/questionnaireQuestion/QuestionNumberButton";
 import QuestionAllComments from "../../../components/questionnaireQuestion/QuestionAllComments";
@@ -16,6 +16,7 @@ import ButtonLoader from '../../../components/loaders/ButtonLoader';
 import { errorMessage, successMessage } from "../../../components/toastMessages/ToastifyMsg";
 import { useFinishMockTimerMutation, useGetAllQuesionOfMockQuery, useMockTimeCheckerMutation, useResetMockMutation, useStartMockTimerMutation } from "../../../redux/features/mocks/MocksApiSlice";
 import Timer from "../../../components/timer/Timer";
+import { getCurrentTimeDate } from "../../../utils/util";
 
 // const questionNumbers = Array.from({ length: 95 }, (_, i) => i + 1);
 function Questionnaire({ isMock, type }) {
@@ -40,18 +41,26 @@ function Questionnaire({ isMock, type }) {
     const [isGettingPrevious, setIsGettingPrevious] = useState(false);
     const [timeLeft, setTimeLeft] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
+    const getDateTimeForGetAll = useMemo(() => getCurrentTimeDate(new Date()), []);
 
-    const { data: getSingleQuestionData, error: getSingleQuestionError } = useGetSingleQuestionQuery(question_Id)
+    const [shouldFetch, setShouldFetch] = useState(false);
+    
+    useEffect(() => {
+      // Trigger the API call only once by setting shouldFetch to true
+      setShouldFetch(true);
+    }, []);
+    const { data: mockData, error: mockError } = useGetAllQuesionOfMockQuery({id: mock_id ?? practice_id, current_date: getDateTimeForGetAll}, { skip: !isMock || !shouldFetch });
     const { data, error } = useGetAllQuestionsOfCatQuery(questionnaire_Id, { skip: isMock });
-    const { data: mockData, error: mockError } = useGetAllQuesionOfMockQuery(mock_id ?? practice_id, { skip: !isMock });
+    // console.log("question_Id::",question_Id)
     const [questionAnswer] = useQuestionAnswerMutation();
     const [markFlag] = useMarkFlagMutation();
     const [resetMock] = useResetMockMutation();
-    const  [startMockTimer] = useStartMockTimerMutation();
+    const [startMockTimer] = useStartMockTimerMutation();
     const [finsihMockTimer] = useFinishMockTimerMutation();
     const [mockTimeChecker] = useMockTimeCheckerMutation();
-
+    
     const [removedQuestion, setRemovedQuestion] = useState(false);
+    const { data: getSingleQuestionData, error: getSingleQuestionError } = useGetSingleQuestionQuery({id:question_Id,mock_id:mock_id??practice_id??questionnaire_Id},{skip:!shouldFetch});
 
     useEffect(() => {
         if (getSingleQuestionData) {
@@ -119,7 +128,6 @@ function Questionnaire({ isMock, type }) {
         }
     }
 
-
     useEffect(() => {
         if (data) {
             // console.log("data::",data);
@@ -143,8 +151,9 @@ function Questionnaire({ isMock, type }) {
     useEffect(() => {
         if (mockData) {
             if (mockData?.status) {
+                // console.log("mockData::",mockData)
                 setMockDetail(mockData?.mock);
-                setTimeLeft(mockData?.mock?.duration);
+                // setTimeLeft(mockData?.mock?.duration);
                 setParentId(mockData?.mock?.id)
                 setQuestionsCount(mockData?.questions)
                 setActiveQuestionIndex(activeQuestionIndex ? activeQuestionIndex : mockData?.questions[0]?.slug);
@@ -570,7 +579,11 @@ const [mockTimeCheckerInterval, setMockTimeCheckerInterval] = useState(null);
 // const [isTimerCalled, setIsTimerCalled] = useState(false);
 // const [isConnectionLost, setIsConnectionLost] = useState(false);
 // const [mockTimeCheckerInterval, setMockTimeCheckerInterval] = useState(null);
+const timeLeftRef = useRef(timeLeft);  // Create a ref to store the current timeLeft value
 
+useEffect(() => {
+    timeLeftRef.current = timeLeft;  // Keep ref updated with the latest timeLeft value
+}, [timeLeft]);
 // Timer logic
 useEffect(() => {
     let timerId;
@@ -579,19 +592,45 @@ useEffect(() => {
             setTimeLeft((prevTime) => prevTime - 1);
         }, 1000);
     } else {
-        clearInterval(timerId);  // Clear interval when paused or finished
+        clearInterval(timerId);
+        // handleFinishSave();  // Clear interval when paused or finished
     }
     return () => clearInterval(timerId);  // Cleanup interval on component unmount
 }, [isRunning, timeLeft]);
+
+
+function calculateRemainingDuration(start_at, currentDateTime, duration) {
+    // Convert date-time strings to Date objects
+    const startDate = new Date(start_at.replace(' ', 'T')); // Convert '2024-09-14 21:27:25' to Date
+    const currentDate = new Date(currentDateTime.replace(' ', 'T')); // Convert '2024-09-14 21:27:25' to Date
+  
+    // Calculate the difference in milliseconds
+    const diffInMs = currentDate - startDate;
+  
+    // Convert milliseconds to seconds
+    const diffInSeconds = Math.floor(diffInMs / 1000);
+  
+    // Calculate the remaining time by subtracting the difference from duration
+    const remainingTime = duration - diffInSeconds;
+  
+    return remainingTime >= 0 ? remainingTime : 0; // Ensure no negative values
+  }
 
 // Start timer when `mock` type and not running yet
 useEffect(() => {
     const startTimer = async () => {
         try {
-            const { data, error } = await startMockTimer({ mock_id: mockDetail?.id });
+            const { data, error } = await startMockTimer({ mock_id: mockDetail?.id,current_date: getCurrentTimeDate(new Date())});
             if (data && data?.status) {
                 setIsRunning(true);
                 setIsTimerCalled(true);
+                // console.log("data:",data)
+                // console.log("current_date",new Date())
+                const remainingDuration = type==='mock'?calculateRemainingDuration(data?.mock?.start_at,getCurrentTimeDate(new Date()),data?.mock?.duration):data?.mock?.duration;
+                // console.log(`Remaining time: ${remainingDuration} seconds`,remainingDuration);
+
+                // setTimeLeft(data?.mock?.duration);
+                setTimeLeft(remainingDuration);
             }
             if (error) {
                 console.log("Error:", error);
@@ -604,18 +643,24 @@ useEffect(() => {
     if ((type === "mock" || type === "practice") && !isRunning && mockDetail?.id && !isTimerCalled) {
         startTimer();
     }
-}, [mockDetail, isRunning, type, isTimerCalled]);
+}, [mockDetail, isRunning, type, isTimerCalled,timeLeft]);
 
+// console.log("timeLeft::",timeLeft)
 // Handle API calls every 5 seconds to check connection status
 useEffect(() => {
     const handleMockTimeChecker = async () => {
         if (!isRunning || (type === "practice" && !isRunning)) return; // Only run the checker if the timer is running
-
+        // console.log("timeLeft::",timeLeftRef.current);
         try {
-            const { data, error } = await mockTimeChecker({ mock_id: mockDetail?.id });
+            const { data, error } = await mockTimeChecker({ mock_id: mockDetail?.id,remaining_duration: timeLeftRef.current,current_date: getCurrentTimeDate(new Date()) });
             if (data) {
-                setIsConnectionLost(false);
-                if (!isRunning) setIsRunning(true); // Resume timer if it was stopped
+                if (data?.status) {
+                    setIsConnectionLost(false);
+                    if (!isRunning) setIsRunning(true); // Resume timer if it was stopped
+                }
+                if (!data?.status) {
+                    navigate(-1);
+                }
             }
             if (error) {
                 setIsConnectionLost(true);
@@ -629,7 +674,7 @@ useEffect(() => {
     };
 
     // Start interval only if timer is running and type is not "practice" or is running in "practice"
-    if (isRunning && !mockTimeCheckerInterval && (type === "mock" || type === "practice")) {
+    if (isRunning && !mockTimeCheckerInterval && ( type === "practice")) {
         const intervalId = setInterval(handleMockTimeChecker, 5000);
         setMockTimeCheckerInterval(intervalId);
     }
@@ -657,7 +702,7 @@ const handlePauseTimer = async() => {
             setMockTimeCheckerInterval(null);
         }
         try {
-            const { data, error } = await mockTimeChecker({ mock_id: mockDetail?.id });
+            const { data, error } = await mockTimeChecker({ mock_id: mockDetail?.id,remaining_duration:timeLeftRef.current,current_date: getCurrentTimeDate(new Date()) });
             if (data) {
                 setIsConnectionLost(false);
                 if (!isRunning) setIsRunning(true); // Resume timer if it was stopped
@@ -676,14 +721,17 @@ const handlePauseTimer = async() => {
 
 const handleFinishSave = async () => {
     try {
-        const { data, error } = await finsihMockTimer({ mock_id: mockDetail?.id });
+        const { data, error } = await finsihMockTimer({ mock_id: mockDetail?.id,current_date: getCurrentTimeDate(new Date()) });
         if (data) {
             if (data?.status) {
                 successMessage(data?.message);
+                // console.log("data::",data)
                 if (type === "mock") {
+                    // console.log("big-mocks")
                     navigate(`/big-mocks`);
                 }
                 if (type === "practice") {
+                    // console.log("practice")
                     navigate(`/practice-mocks`);
                 }
             } else {
@@ -742,7 +790,7 @@ const handleFinishSave = async () => {
 
                                         <div className="question-body">
                                             {!removedQuestion &&
-                                                <QuestionnaireQuestion selectedValue={selectedValue} handleChange={handleChange} questionDetails={singleQuestionDetails} isTimmerRunning={isRunning} />
+                                                <QuestionnaireQuestion selectedValue={selectedValue} handleChange={handleChange} questionDetails={singleQuestionDetails} isTimmerRunning={isRunning} type={type} />
                                             }
                                             {removedQuestion &&
                                                 <div className="removed-question">
@@ -753,20 +801,20 @@ const handleFinishSave = async () => {
                                             <div className="questionnaire-form-actions-btn-wrapper">
                                                 {!singleQuestionDetails?.answer && !removedQuestion &&
                                                     <div className="col-12 py-1">
-                                                        <button type="submit" className="btn btn-primary" disabled={!selected || apiCall || isSubmitting || !isRunning}>
+                                                        <button type="submit" className="btn btn-primary" disabled={!selected || apiCall || isSubmitting || (!isRunning && (type==="practice" || type==="mock"))}>
                                                             {isSubmitting ? <ButtonLoader /> : 'Submit Answer'}
                                                         </button>
                                                     </div>
                                                 }
                                                 <div className="col-6 pe-1 pt-3">
                                                     <button type="button" className="btn btn-secondary" onClick={handlePreviousQuestion}
-                                                        disabled={currentIndex === 0 || apiCall || !isRunning}>
+                                                        disabled={currentIndex === 0 || apiCall || (!isRunning && (type==="practice" || type==="mock"))}>
                                                         {isGettingPrevious ? <ButtonLoader /> : 'Previous Question'}
                                                     </button>
                                                 </div>
                                                 <div className="col-6 ps-1 pt-3">
                                                     <button type="button" className={`btn ${isGettingNext ? 'btn-secondary' : 'btn-primary'}`} onClick={handleNextQuestion}
-                                                        disabled={currentIndex === questionsCount.length - 1 || apiCall || !isRunning}>
+                                                        disabled={currentIndex === questionsCount.length - 1 || apiCall || (!isRunning && (type==="practice" || type==="mock"))}>
                                                         {isGettingNext ? <ButtonLoader /> : 'Next Question'}
                                                     </button>
                                                 </div>
@@ -836,6 +884,7 @@ const handleFinishSave = async () => {
                                                     questCountDetails={questCountDetails}
                                                     apiCall={apiCall}
                                                     isTimmerRunning={isRunning}
+                                                    type={type}
                                                 />)
                                         }
                                     </div>

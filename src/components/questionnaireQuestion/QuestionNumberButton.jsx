@@ -1,6 +1,6 @@
 // import React from 'react'
 import './QuestionNumberButton.css'
-function QuestionNumberButton({ number, activeQuestionIndex, handleChangeQuestion, questCountDetails, apiCall, isTimmerRunning }) {
+function QuestionNumberButton({ number, activeQuestionIndex, handleChangeQuestion, questCountDetails, apiCall, isTimmerRunning,type }) {
   // console.log("questCountDetails::", questCountDetails)
   // Pending
   // Correct
@@ -10,7 +10,7 @@ function QuestionNumberButton({ number, activeQuestionIndex, handleChangeQuestio
       <button
         className={`question-index-btn  ${questCountDetails?.customer_answer === 'Incorrect' ? ' wrong-index-btn' : ''} ${questCountDetails?.customer_answer === 'Correct' ? ' correct-index-btn' : ''} ${questCountDetails?.customer_answer === 'Removed' ? ' removed-index-btn' : ''} ${questCountDetails?.slug === activeQuestionIndex ? ' active-index-btn' : ''} ${questCountDetails?.removed === 1 ? 'removed-index-btn' : ''}`}
         onClick={() => handleChangeQuestion(questCountDetails?.slug)}
-        disabled={apiCall || !isTimmerRunning}
+        disabled={apiCall || (!isTimmerRunning && (type==="practice" || type==="mock"))}
       >
         {questCountDetails?.is_flagged_count ===1 &&
           <span className='btn-flagged-question-container'>

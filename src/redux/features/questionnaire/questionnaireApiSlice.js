@@ -11,7 +11,7 @@ export const questionnaireApiSlice = apiSlice.injectEndpoints({
             providesTags:["update_question_count"]
         }),
         getSingleQuestion: builder.query({
-            query: (questionId) => `/question/${questionId}`
+            query: ({id,mock_id}) => `/question/${id}/${mock_id}`
         }),
         questionAnswer: builder.mutation({
             query: (body)=>({

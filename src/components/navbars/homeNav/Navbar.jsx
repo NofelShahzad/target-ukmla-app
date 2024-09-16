@@ -48,7 +48,7 @@ function Navbar() {
               </li>
               <li>
                 <NavLink to="/mocks">
-                  Mocks</NavLink>
+                  Big Mocks</NavLink>
               </li>
               <li>
                 <NavLink to="/contact-us">

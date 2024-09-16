@@ -1,0 +1,32 @@
+/* Webinars Heading */
+.webinars-heading {
+    font-size: 2.2em;
+    color: #0077b6;
+    margin-bottom: 20px;
+}
+
+/* Webinars Description */
+.webinars-description {
+    font-size: 1em;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/* Webinar List */
+.webinar-list {
+    margin-bottom: 20px;
+    list-style: none;
+    padding-left: 0;
+}
+
+.webinar-list li {
+    font-size: 1em;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/* Cost and Reminder Text */
+.webinars-footer {
+    font-size: 0.9em;
+    color: #555;
+}

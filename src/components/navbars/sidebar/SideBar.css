@@ -65,10 +65,12 @@ aside.sidebar-wrapper .sidebar-body{
     flex-direction: column;
     justify-content: space-between;
     height: calc(100% - 90px);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 aside.sidebar-wrapper .sidebar-menu{
     list-style-type: none;
-    height: 50%;
+    /* height: 50%; */
     padding-left: 10px;
 }
 aside.sidebar-wrapper .sidebar-menu li {

@@ -67,7 +67,7 @@ function BigmockDetail() {
                                     <p>£130 per person<br /> (Includes a dedicated WhatsApp group with access to course tutors to answer questions, revision slides and the NEW BIG MOCK, which would be discussed in-depth).</p>
                                 </div> */}
                                 <div className="bigmocks-card-footer">
-                                  <button type='button' className='btn btn-primary' onClick={()=>handleNavigate()}>Start Mock</button>
+                                  <button type='button' className='btn btn-primary' onClick={()=>handleNavigate()}>{singleMock?.paused?'Continue':'Start'} Mock</button>
                                   {/* <button type='button' className='btn btn-primary' onClickCapture={()=>handleNavigate()}>Pruchase</button> */}
                               </div>
 

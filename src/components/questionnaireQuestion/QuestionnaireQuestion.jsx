@@ -3,7 +3,7 @@ import { Markup } from "react-render-markup";
 
 const alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S'];
 
-function QuestionnaireQuestion({ selectedValue, handleChange, questionDetails,isTimmerRunning }) {
+function QuestionnaireQuestion({ selectedValue, handleChange, questionDetails,isTimmerRunning,type }) {
     // console.log("questionDetails::", questionDetails)
     // console.log("selectedValue::",selectedValue)
     const totalSelectedCount = questionDetails?.options.reduce((acc, opt) => {
@@ -30,7 +30,7 @@ function QuestionnaireQuestion({ selectedValue, handleChange, questionDetails,is
                                         value={opt?.id}
                                         checked={selectedValue === opt?.id}
                                         onChange={(e) => handleChange(e)}
-                                        disabled={!!questionDetails?.answer && selectedValue !== opt?.id || !isTimmerRunning} />
+                                        disabled={!!questionDetails?.answer && selectedValue !== opt?.id || (!isTimmerRunning && (type==="practice" || type==="mock"))} />
 
                                     <div className="question-label-result col-11">
                                         <p>{alphabets[index]}. {opt?.description}</p>

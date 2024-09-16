@@ -38,13 +38,13 @@ function QuestionsBank() {
                                     <h2 className='title'>My Stuff</h2>
                                     <div className='footer'>
                                         <div className='col-6 p-1'>
-                                            <Link to='flagged-questions' className='btn btn-secondary my-1 w-100'>Flagged Questions</Link>
+                                            <Link to='questions-bank/flagged-questions' className='btn btn-secondary my-1 w-100'>Flagged Questions</Link>
                                         </div>
                                         <div className='col-6 p-1'>
-                                            <Link to='flagged-guides' className='btn btn-secondary my-1 w-100'>Flagged Guides</Link>
+                                            <Link to='questions-bank/flagged-guides' className='btn btn-secondary my-1 w-100'>Flagged Guides</Link>
                                         </div>
                                         <div className='col-6 p-1'>
-                                            <Link to='comments' className='btn btn-secondary my-1 w-100'>View Comments</Link>
+                                            <Link to='questions-bank/comments' className='btn btn-secondary my-1 w-100'>View Comments</Link>
                                         </div>
                                         <div className='col-6 p-1'>
                                             <button className='btn btn-secondary my-1 w-100'>View Notes</button>

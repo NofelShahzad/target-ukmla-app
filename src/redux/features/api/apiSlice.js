@@ -34,7 +34,7 @@ const baseQuery = fetchBaseQuery({
   const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: baseQueryWithSessionCheck,
-    keepUnusedDataFor: 5,
+    keepUnusedDataFor: 0,
     tagTypes: ["update_question_count"],
     endpoints: () => ({}),
   });

@@ -1,0 +1,78 @@
+/* Question Bank Heading */
+.question-bank-heading {
+    font-size: 2.2em;
+    color: #0077b6;
+    margin-bottom: 20px;
+}
+
+/* Paragraph Text */
+.question-bank-description {
+    font-size: 1em;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+/* Box Section Styling */
+.subscription-box {
+    background-color: #f9f9f9;
+    border: 1px solid #e3e3e3;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Left Box Icon */
+.subscription-icon {
+    font-size: 4em;
+    color: #0077b6;
+    margin-right: 20px;
+    height: 150px;
+    width: 150px;
+    background: #eee;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Box Content */
+.subscription-details {
+    flex: 1;
+}
+
+.subscription-title {
+    font-size: 1.5em;
+    color: #0077b6;
+    margin-bottom: 10px;
+}
+
+.subscription-description {
+    margin-bottom: 18px;
+    font-size: 0.9em;
+    color: #333;
+}
+
+.subscription-description span {
+    font-weight: bold;
+}
+
+/* Sign Up Button */
+.signup-button {
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    width: fit-content;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+.signup-button:hover {
+    background-color: #005f8b;
+}

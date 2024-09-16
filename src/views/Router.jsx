@@ -29,6 +29,10 @@ import { useGetLoggedInUserQuery } from '../redux/features/auth/authApi';
 import PracticeMocks from './dashboard/practice-mocks/PracticeMocks';
 import BigMock from './frontSite/BigMock';
 import Contactus from './frontSite/contactus/Contactus';
+import Home from './frontSite/home/Home';
+import QuestionBank from './frontSite/questionBank/QuestionBank';
+import Webinar from './frontSite/webinar/Webinar';
+import PracticeDetail from './dashboard/practice-mocks/PracticeDetail';
 
 const RouterWrapper = () => {
     const isUserAuthenticated = useSelector(state => !!state.auth.user);
@@ -98,10 +102,10 @@ const RouterWrapper = () => {
                         </ProtectedRoute>
                     }
                 />
-                <Route path="/home" element={ <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/"><div className="container"> <h3 className="my-4 text-center">Home</h3></div></ProtectedRoute>} />
-                <Route path="question-bank" element={<div className="container"> <h3 className="my-4 text-center">Question Bank</h3></div>} />
+                <Route path="/home" element={ <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/"><Home/></ProtectedRoute>} />
+                <Route path="question-bank" element={<QuestionBank/>} />
                 <Route path="mocks" element={<BigMock/>} />
-                <Route path="webinar" element={<div className="container"> <h3 className="my-4 text-center">Webinars</h3></div>} />
+                <Route path="webinar" element={<Webinar/>} />
                 <Route path="contact-us" element={<Contactus/>} />
 
                 <Route path="reset-password" element={<ResetPassword title={"Forget Password"}/>} />
@@ -117,19 +121,19 @@ const RouterWrapper = () => {
                 }
             >
                     <Route index element={<QuestionsBank/>} />
-                <Route path="questions-bank" >
-                <Route index element={<Dashboard />} />
-                    <Route path='comments' element={<AllComments/>}/>
-                    <Route path='flagged-questions' element={<FlaggedQuestion/>}/>
-                    <Route path='flagged-guides' element={<FlaggedGuides/>}/>
-
+                <Route path="questions-bank">
+                  <Route index element={<Dashboard />} />
+                  <Route path='comments' element={<AllComments/>}/>
+                  <Route path='flagged-questions' element={<FlaggedQuestion/>}/>
+                  <Route path='flagged-guides' element={<FlaggedGuides/>}/>
                 </Route>
-                <Route path="big-mocks"  >
+                <Route path="big-mocks">
                     <Route index element={<BigMocks/>}/>
                     <Route path='detail/:mock_id' element={<BigmockDetail/>}/>
                 </Route>
                 <Route path='practice-mocks'>
                   <Route index element={<PracticeMocks/>}/>
+                  <Route path='detail/:practice_id' element={<PracticeDetail/>}/> 
                 </Route>
                 <Route path="webinars" element={<Webinars/>} />
                 <Route path="contactus" element={<ContactUs/>} />

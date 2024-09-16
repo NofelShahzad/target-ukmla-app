@@ -11,7 +11,7 @@ export const mocksApiSlice = apiSlice.injectEndpoints({
             query: ()=>`/practice-mocks`
         }),
         getAllQuesionOfMock: builder.query({
-            query: (id)=>`/mocks/${id}`,
+            query: ({id,current_date})=>`/mocks/${id}?current_date=${current_date}`,
             providesTags:["mock_all_quesion_count","update_question_count"]
         }),
         buyMockPlan: builder.mutation({

@@ -1,0 +1,597 @@
+
+:root {
+    --color-white: #ffffff;
+    --color-blue: #5eb9f0;
+    --color-black: #000000;
+    --color_text_one: #333333;
+}
+
+.flex_center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.banner_container {
+    height: 70vh;
+}
+
+.banner_container .banner_wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.banner_container .banner_wrapper .banner_video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    height: 100%;
+    width: 100%;
+}
+
+.video_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.17);
+    z-index: 9;
+}
+.banner_container .banner_wrapper .banner_video video {
+    object-fit: cover;
+    width: 100% !important;
+    height: 100% !important;
+}
+.banner_container .banner_wrapper {
+    height: 100%;
+}
+
+.banner_container .banner_wrapper .banner_text_box {
+    position: relative;
+    height: 100%;
+    z-index: 10;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 5rem;
+}
+.banner_container .banner_wrapper .banner_text_box h1 {
+    font: 500 30px/30px var(--font-family);
+    text-align: left;
+    color: var(--color-white);
+}
+.banner_container .banner_wrapper .banner_text_box p {
+    margin-top: 16px;
+    font: 400 18px/24px var(--font-family);
+    text-align: left;
+    color: var(--color-white);
+}
+.banner_container .banner_wrapper .banner_text_box .banner_buttons {
+    margin-top: 16px;
+}
+.banner_container .banner_wrapper .banner_text_box .banner_buttons button {
+    font: 500 16px/16px var(--font-family);
+    border: 1px solid var(--color-white);
+    background-color: transparent;
+    color: var(--color-white);
+    width: 65px;
+    height: 40px;
+    border-radius: 5px;
+    margin-right: 16px;
+    cursor: pointer;
+}
+
+
+.motive_section_container {
+    margin-top: 48px;
+}
+.motive_section_container {
+    height: 100%;
+}
+.motive_section_container {
+    padding: 0 60px;
+}
+.motive_section_container .motive_content {
+    flex-direction: column;
+    align-items: flex-start;
+}
+.motive_section_container .motive_content h2 {
+    font: 800 24px/24px var(--font-family);
+    color: var(--color-blue);
+}
+.motive_section_container .motive_content .motive_box_wrapper {
+    align-items: flex-start;
+    margin-top: 32px;
+}
+.motive_section_container .motive_content .motive_box_wrapper .motive_box {
+    width: 100%;
+    align-items: flex-start;
+}
+
+.motive_section_container .motive_content .motive_img img {
+    width: 115px;
+    object-fit: contain;
+}
+.motive_section_container .motive_content .motive_box_wrapper .motive_box p {
+    font: 400 16px/20px var(--font-family);
+    color: var(--color_text_one);
+}
+/* /////////////motive section */
+
+/* why us part  */
+.whyus_section {
+    margin-top: 48px;
+}
+.whyus_section .whyus_part {
+    gap: 48px;
+}
+.whyus_section .whyus_part .why_video .video video {
+    width: 100%;
+    height: 320px;
+}
+.whyus_section .whyus_part .why_content h2 {
+    font: 600 32px/32px var(--font-family);
+    color: var(--color-blue);
+}
+.whyus_section .whyus_part .why_content span {
+    font: 500 16px/19px var(--font-family);
+    color: var(--color_text_one);
+    width: 640px;
+}
+.whyus_section .whyus_part .why_content button {
+    font: 500 14px/16px var(--font-family);
+    display: inline-block;
+    white-space: nowrap;
+    cursor: pointer;
+    background: var(--color-white);
+    border: 1px solid var(--color-blue);
+    color: var(--color-blue);
+    -webkit-appearance: none;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: 0;
+    margin: 0;
+    -webkit-transition: 0.1s;
+    transition: 0.1s;
+    padding: 12px 20px;
+    border-radius: 4px;
+}
+
+.whyus_section .whyus_part .why_content button span {
+    color: var(--color-blue);
+}
+.whyus_section .whyus_part .why_content .why_action button:last-child {
+    background: var(--color-blue);
+    border: 1px solid var(--color-blue);
+    color: var(--color-white);
+    /* margin-left: 12px; */
+}
+.whyus_section .whyus_part .why_content .why_action button:last-child span {
+    color: var(--color-white);
+}
+
+.whyus_section .whyus_part .why_content button:hover {
+    background: var(--color-blue);
+    color: var(--color-white);
+}
+.whyus_section .whyus_part .why_content button:hover span {
+    color: var(--color-white);
+}
+.whyus_section .whyus_part .why_content button:last-child:hover {
+    background: var(--color-white);
+    color: var(--color-blue);
+}
+.whyus_section .whyus_part .why_content button:last-child:hover span {
+    color: var(--color-blue);
+}
+
+/* why us part  */
+
+/* /////sign up section */
+.signup_section {
+    margin-top: 48px;
+    background-image: url("./assets/images/signup_image.jpeg");
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.signup_section .signup_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(2, 158, 206, 0.7);
+}
+.signup_section .signup_section_bg {
+    position: relative;
+    z-index: 10;
+    height: 352px;
+}
+.signup_section .signup_section_bg .signup_section_content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    text-align: center;
+    padding: 64px;
+}
+.signup_section .signup_section_bg .signup_section_content h2 {
+    font: 600 32px/32px var(--font-family);
+    color: var(--color-white);
+}
+.signup_section .signup_section_bg .signup_section_content span {
+    font: 500 18px/22px var(--font-family);
+    color: var(--color-white);
+}
+.signup_section .signup_section_bg .signup_section_content a {
+    font: 500 18px/20px var(--font-family);
+    border: 1px solid var(--color-white);
+    background-color: transparent;
+    color: var(--color-white);
+    width: 96px;
+    height: 42px;
+    border-radius: 3px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* /////sign up section */
+
+
+
+@media (max-width:500px) {
+    .banner_container {
+        height: 100vh;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .banner_container .banner_wrapper .banner_text_box {
+        padding: 0;
+    }
+    .banner_container .banner_wrapper .banner_text_box h1 {
+        font: 500 26px/26px var(--font-family);
+    }
+    .banner_container .banner_wrapper .banner_text_box p {
+        font: 400 18px/22px var(--font-family);
+    }
+}
+@media screen and (max-width: 768px) {
+    .banner_container .banner_wrapper .banner_text_box h1 {
+        font: 500 18px/18px var(--font-family);
+    }
+    .banner_container .banner_wrapper .banner_text_box p {
+        font: 400 14px/18px var(--font-family);
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .motive_section_container .motive_section_wrapper .container {
+        padding: 0 1rem;
+    }
+    .whyus_section .container {
+        padding: 0 1rem;
+    }
+
+    /* why uss  */
+    .whyus_section .whyus_part .why_content {
+        width: 30rem;
+    }
+    .whyus_section .whyus_part .why_content span {
+        width: auto;
+    }
+    /* why uss  */
+}
+
+
+@media screen and (max-width: 992px) {
+    /* ///motive section */
+    .motive_section_container {
+        margin-top: 3rem;
+    }
+    .motive_section_container .motive_section_wrapper .container .motive_content h2 {
+        text-align: center;
+    }
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper {
+        flex-wrap: wrap;
+        gap: 2rem;
+        align-items: flex-start;
+    }
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper
+        .motive_box {
+        width: 20rem;
+    }
+
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper
+        .motive_box
+        .motive_img {
+        width: 8rem;
+    }
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper
+        .motive_box
+        .motive_img
+        img {
+        width: 8rem;
+    }
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper
+        .motive_box
+        .motive_img
+        p {
+        width: 80%;
+    }
+    .whyus_section .whyus_part {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .whyus_section .whyus_part .why_content {
+        width: 60%;
+    }
+
+    .downloadapp_section {
+        margin-top: 3rem;
+    }
+    .downloadapp_part {
+        gap: 2rem;
+        flex-direction: column;
+        align-items: center;
+    }
+    .downloadapp_part .downloadapp_content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 3rem;
+        width: 75%;
+    }
+    .downloadapp_part .downloadapp_content h2 {
+        font: 600 2rem/2.1rem var(--font-family);
+    }
+    .downloadapp_part .downloadapp_content span {
+        font: 500 1.2rem/1.5rem var(--font-family);
+    }
+    .downloadapp_part .downloadapp_image {
+        width: 75%;
+    }
+    /* //sign up section */
+    .signup_section .signup_section_bg .signup_section_content {
+        width: 90%;
+        padding: 1rem;
+    }
+    .signup_section .signup_section_bg .signup_section_content h2 {
+        font: 500 2rem/2.1rem var(--font-family);
+    }
+    .signup_section .signup_section_bg .signup_section_content span {
+        font: 500 1rem/1.3rem var(--font-family);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* ///motive section */
+
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper {
+        flex-wrap: wrap;
+        gap: 2rem;
+        align-items: flex-start;
+    }
+
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper
+        .motive_box {
+        width: 100%;
+    }
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper
+        .motive_box
+        .motive_img {
+        width: 8rem;
+    }
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper
+        .motive_box
+        .motive_img
+        img {
+        width: 8rem;
+    }
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper
+        .motive_box
+        .motive_img
+        p {
+        width: 80%;
+    }
+
+    .whyus_section .whyus_part .why_content {
+        width: 80%;
+    }
+    /* //sign up section */
+    .signup_section .signup_section_bg .signup_section_content {
+        width: 90%;
+        padding: 1rem;
+    }
+    .signup_section .signup_section_bg .signup_section_content h2 {
+        font: 600 1.8rem/1.9rem var(--font-family);
+    }
+    .signup_section .signup_section_bg .signup_section_content span {
+        font: 500 0.9rem/1.2rem var(--font-family);
+    }
+
+    .banner_container .banner_wrapper .container .banner_text_box {
+        width: 100%;
+        align-items: flex-start;
+        padding: 0 0.5rem;
+    }
+
+    .banner_container .banner_wrapper .container .banner_text_box h1 {
+        font: 500 20px/26px var(--font-family);
+    }
+    .banner_container .banner_wrapper .container .banner_text_box p {
+        font: 300 16px/26px var(--font-family);
+        margin-top: 0.5rem;
+    }
+    .banner_container .banner_wrapper .container .banner_text_box .banner_buttons {
+        margin-top: 0.5rem;
+    }
+    .banner_container .banner_wrapper .container .banner_text_box .banner_buttons button {
+        font: 500 16px/16px var(--font-family);
+        width: fit-content;
+        padding: 10px;
+    }
+
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper
+        .motive_box {
+        width: 20rem;
+        flex-direction: column;
+        align-items: center;
+    }
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper
+        .motive_box
+        .motive_img {
+        width: 8rem;
+    }
+    .motive_section_container .motive_section_wrapper {
+        height: 100%;
+        align-items: center;
+    }
+    .motive_section_container .motive_section_wrapper .container .motive_content h2 {
+        font: 600 1.4rem/1.5rem var(--font-family);
+        text-align: center;
+    }
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper {
+        margin-top: 1rem;
+        gap: 2rem;
+    }
+    .motive_section_container
+        .motive_section_wrapper
+        .container
+        .motive_content
+        .motive_box_wrapper
+        .motive_box
+        p {
+        font: 400 1rem/1.3rem var(--font-family);
+        text-align: center;
+    }
+    /* ///why us */
+    .whyus_section .whyus_part {
+        flex-direction: column;
+    }
+    .whyus_section .whyus_part .why_video .video video {
+        width: 18rem;
+        height: 10rem;
+    }
+    .whyus_section .whyus_part .why_content {
+        align-items: center;
+        text-align: center;
+        width: 90%;
+    }
+    .whyus_section .whyus_part .why_content span {
+        width: 17rem;
+    }
+    .whyus_section .whyus_part .why_content .why_action button:last-child {
+        margin: 1rem 0 0 0;
+    }
+    /* ///why us */
+    /* ///download appp */
+    /* .downloadapp_section {
+        margin-top: 3rem;
+    }
+    .downloadapp_part {
+        gap: 2rem;
+        flex-direction: column;
+        align-items: center;
+    }
+    .downloadapp_part .downloadapp_content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 2rem;
+        width: 95%;
+    }
+    .downloadapp_part .downloadapp_content h2 {
+        font: 600 1.5rem/1.6rem var(--font-family);
+    }
+    .downloadapp_part .downloadapp_content span {
+        font: 400 1rem/1.3rem var(--font-family);
+    }
+    .downloadapp_part .downloadapp_image {
+        width: 90%;
+    } */
+    /* ///download appp */
+
+    /* //sign up section */
+    .signup_section .signup_section_bg .signup_section_content {
+        width: 90%;
+        padding: 1rem;
+    }
+    .signup_section .signup_section_bg .signup_section_content h2 {
+        font: 600 1.5rem/1.6rem var(--font-family);
+    }
+    .signup_section .signup_section_bg .signup_section_content span {
+        font: 400 0.8rem/1.1rem var(--font-family);
+        font-size: 0.8rem;
+    }
+}
+

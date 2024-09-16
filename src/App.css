@@ -1,11 +1,11 @@
 :root {
-  --themecolor:  #007aff;
+  --themecolor:  #5eb9f0;
   --text-dark: #0f0f0f;
   --text-light: #fff;
-  --border-color:  #007aff;
-  --title-color:  #007aff;
-  --anchor-hover:  #007aff;
-  --checked-question:  #007aff;
+  --border-color:  #5eb9f0;
+  --title-color:  #5eb9f0;
+  --anchor-hover:  #5eb9f0;
+  --checked-question:  #5eb9f0;
   --body-bg: #fff;
   --light-bg: #fff;
   --dark-background: #C5C5C5;
@@ -19,14 +19,14 @@
   --err-text-color: #ea0000;
   --err-bg: #ea0000;
   --flag-marked: #ea0000;
-  --btn-primary-bg:  #007aff;
+  --btn-primary-bg:  #5eb9f0;
   --btn-primary-text: #fff;
   --navbar-dark-text: #012f46;
-  --navbar-theme-text:  #007aff;
-  --active-color:  #007aff;
+  --navbar-theme-text:  #5eb9f0;
+  --active-color:  #5eb9f0;
   /* --backdrop: rgb(1, 47, 70,0.78); */
-  --signup-progressbar-bg:  #007aff;
-  --dash-nav-icon-bg:  #007aff;
+  --signup-progressbar-bg:  #5eb9f0;
+  --dash-nav-icon-bg:  #5eb9f0;
   --dash-nav-icon-hoverbg : #0F0F0F;
   --dash-navitem-bg: #F6F6F6;
   --wrong-color: #BF0303;
@@ -34,11 +34,11 @@
   --not-attempt-color: #BFBFBF;
   --removed-color: #535353;
   --backdrop-color: #012f46d4;
-  --theme-heading-color:  #007aff;
+  --theme-heading-color:  #5eb9f0;
   --wrong-question-btn-bg: #ea0000;
   --correct-question-btn-bg: #00B221;
   --removed-question-btn-bg: #555555;
-  --btn-loader: #007aff;
+  --btn-loader: #5eb9f0;
 }
 
 * {
@@ -57,6 +57,13 @@ body{
   font-family: "Poppins", sans-serif;
   color: var(--text-dark);
   /* background-color: #FBFFF4; */
+}
+.btn-primary {
+  background: var(--btn-primary-bg);
+  border-radius: 5px;
+  color: var(--btn-primary-text);
+  transition: all 0.2s ease-in-out;
+  border-color: #5eb9f0;
 }
 .text-primary{
   color: var(--text-primary);
@@ -78,9 +85,9 @@ input.form-control {
 }
 
 input.form-control:focus,textarea:focus {
-  border: 1px solid #007aff !important;
+  border: 1px solid #5eb9f0 !important;
   background: #FFFFFF 0% 0% no-repeat padding-box !important;
-  box-shadow: 0px 0px 8px #007AFF47 !important;
+  box-shadow: 0px 0px 8px #5eb9f047 !important;
   outline: none;
   transition: all 0.15s ease-in-out;
 }
@@ -478,10 +485,10 @@ input.input-error{
   border: 1px solid #D8D8D8;
   transition: all 0.15s ease-in-out;
 }
-/* .single-question-card:hover{
+.single-question-card:hover{
   border-color: var(--active-color);
   color: var(--active-color);
-} */
+}
 .single-question-card .single-question-header .img-container{
   height: 55px;
   width: 55px;
@@ -1127,7 +1134,11 @@ input.input-error{
 
 
 /* Questionnaire END */
-
+@media (max-width: 500px) {
+  .cred-page-wrapper .cred-page-inner-wrapper{
+    padding: 20px;
+  }
+}
 
 @media (width <= 768px) {
   

@@ -107,6 +107,12 @@ function DashboardHeader() {
                 </div>
                 <ul className="menu-dropdown">
                   <li>
+                    <Link className="nav-link" to="/">
+                      <span>Gems</span>
+                    </Link>
+                  </li>
+
+                  <li>
                     <div className="nav-link" to="/">
                       <div className='dropmenu-item'>
                         <span>Questions</span>
@@ -145,11 +151,7 @@ function DashboardHeader() {
                       </ul>
                     </div>
                   </li>
-                  <li>
-                    <Link className="nav-link" to="/">
-                      <span>Gems</span>
-                    </Link>
-                  </li>
+
 
                 </ul>
               </div>
