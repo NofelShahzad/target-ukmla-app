@@ -280,7 +280,17 @@ header.dashboard-header-wrapper nav ul.nav-body li.nav-notification-container .n
 }
 header.dashboard-header-wrapper nav ul.nav-body li.nav-notification-container .notification-dropdown-wrapper .notification-dropdown-inner-wrapper .single-notification{
     font-weight: 400;
-    padding: 5px 10px;
+    position: relative;
+    padding: 5px 15px 5px 10px;
+}
+header.dashboard-header-wrapper nav ul.nav-body li.nav-notification-container .notification-dropdown-wrapper .notification-dropdown-inner-wrapper .single-notification:after{
+    position: absolute;
+    width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  align-self: center;
+  flex-shrink: 0;
 }
 header.dashboard-header-wrapper nav ul.nav-body li.nav-notification-container .notification-dropdown-wrapper .notification-dropdown-inner-wrapper .single-notification:hover{
     background-color: #5DEF782B;

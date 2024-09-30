@@ -613,12 +613,22 @@ input.input-error{
     min-width: 400px;
 
 }
+
+.detail-modal.lab-values-modal {
+  width: 50%;
+  position: relative;
+}
 .detail-modal-lg{
   width: 95%;
 }
 
 .close-btn-container {
   text-align: right;
+}
+.detail-modal.lab-values-modal .close-btn-container{
+  position: absolute;
+  right: 0;
+  top: 6px;
 }
 .close-btn-container img{
   cursor: pointer;
@@ -632,11 +642,18 @@ input.input-error{
   padding-bottom: 10px;
 }
 .detail-modal .title-wrapper .title{
-    color: var(--theme-heading-color);
-    font-size: 16px;
-    text-align: center;
-    font-weight: 700;
-    margin-bottom: 2px;
+  color: var(--theme-heading-color);
+  font-size: 16px;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.detail-modal.lab-values-modal .title-wrapper .title{
+  line-height: 24px;
+  font-size: 18px;
+  color: #303133;
+  text-align: left;
+  padding-top: 20px;
 }
 .detail-modal .title-wrapper .date-time-wrapper{
   font-size: 14px;
@@ -886,6 +903,7 @@ input.input-error{
 }
 .questionnaire-wrapper .questionnaire-inner-wrapper .question-container .questionnaire-question-container{
   padding: 20px;
+  user-select: none;
 }
 .questionnaire-wrapper .questionnaire-inner-wrapper .question-container .questionnaire-form-actions-btn-wrapper{
   padding: 20px;
@@ -1009,6 +1027,7 @@ input.input-error{
   justify-content: space-between;
   padding-left: 5px;
   z-index: 9;
+  gap: 10px;
 }
 .questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option .question-label-result p{
   margin: 0;
@@ -1131,6 +1150,14 @@ input.input-error{
   border-radius: 8px;
 }
 
+.notif__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  align-self: center;
+  flex-shrink: 0;
+}
 
 
 /* Questionnaire END */
@@ -1148,7 +1175,7 @@ input.input-error{
 }
 
 @media (min-width: 576px) {
-  .detail-modal {
+  .detail-modal, .detail-modal.lab-values-modal {
     /* max-width: 500px; */
     max-width: 90%;
     margin: 1.75rem auto;

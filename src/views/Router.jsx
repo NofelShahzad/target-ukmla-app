@@ -33,6 +33,8 @@ import Home from './frontSite/home/Home';
 import QuestionBank from './frontSite/questionBank/QuestionBank';
 import Webinar from './frontSite/webinar/Webinar';
 import PracticeDetail from './dashboard/practice-mocks/PracticeDetail';
+import AllNotifications from './dashboard/notification/AllNotifications';
+import NotificationDetail from './dashboard/notification/NotificationDetail';
 
 const RouterWrapper = () => {
     const isUserAuthenticated = useSelector(state => !!state.auth.user);
@@ -141,7 +143,8 @@ const RouterWrapper = () => {
                 {/* <Route path=':questionnaire_Id' element={<Questionnaire isMock={false}/>}/> */}
                 <Route path='/mock/:mock_id/:question_Id' element={<Questionnaire isMock={true} type={"mock"}/>}/>
                 <Route path='/practice/:practice_id/:question_Id' element={<Questionnaire isMock={true} type={"practice"}/>}/>
-
+                <Route path='/notifications' element={<AllNotifications/>} />
+                <Route path='/notifications/:notification_id' element={<NotificationDetail/>} />
 
             </Route>
         </Routes>

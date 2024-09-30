@@ -1,0 +1,51 @@
+.labvalues .lab-content {
+    max-height: 506px;
+    overflow-y: scroll;
+    color: #606266!important;
+}
+
+.labvalues .lab-content .lab-item {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+.labvalues .lab-content .lab-item .lab-title {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+.labvalues p {
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0;
+}
+.labvalues .lab-content .lab-item .lab-title {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+.labvalues .lab-content .lab-item .lab-list {
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    word-break: break-word;
+}
+.labvalues .lab-content .lab-item .lab-list .list-name {
+    flex: 1;
+    padding-right: 10px;
+}
+.labvalues .lab-content .lab-item .lab-list .list-desc {
+    flex: 2;
+}
+
+colorcyan {
+    color: #45818e;
+}
+
+.labvalues .lab-box {
+    margin-bottom: 15px;
+}
+
+.labvalues .lab-box.bottom {
+    margin-top: 15px;
+}

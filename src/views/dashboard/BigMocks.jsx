@@ -63,37 +63,39 @@ function BigMocks() {
 
     const handlePurchaseBigMock = async()=>{
       try {
+        // console.log("purchaseId:::",purchaseId)
         setIsPurchasing({
           id:purchaseId?.id,
           loading:true,
         })
         setConfirmPurchaseModal(false);
-        const body = {
-          mock_id: purchaseId?.id,
-          days : 30
-        } 
-        const {data, error} = await buyMockPlan(body);
-        if (data) {
-          if (data?.status) {
-            successMessage(data?.message);
-          }
-          if (!data?.status) {
-            errorMessage(data?.message);
-          }
-          setIsPurchasing({
-            id:null,
-            loading: false,
-          })
-        }
-        if (error) {
-          if (error?.data?.message) {
-              errorMessage(error?.data?.message);
-            }
-            setIsPurchasing({
-              id:null,
-              loading: false,
-            })
-        }
+        window.open(purchaseId?.link, '_self');
+        // const body = {
+        //   mock_id: purchaseId?.id,
+        //   days : 30
+        // } 
+        // const {data, error} = await buyMockPlan(body);
+        // if (data) {
+        //   if (data?.status) {
+        //     successMessage(data?.message);
+        //   }
+        //   if (!data?.status) {
+        //     errorMessage(data?.message);
+        //   }
+        //   setIsPurchasing({
+        //     id:null,
+        //     loading: false,
+        //   })
+        // }
+        // if (error) {
+        //   if (error?.data?.message) {
+        //       errorMessage(error?.data?.message);
+        //     }
+        //     setIsPurchasing({
+        //       id:null,
+        //       loading: false,
+        //     })
+        // }
       } catch (err) {
         console.log("err::",err);
       }

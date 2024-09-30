@@ -17,6 +17,7 @@ import { errorMessage, successMessage } from "../../../components/toastMessages/
 import { useFinishMockTimerMutation, useGetAllQuesionOfMockQuery, useMockTimeCheckerMutation, useResetMockMutation, useStartMockTimerMutation } from "../../../redux/features/mocks/MocksApiSlice";
 import Timer from "../../../components/timer/Timer";
 import { getCurrentTimeDate } from "../../../utils/util";
+import { useGetAllCommentsQuery, useLikeDislikeCommentMutation, useUpdateCommentMutation } from "../../../redux/features/commentsApi/commentsApiSlice";
 
 // const questionNumbers = Array.from({ length: 95 }, (_, i) => i + 1);
 function Questionnaire({ isMock, type }) {
@@ -60,37 +61,7 @@ function Questionnaire({ isMock, type }) {
     const [mockTimeChecker] = useMockTimeCheckerMutation();
     
     const [removedQuestion, setRemovedQuestion] = useState(false);
-    const { data: getSingleQuestionData, error: getSingleQuestionError } = useGetSingleQuestionQuery({id:question_Id,mock_id:mock_id??practice_id??questionnaire_Id},{skip:!shouldFetch});
-
-    useEffect(() => {
-        if (getSingleQuestionData) {
-            if (getSingleQuestionData.status) {
-                // console.log("getSingleQuestionData::",getSingleQuestionData);
-                setSingleQuestionDetails(getSingleQuestionData?.question);
-                setSelectedValue('');
-                setSelected(false);
-                setActiveQuestionIndex(question_Id);
-                setFlagMarked(getSingleQuestionData?.question?.is_flagged_count === 1 ? true : false);
-                if (getSingleQuestionData?.question?.answer) {
-                    setSelectedValue(getSingleQuestionData?.question?.answer?.option_id)
-                }
-                setRemovedQuestion(false);
-            }
-            if (!getSingleQuestionData.status) {
-                setRemovedQuestion(true);
-            }
-            setApiCall(false);
-            setIsGettingPrevious(false);
-            setIsGettingNext(false);
-        }
-        if (getSingleQuestionError) {
-            // console.log("getSingleQuestionError::", getSingleQuestionError);
-            errorMessage(error?.data?.message);
-            setApiCall(false);
-            setIsGettingPrevious(false);
-            setIsGettingNext(false);
-        }
-    }, [getSingleQuestionData, getSingleQuestionError])
+    
 
     const handleGetSingleQuestion = async () => {
         try {
@@ -179,6 +150,60 @@ function Questionnaire({ isMock, type }) {
     // useEffect(() => {
     //     handleGetSingleQuestion()
     // }, [activeQuestionIndex])
+    const { data: getSingleQuestionData, error: getSingleQuestionError } = useGetSingleQuestionQuery({id:question_Id,mock_id:mock_id??practice_id??questionnaire_Id},{skip:!shouldFetch});
+
+    useEffect(() => {
+        if (getSingleQuestionData) {
+            if (getSingleQuestionData.status) {
+                // console.log("getSingleQuestionData::",getSingleQuestionData);
+                setSingleQuestionDetails(getSingleQuestionData?.question);
+                setSelectedValue('');
+                setSelected(false);
+                setActiveQuestionIndex(question_Id);
+                setFlagMarked(getSingleQuestionData?.question?.is_flagged_count === 1 ? true : false);
+                if (getSingleQuestionData?.question?.answer) {
+                    setSelectedValue(getSingleQuestionData?.question?.answer?.option_id)
+                }
+                setRemovedQuestion(false);
+            }
+            if (!getSingleQuestionData.status) {
+                setRemovedQuestion(true);
+            }
+            setApiCall(false);
+            setIsGettingPrevious(false);
+            setIsGettingNext(false);
+        }
+        if (getSingleQuestionError) {
+            // console.log("getSingleQuestionError::", getSingleQuestionError);
+            errorMessage(getSingleQuestionError?.data?.message);
+            setApiCall(false);
+            setIsGettingPrevious(false);
+            setIsGettingNext(false);
+        }
+    }, [getSingleQuestionData, getSingleQuestionError])
+
+    const [ allComments,setAllComments] = useState([]);
+    const {data: allCommentsData, error: allCommentsError} = useGetAllCommentsQuery({question_id:question_Id},{
+        skip: !shouldFetch
+    });
+    const [updateComment] = useUpdateCommentMutation();
+    const [likeDislikeComment] = useLikeDislikeCommentMutation();
+    useEffect(() => {
+        if (allCommentsData) {
+            if (allCommentsData?.status) {
+                setAllComments(allCommentsData?.comments);
+                // console.log("allCommentsDat::",allCommentsData)
+            }
+            if (!allCommentsData?.status) {
+                setAllComments([]);
+            }
+        }
+        if (allCommentsError) {
+            errorMessage(error?.data?.message);
+        }
+    
+    }, [allCommentsData,allCommentsError]);
+
 
 
     const handleCloseLabValuesModal = useCallback(() => {
@@ -753,6 +778,16 @@ const handleFinishSave = async () => {
     }
 };
 
+useEffect(() => {
+    // console.log(timeLeft,"beforeIff",isRunning)
+    if (timeLeft===0 && isRunning) {
+        // console.log("InIFf::")
+        handleFinishSave();
+    }
+}, [timeLeft,isRunning])
+
+
+
 
 
     return (
@@ -921,7 +956,7 @@ const handleFinishSave = async () => {
             </div>
 
             {labValuesModal &&
-                <ReactPortal wrapperId="external_modal_container">
+                <ReactPortal wrapperId="labvalues_external_modal_container">
                     <LabValuesInfo closeBtn={closeBtn} handleModal={handleCloseLabValuesModal} />
                 </ReactPortal>
             }

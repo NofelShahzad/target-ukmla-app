@@ -61,6 +61,7 @@ function Webinars() {
     const handleConfirmPurchase = (purchaseWebinar) => {
         setConfirmPurchaseModal(true);
         setPurchaseId(purchaseWebinar);
+
         // console.log("purchaseWebinar::",purchaseWebinar)
     }
 
@@ -71,28 +72,29 @@ function Webinars() {
                 loading:true,
               })
               setConfirmPurchaseModal(false);
-            const body = {webinar_id: purchaseId?.id}
-            const {data, error} = await buyWebinar(body);
-            if (data) {
-                if (data?.status) {
-                    successMessage(data?.message);
-                }
-                if (!data?.status) {
-                    errorMessage(data?.message);
-                }
-                setIsPurchasing({
-                    id:null,
-                    loading: false,
-                  })
-            }
-            if (error) {
-                console.log("error:",error);
-                errorMessage(error?.data?.message);
-                setIsPurchasing({
-                    id:null,
-                    loading: false,
-                  })
-            }
+              window.open(purchaseId?.link, '_self');
+            // const body = {webinar_id: purchaseId?.id}
+            // const {data, error} = await buyWebinar(body);
+            // if (data) {
+            //     if (data?.status) {
+            //         successMessage(data?.message);
+            //     }
+            //     if (!data?.status) {
+            //         errorMessage(data?.message);
+            //     }
+            //     setIsPurchasing({
+            //         id:null,
+            //         loading: false,
+            //       })
+            // }
+            // if (error) {
+            //     console.log("error:",error);
+            //     errorMessage(error?.data?.message);
+            //     setIsPurchasing({
+            //         id:null,
+            //         loading: false,
+            //       })
+            // }
         } catch (err) {
             console.log("err::",err);
         }
