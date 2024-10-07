@@ -11,7 +11,7 @@ function NotificationDetail() {
     useEffect(() => {
         if (data) {
             if (data?.status) {
-                console.log("data::", data);
+                // console.log("data::", data);
                 setNotificationDetails(data?.notification);
             }
             if (!data?.status) {

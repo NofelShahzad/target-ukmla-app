@@ -17,7 +17,7 @@ import { errorMessage, successMessage } from "../../../components/toastMessages/
 import { useFinishMockTimerMutation, useGetAllQuesionOfMockQuery, useMockTimeCheckerMutation, useResetMockMutation, useStartMockTimerMutation } from "../../../redux/features/mocks/MocksApiSlice";
 import Timer from "../../../components/timer/Timer";
 import { getCurrentTimeDate } from "../../../utils/util";
-import { useGetAllCommentsQuery, useLikeDislikeCommentMutation, useUpdateCommentMutation } from "../../../redux/features/commentsApi/commentsApiSlice";
+import { useAddCommentMutation, useGetAllCommentsQuery, useLikeDislikeCommentMutation, useUpdateCommentMutation } from "../../../redux/features/commentsApi/commentsApiSlice";
 
 // const questionNumbers = Array.from({ length: 95 }, (_, i) => i + 1);
 function Questionnaire({ isMock, type }) {
@@ -183,16 +183,16 @@ function Questionnaire({ isMock, type }) {
     }, [getSingleQuestionData, getSingleQuestionError])
 
     const [ allComments,setAllComments] = useState([]);
-    const {data: allCommentsData, error: allCommentsError} = useGetAllCommentsQuery({question_id:question_Id},{
+    const {data: allCommentsData, error: allCommentsError} = useGetAllCommentsQuery({question_id:singleQuestionDetails?.id},{
         skip: !shouldFetch
     });
     const [updateComment] = useUpdateCommentMutation();
     const [likeDislikeComment] = useLikeDislikeCommentMutation();
+    const [addComment] =  useAddCommentMutation();
     useEffect(() => {
         if (allCommentsData) {
             if (allCommentsData?.status) {
                 setAllComments(allCommentsData?.comments);
-                // console.log("allCommentsDat::",allCommentsData)
             }
             if (!allCommentsData?.status) {
                 setAllComments([]);
@@ -290,12 +290,61 @@ function Questionnaire({ isMock, type }) {
             console.log("err::", err);
         }
     }
-
+    const [comment,setComment] = useState("");
+    const [commentPostLoading,setCommentPostLoading] = useState(false);
     const handleSubmitComment = async (e) => {
-        e.preventDefault();
-        console.log("Comment Submitted")
+        try {
+            e.preventDefault();
+            setCommentPostLoading(true)
+            // console.log("Comment Submitted");
+            // console.log("singleQuestionDetails::",singleQuestionDetails)
+            const body = {
+                question_id : singleQuestionDetails?.id,
+                content : comment,
+            }
+            // console.log("body::",body)
+            const {data, error} = await addComment(body);
+            if (data) {
+                if (data?.status) {
+                    successMessage(data?.message);
+                    setComment("");
+                }
+                if (!data?.status) {
+                    errorMessage(data?.message);
+                }
+                setCommentPostLoading(false);
+            }
+            if (error) {
+                console.log(error);
+                errorMessage(error?.data?.message);
+            }
+        } catch (err) {
+            console.log("err:",err);
+        }
     }
-
+    
+    const handleReactOnComment = async(reactBody)=>{
+        try {
+            const body = {...reactBody}
+            const {data, error} = await likeDislikeComment(body);
+            if (data) {
+                if (data.status) {
+                    console.log("data::",data);
+                    successMessage(data.message);   
+                }
+                if (!data.status) {
+                    console.log("data::",data);
+                    errorMessage(data.message);   
+                }
+            }
+            if (error) {
+                console.log("error::",error);
+                errorMessage(error?.data?.message)
+            }
+        } catch (err) {
+            console.log("err::",err);
+        }
+    }
 
     const handleNextQuestion = () => {
         const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
@@ -931,15 +980,17 @@ useEffect(() => {
                                     {!removedQuestion && singleQuestionDetails?.answer &&
                                         <div className="question-comment-container">
                                             <div className="question-comment-inner-container">
-                                                <QuestionAllComments />
+                                                <QuestionAllComments handleReactOnComment={handleReactOnComment} allComments={allComments}/>
 
                                                 <div className="post-comment">
                                                     <form action="" onSubmit={handleSubmitComment}>
                                                         <div className="col-12">
-                                                            <textarea name="" id="" rows="5" placeholder="Write a comment as Adam Bial"></textarea>
+                                                            <textarea name="comment" required id="comment" rows="5" onChange={(e)=>setComment(e.target.value)} value={comment} placeholder="Write a comment as Adam Bial"></textarea>
                                                         </div>
                                                         <div className="col-12 py-2">
-                                                            <button type="submit" className="btn btn-primary">Post Comment</button>
+                                                            <button type="submit" className="btn btn-primary" disabled={commentPostLoading || !comment?.trim()}> 
+                                                                {commentPostLoading? <ButtonLoader/>:'Post Comment'}
+                                                            </button>
                                                         </div>
                                                     </form>
                                                 </div>

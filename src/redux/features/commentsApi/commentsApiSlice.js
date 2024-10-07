@@ -3,7 +3,7 @@ export const commentsApiSlice = apiSlice.injectEndpoints({
     tagType: ["all_comments"],
     endpoints: (builder) => ({
         getAllComments: builder.query({
-            query: () => `/comments`,
+            query: ({question_id}) => `/comments?question_id=${question_id}`,
             providesTags: ["all_comments"],
         }),
         addComment: builder.mutation({
