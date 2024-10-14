@@ -9,11 +9,14 @@ import ReactPortal from '../../components/portal/ReactPortal';
 import ExtendPlans from '../../components/modals/ExtendPlans';
 import closeBtn from '../../assets/icons/dashboard/modal-close.svg'
 import SubscriptionDetails from '../../components/subscriptionDetails/SubscriptionDetails';
+import { useGetUserPlansQuery } from '../../redux/features/plansApi/plansApiSlice';
+import { useEffect } from 'react';
 
 
 function QuestionsBank() {
     // const navigate = useNavigate();
     const [plansModal, setPlansModal] = useState(false);
+    const [allUserPlans,setAllUserPlans] = useState([]);
 
     const handleClosePlansModal = useCallback(() => {
         setPlansModal(false)
@@ -21,6 +24,21 @@ function QuestionsBank() {
     const handleOpenPlansModal = useCallback(() => {
         setPlansModal(true)
     }, []);
+
+    const {data:userPlansData, error: userPlansError} = useGetUserPlansQuery();
+
+    useEffect(() => {
+    if (userPlansData) {
+        if (userPlansData?.status) {
+            console.log("userPlansData.plans::",userPlansData.plans)
+            setAllUserPlans(userPlansData.plans)
+        }
+    }
+    if (userPlansError) {
+        console.log("userPlansError:",userPlansError)
+    }
+        
+    }, [userPlansData,userPlansError])
 
     return (
         <>
@@ -149,9 +167,14 @@ function QuestionsBank() {
                             <div className='plans-wrapper'>
                                 <div className="plans-inner-wrapper">
                                     <h2 className="title">Question Bank (Plans)</h2>
+                                    {/* {
+                                        allUserPlans.map((plan, index) => 
 
-                                    <SinglePlan handleOpenPlansModal={handleOpenPlansModal} status='active' />
-                                    <SinglePlan handleOpenPlansModal={handleOpenPlansModal} status='inactive' />
+                                        <SinglePlan key={plan.id} plan={plan} indexCount={index} handleOpenPlansModal={handleOpenPlansModal} status='active' />
+)                                       
+                                    } */}
+                                    {/* {console.log("allUserPlans::",allUserPlans)} */}
+                                    {/* <SinglePlan handleOpenPlansModal={handleOpenPlansModal} status='inactive' /> */}
                                     {/* <SinglePlan status='inactive'/> */}
                                 </div>
                             </div>

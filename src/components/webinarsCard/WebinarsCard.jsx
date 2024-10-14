@@ -4,6 +4,7 @@ import { Markup } from 'react-render-markup';
 import ButtonLoader from '../loaders/ButtonLoader';
 import './WebinarsCard.css'
 import moment from "moment/moment";
+import { VITE_REACT_APP_BASE_URL } from '../../config';
 
 // eslint-disable-next-line react/prop-types
 function WebinarsCard({imgSrc,handleOpenWebinarModal, handleConfirmPurchase, webinar, isPurchasing}) {
@@ -19,7 +20,7 @@ function WebinarsCard({imgSrc,handleOpenWebinarModal, handleConfirmPurchase, web
             <div className='webinar-card'>
                     <div className='webinar-inner-card'>
                             <div className='col-3 webinar-img'>
-                                <img src={imgSrc} alt="babies" />
+                                <img src={`${VITE_REACT_APP_BASE_URL}/${webinar?.icon??imgSrc} `} alt="babies" />
                             </div>
                             <div className='webinar-card-body'>
                                     <div className='card-title-wrapper'>

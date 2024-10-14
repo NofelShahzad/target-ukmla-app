@@ -1161,6 +1161,20 @@ input.input-error{
 
 
 /* Questionnaire END */
+
+
+.buy-plan-container{
+padding: 20px 0;
+text-align: center;
+
+}
+.buy-plan-container button{
+  width: fit-content;
+}
+
+
+
+
 @media (max-width: 500px) {
   .cred-page-wrapper .cred-page-inner-wrapper{
     padding: 20px;
