@@ -58,4 +58,17 @@
   .single-posted-comment-card  .single-posted-comment-card-footer .likes span,.single-posted-comment-card .single-posted-comment-card-footer .dislikes span {
     margin-left: 5px;
   }
+  .single-posted-comment-card  .single-posted-comment-card-footer .comment-actions {
+    margin-left: 15px;
+  }
+  .single-posted-comment-card  .single-posted-comment-card-footer .comment-actions button{
+    font-weight:500;
+  }
+  .single-posted-comment-card  .single-posted-comment-card-footer .comment-actions button:hover{
+    color: var(--themecolor);
+    text-decoration: underline;
+  }
+  .single-posted-comment-card  .single-posted-comment-card-footer .comment-actions button.btn-del-comment:hover{
+    color: var(--err-text-color);
+  }
   

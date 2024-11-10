@@ -10,10 +10,14 @@ import closeBtn from '../../assets/icons/dashboard/modal-close.svg'
 import ReactPortal from '../../components/portal/ReactPortal';
 import { useState } from 'react';
 import WebinarsInfo from '../../components/modals/WebinarsInfo';
-import { useAllWebinarsQuery, useBuyWebinarMutation } from '../../redux/features/webinar/webinarsApiSlice';
+import { useAllWebinarsQuery, 
+    // useBuyWebinarMutation 
+} from '../../redux/features/webinar/webinarsApiSlice';
 import { useEffect } from 'react';
 // import img from '../../assets/images/dashboard/webinars/babies.png'
-import { errorMessage, successMessage } from "../../components/toastMessages/ToastifyMsg";
+import { errorMessage, 
+    // successMessage 
+} from "../../components/toastMessages/ToastifyMsg";
 import moment from "moment/moment";
 
 function Webinars() {
@@ -25,7 +29,7 @@ function Webinars() {
 
     const {data, error } = useAllWebinarsQuery();
 
-    const [buyWebinar] = useBuyWebinarMutation();
+    // const [buyWebinar] = useBuyWebinarMutation();
     const [isPurchasing,setIsPurchasing] = useState({
         id: null,
         loading: false,

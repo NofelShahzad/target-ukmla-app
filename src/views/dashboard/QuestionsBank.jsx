@@ -2,15 +2,16 @@
 // import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import SinglePlan from '../../components/singlePlan/SinglePlan';
-import withAuth from '../../components/withAuth/withAuth'
-import withLayout from '../../components/withAuth/withLayout'
-import { useCallback, useState } from 'react';
+// import withAuth from '../../components/withAuth/withAuth'
+// import withLayout from '../../components/withAuth/withLayout'
+import { useState } from 'react';
 import ReactPortal from '../../components/portal/ReactPortal';
 import ExtendPlans from '../../components/modals/ExtendPlans';
 import closeBtn from '../../assets/icons/dashboard/modal-close.svg'
 import SubscriptionDetails from '../../components/subscriptionDetails/SubscriptionDetails';
-import { useGetUserPlansQuery } from '../../redux/features/plansApi/plansApiSlice';
+import { useBuyStandardPlanMutation, useGetStandardPlansQuery, useGetUserPlansQuery } from '../../redux/features/plansApi/plansApiSlice';
 import { useEffect } from 'react';
+import { errorMessage, successMessage } from '../../components/toastMessages/ToastifyMsg';
 
 
 function QuestionsBank() {
@@ -18,27 +19,87 @@ function QuestionsBank() {
     const [plansModal, setPlansModal] = useState(false);
     const [allUserPlans,setAllUserPlans] = useState([]);
 
-    const handleClosePlansModal = useCallback(() => {
+    const [allStandardPlans,setAllStandardPlans] = useState([]);
+
+    const handleClosePlansModal = () => {
         setPlansModal(false)
-    }, []);
-    const handleOpenPlansModal = useCallback(() => {
+    };
+    const handleOpenPlansModal = () => {
         setPlansModal(true)
-    }, []);
+    };
+
+    const {data:plansData , error: plansError} = useGetStandardPlansQuery();
+
+    useEffect(() => {
+        if (plansData) {
+          if (plansData?.status) {
+            // console.log("plansData::",plansData)
+            setAllStandardPlans(plansData.plans)
+          }
+          if (!plansData.status) {
+            setAllStandardPlans([]);
+          }
+        }
+        if (plansError) {
+        //   errorMessage(plansError?.data?.message);
+          setAllStandardPlans([])
+        }
+      
+      }, [plansData, plansError])
+
 
     const {data:userPlansData, error: userPlansError} = useGetUserPlansQuery();
 
     useEffect(() => {
     if (userPlansData) {
         if (userPlansData?.status) {
-            console.log("userPlansData.plans::",userPlansData.plans)
-            setAllUserPlans(userPlansData.plans)
+            // console.log("userPlansData::",userPlansData)
+            setAllUserPlans(userPlansData?.plans)
+        }
+        if (!userPlansData?.status) {
+            setAllUserPlans([])
         }
     }
     if (userPlansError) {
-        console.log("userPlansError:",userPlansError)
+        console.log("userPlansError:",userPlansError);
     }
         
     }, [userPlansData,userPlansError])
+
+    const [buyStandardPlan] = useBuyStandardPlanMutation();
+
+
+    const handlePurchansePlan = async(plan)=>{
+        // console.log("handlePurchansePlan::",plan);
+        if (plan?.link.trim()) {
+          window.location = plan?.link;
+        }else{
+          try {
+            const body = {
+              plan_id: plan?.id,
+              days: plan?.days
+            }
+            const { data, error} = await buyStandardPlan(body);
+            if (data) {
+              // console.log(data)
+              if (data?.status) {
+                successMessage(data?.message);
+                handleClosePlansModal();
+              }
+              if (!data?.status) {
+                errorMessage(data?.message);
+              }
+            }
+            if (error) {
+              errorMessage(error?.data?.message);
+            }
+            
+          } catch (err) {
+            console.log("err::",err)
+          }
+         
+        }
+      }
 
     return (
         <>
@@ -167,12 +228,16 @@ function QuestionsBank() {
                             <div className='plans-wrapper'>
                                 <div className="plans-inner-wrapper">
                                     <h2 className="title">Question Bank (Plans)</h2>
-                                    {/* {
-                                        allUserPlans.map((plan, index) => 
-
-                                        <SinglePlan key={plan.id} plan={plan} indexCount={index} handleOpenPlansModal={handleOpenPlansModal} status='active' />
-)                                       
-                                    } */}
+                                    {allUserPlans.length >0 &&
+                                        allUserPlans.map((plan, index) =>
+                                            <SinglePlan key={plan.id} plan={plan} indexCount={index} handleOpenPlansModal={handleOpenPlansModal} status='active' />
+                                    )} 
+                                    {
+                                        !allUserPlans.length > 0 &&
+                                        <div className='no-plans-found'>
+                                            <p>No plans found. Please purchase a plan to access the Question Bank.</p>
+                                        </div>
+                                    }
                                     {/* {console.log("allUserPlans::",allUserPlans)} */}
                                     {/* <SinglePlan handleOpenPlansModal={handleOpenPlansModal} status='inactive' /> */}
                                     {/* <SinglePlan status='inactive'/> */}
@@ -195,7 +260,7 @@ function QuestionsBank() {
             </div>
             {plansModal &&
                 <ReactPortal wrapperId="external_modal_container">
-                    <ExtendPlans closeBtn={closeBtn} closeModal={handleClosePlansModal} />
+                    <ExtendPlans closeBtn={closeBtn} closeModal={handleClosePlansModal} type={"extend"} handlePurchase={handlePurchansePlan} purchasedPlan={allUserPlans[0]} allPlans={allStandardPlans}/>
                 </ReactPortal>
             }
         </>

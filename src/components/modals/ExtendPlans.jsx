@@ -2,7 +2,7 @@
 
 // eslint-disable-next-line react/prop-types
 function ExtendPlans({allPlans, closeBtn, closeModal, type, handlePurchase}) {
-    console.log("allPlans::",allPlans)
+    // console.log("allPlans::",allPlans)
     return (
         <>
             <div className="detail-modal detail-modal-lg">
@@ -11,10 +11,10 @@ function ExtendPlans({allPlans, closeBtn, closeModal, type, handlePurchase}) {
                 </div>
                 <div className="extend-plans-wrapper">
                     {
-                        allPlans.map(plan => 
+                        allPlans?.map((plan) => 
                         <div key={plan?.id} className="col-lg-4 col-12 px-2">
                             <div className="single-extend-plan">
-                                <h2 className="title">{type==="extend"?'Extend':'Buy'} {plan?.name} Plan <br /><sub> {plan?.days/30} Month(s)</sub> </h2>
+                                <h2 className="title">{type==="extend" ?'Extend':'Buy'} {plan?.name} Plan <br /><sub> {plan?.days/30} Month(s)</sub> </h2>
                                 <div className="extend-action-wrapper">
                                     {/* <div className="col-lg-5 col-lg-12 col-6 pe-1 pe-lg-0 py-1 py-lg-2 ">
                                         <button type="button" className="btn btn-secondary">Please RESET my account</button>

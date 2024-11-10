@@ -1,16 +1,16 @@
 // import React from 'react'
 
 import QuestionCategoryCard from "../../components/questionCategoryCard/QuestionCategoryCard";
-import withAuth from "../../components/withAuth/withAuth";
-import withLayout from "../../components/withAuth/withLayout";
+// import withAuth from "../../components/withAuth/withAuth";
+// import withLayout from "../../components/withAuth/withLayout";
 
-import anesthesiology from '../../assets/icons/dashboard/anesthesiology-icon.svg';
-import anatomy from '../../assets/icons/dashboard/anatomy-icon.svg';
-import ent from '../../assets/icons/dashboard/ent-icon.svg';
-import criticalCare from '../../assets/icons/dashboard/critical-care-icon.svg';
-import breastSurgery from '../../assets/icons/dashboard/breast-surgery-icon.svg';
-import dermatology from '../../assets/icons/dashboard/dermatology-icon.svg';
-import React, { useCallback, useEffect, useState } from "react";
+// import anesthesiology from '../../assets/icons/dashboard/anesthesiology-icon.svg';
+// import anatomy from '../../assets/icons/dashboard/anatomy-icon.svg';
+// import ent from '../../assets/icons/dashboard/ent-icon.svg';
+// import criticalCare from '../../assets/icons/dashboard/critical-care-icon.svg';
+// import breastSurgery from '../../assets/icons/dashboard/breast-surgery-icon.svg';
+// import dermatology from '../../assets/icons/dashboard/dermatology-icon.svg';
+import { useCallback, useEffect, useState } from "react";
 import { useAllQuestionsCategoriesQuery } from "../../redux/features/questionnaire/questionnaireApiSlice";
 import { useSelector } from "react-redux";
 import { useBuyStandardPlanMutation, useGetStandardPlansQuery } from "../../redux/features/plansApi/plansApiSlice";
@@ -89,6 +89,7 @@ function Dashboard() {
             // console.log(data)
             if (data?.status) {
               successMessage(data?.message);
+              handleClosePlansModal();
             }
           }
           if (error) {

@@ -28,7 +28,15 @@ export const commentsApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body
             }),
-        })
+            invalidatesTags: ["all_comments"],
+        }),
+        deleteComment: builder.mutation({
+            query: (id) => ({
+                url: `/delete/${id}`,
+                method: "DELETE"
+            }),
+            invalidatesTags: ["all_comments"],
+        }),
 
     })
 })
@@ -36,5 +44,6 @@ export const {
     useAddCommentMutation,
     useGetAllCommentsQuery,
     useUpdateCommentMutation, 
-    useLikeDislikeCommentMutation
+    useLikeDislikeCommentMutation,
+    useDeleteCommentMutation,
 } = commentsApiSlice;

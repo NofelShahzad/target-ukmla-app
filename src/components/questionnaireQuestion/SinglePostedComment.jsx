@@ -1,12 +1,24 @@
 // import React from 'react'
 import moment from 'moment/moment'
 import './SinglePostedComment.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
-function SinglePostedComment({comment,handleReactOnComment}) {
+function SinglePostedComment({comment,handleReactOnComment,handleDeleteComment}) {
   const [likesDetails,setLikesDetails] = useState({liked:false,likes:0})
-  const [dislikesDetails,setdisLikesDetails] = useState({disliked:false,dislikes:0})
-  console.log("comment::",comment)
+  const [dislikesDetails,setDisLikesDetails] = useState({disliked:false,dislikes:0})
+ 
+  const userAuth = useSelector(state=>state.auth);
+
+
+  useEffect(() => {
+    if (comment) {
+      setLikesDetails({liked:comment?.liked,likes:comment?.likes});
+      setDisLikesDetails({disliked:comment?.disliked,dislikes:comment?.dislikes});
+    }
+  
+  }, [comment])
+
 
   const handleReact =(type)=>{
     const body = {
@@ -16,6 +28,8 @@ function SinglePostedComment({comment,handleReactOnComment}) {
   }
     handleReactOnComment(body);
   }
+
+
   return (
     // <div className="">SinglePostedComment</div>
     <div className="single-posted-comment-card">
@@ -45,6 +59,16 @@ function SinglePostedComment({comment,handleReactOnComment}) {
             </button>
           <span>{dislikesDetails?.dislikes}</span>
         </div>
+        {userAuth?.user?.id === comment?.customer_id   &&
+          <>
+            <div className='comment-actions'>
+              <button>Edit</button>
+            </div>
+            <div className='comment-actions'>
+              <button className='btn-del-comment' onClick={()=>handleDeleteComment(comment?.id)}>Delete</button>
+            </div>
+          </>
+        }
       </div>
     </div>
   )

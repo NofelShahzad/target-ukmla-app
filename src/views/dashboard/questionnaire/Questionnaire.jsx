@@ -17,10 +17,12 @@ import { errorMessage, successMessage } from "../../../components/toastMessages/
 import { useFinishMockTimerMutation, useGetAllQuesionOfMockQuery, useMockTimeCheckerMutation, useResetMockMutation, useStartMockTimerMutation } from "../../../redux/features/mocks/MocksApiSlice";
 import Timer from "../../../components/timer/Timer";
 import { getCurrentTimeDate } from "../../../utils/util";
-import { useAddCommentMutation, useGetAllCommentsQuery, useLikeDislikeCommentMutation, useUpdateCommentMutation } from "../../../redux/features/commentsApi/commentsApiSlice";
+import { useAddCommentMutation, useDeleteCommentMutation, useGetAllCommentsQuery, useLikeDislikeCommentMutation, useUpdateCommentMutation } from "../../../redux/features/commentsApi/commentsApiSlice";
+import { useSelector } from "react-redux";
 
 // const questionNumbers = Array.from({ length: 95 }, (_, i) => i + 1);
 function Questionnaire({ isMock, type }) {
+    const userAuth = useSelector(state=>state.auth);
     const { questionnaire_Id, question_Id, mock_id, practice_id } = useParams();
     const navigate = useNavigate();
     const [selectedValue, setSelectedValue] = useState('');
@@ -189,6 +191,8 @@ function Questionnaire({ isMock, type }) {
     const [updateComment] = useUpdateCommentMutation();
     const [likeDislikeComment] = useLikeDislikeCommentMutation();
     const [addComment] =  useAddCommentMutation();
+    const [deleteComment] = useDeleteCommentMutation();
+
     useEffect(() => {
         if (allCommentsData) {
             if (allCommentsData?.status) {
@@ -329,11 +333,11 @@ function Questionnaire({ isMock, type }) {
             const {data, error} = await likeDislikeComment(body);
             if (data) {
                 if (data.status) {
-                    console.log("data::",data);
+                    // console.log("data::",data);
                     successMessage(data.message);   
                 }
                 if (!data.status) {
-                    console.log("data::",data);
+                    // console.log("data::",data);
                     errorMessage(data.message);   
                 }
             }
@@ -345,6 +349,29 @@ function Questionnaire({ isMock, type }) {
             console.log("err::",err);
         }
     }
+
+    const handleDeleteComment = async(id)=>{
+        try {
+            
+            const { data, error} = await deleteComment(id);
+            if (data) {
+                if (data?.status) {
+                    successMessage(data?.message);
+                }
+                if (!data?.status) {
+                    errorMessage(data?.message);
+                }
+            }
+            if (error) {
+                console.log("error:",error);
+                errorMessage(error?.data?.message);
+            }
+        } catch (err) {
+            console.log("err::",err);
+        }
+    }
+
+
 
     const handleNextQuestion = () => {
         const currentIndex = questionsCount.findIndex(q => q.slug === activeQuestionIndex);
@@ -980,12 +1007,12 @@ useEffect(() => {
                                     {!removedQuestion && singleQuestionDetails?.answer &&
                                         <div className="question-comment-container">
                                             <div className="question-comment-inner-container">
-                                                <QuestionAllComments handleReactOnComment={handleReactOnComment} allComments={allComments}/>
+                                                <QuestionAllComments handleReactOnComment={handleReactOnComment} allComments={allComments} handleDeleteComment={handleDeleteComment}/>
 
                                                 <div className="post-comment">
                                                     <form action="" onSubmit={handleSubmitComment}>
                                                         <div className="col-12">
-                                                            <textarea name="comment" required id="comment" rows="5" onChange={(e)=>setComment(e.target.value)} value={comment} placeholder="Write a comment as Adam Bial"></textarea>
+                                                            <textarea name="comment" required id="comment" rows="5" onChange={(e)=>setComment(e.target.value)} value={comment} placeholder={`Write a comment as ${userAuth?.user?.name} ${userAuth?.user?.last_name}`}></textarea>
                                                         </div>
                                                         <div className="col-12 py-2">
                                                             <button type="submit" className="btn btn-primary" disabled={commentPostLoading || !comment?.trim()}> 

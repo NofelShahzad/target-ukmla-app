@@ -2,7 +2,7 @@
 import './SinglePlan.css'
 // eslint-disable-next-line react/prop-types
 function SinglePlan({plan, status, handleOpenPlansModal, indexCount}) {
-    console.log("plan::",plan)
+    // console.log("plan::",plan)
     return (
         <>
             <div className='single-plan-container'>
@@ -23,14 +23,15 @@ function SinglePlan({plan, status, handleOpenPlansModal, indexCount}) {
                             <td><span className={`status-tag ${status==='active'?'active':'inactive'}`}>{status}</span> </td>
                         </tr>
                     </tbody>
-                </table>{console.log("indexCount::",indexCount)}
+                </table>
+                {/* {console.log("indexCount::",indexCount)} */}
                 {indexCount===0 && 
                     <div className='plan-action'>
                         <div className="col-6 p-1">
-                            <button className='btn btn-secondary' onClick={handleOpenPlansModal}>Reset Plan</button>
+                            <button className='btn btn-secondary' onClick={()=>handleOpenPlansModal()}>Reset Plan</button>
                         </div>
                         <div className="col-6 p-1">
-                            <button className='btn btn-primary' onClick={handleOpenPlansModal}>Extend Plan</button>
+                            <button className='btn btn-primary' onClick={()=>handleOpenPlansModal()}>Extend Plan</button>
                         </div>
                     </div>
                 }
