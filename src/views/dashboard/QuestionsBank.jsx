@@ -199,7 +199,7 @@ function QuestionsBank() {
                                     </div>
                                     <div className='footer'>
                                         <div className='col-12 p-1'>
-                                            <button type='button' className='btn btn-secondary my-1'>View Big Mock</button>
+                                            <Link to='/big-mocks' type='button' className='btn btn-secondary my-1 w-100'>View Big Mock</Link>
                                         </div>
 
 
@@ -216,7 +216,7 @@ function QuestionsBank() {
                                     </div>
                                     <div className='footer'>
                                         <div className='col-12 p-1'>
-                                            <button type='button' className='btn btn-secondary my-1'>View Webinars</button>
+                                            <Link to='webinars' type='button' className='btn btn-secondary w-100 my-1'>View Webinars</Link>
                                         </div>
 
 
@@ -230,12 +230,12 @@ function QuestionsBank() {
                                     <h2 className="title">Question Bank (Plans)</h2>
                                     {allUserPlans.length >0 &&
                                         allUserPlans.map((plan, index) =>
-                                            <SinglePlan key={plan.id} plan={plan} indexCount={index} handleOpenPlansModal={handleOpenPlansModal} status='active' />
+                                            <SinglePlan key={plan.id} plan={plan} indexCount={index} handleOpenPlansModal={handleOpenPlansModal} />
                                     )} 
                                     {
                                         !allUserPlans.length > 0 &&
                                         <div className='no-plans-found'>
-                                            <p>No plans found. Please purchase a plan to access the Question Bank.</p>
+                                            <p className='text-center'>No plans found. Please purchase a plan to access the Question Bank.</p>
                                         </div>
                                     }
                                     {/* {console.log("allUserPlans::",allUserPlans)} */}
@@ -244,14 +244,14 @@ function QuestionsBank() {
                                 </div>
                             </div>
 
-                            <div className='subscription-details-wrapper'>
+                            {/* <div className='subscription-details-wrapper'>
                                 <div className="subscription-details-inner-wrapper">
                                     <h2 className="title">Subscriptions</h2>
                                     <>
                                         <SubscriptionDetails/>
                                     </>
                                 </div>
-                            </div>
+                            </div> */}
 
                         </div>
                     </div>

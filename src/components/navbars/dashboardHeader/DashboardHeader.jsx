@@ -210,7 +210,7 @@ function DashboardHeader() {
                     </Link>
                   </li>
                   <li>
-                    <Link className="nav-link" href="/contracts">
+                    <Link className="nav-link" to={`/contactus`}>
                       <span>Contact Us</span>
                     </Link>
                   </li>

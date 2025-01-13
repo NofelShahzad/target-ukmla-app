@@ -326,6 +326,32 @@ function Questionnaire({ isMock, type }) {
             console.log("err:",err);
         }
     }
+
+    const [updatingComment,setUpdatingComment] = useState(false);
+
+    const handleUpdateComment = async(commentBody)=>{
+        try {
+            setUpdatingComment(true);
+
+            const {data, error} = await updateComment(commentBody);
+
+            if (data) {
+                if (data?.status) {
+                    successMessage(data?.message);
+                }
+                if (!data?.status) {
+                    errorMessage(data?.message);
+                }
+                setUpdatingComment(false);
+            }
+            if (error) {
+                errorMessage(error?.data?.message);
+                setUpdatingComment(false);
+            }
+        } catch (err) {
+            console.log("err::",err);
+        }
+    }
     
     const handleReactOnComment = async(reactBody)=>{
         try {
@@ -1007,7 +1033,13 @@ useEffect(() => {
                                     {!removedQuestion && singleQuestionDetails?.answer &&
                                         <div className="question-comment-container">
                                             <div className="question-comment-inner-container">
-                                                <QuestionAllComments handleReactOnComment={handleReactOnComment} allComments={allComments} handleDeleteComment={handleDeleteComment}/>
+                                                <QuestionAllComments 
+                                                    handleReactOnComment={handleReactOnComment} 
+                                                    allComments={allComments} 
+                                                    handleDeleteComment={handleDeleteComment} 
+                                                    updatingComment={updatingComment} 
+                                                    handleUpdateComment={handleUpdateComment}
+                                                />
 
                                                 <div className="post-comment">
                                                     <form action="" onSubmit={handleSubmitComment}>

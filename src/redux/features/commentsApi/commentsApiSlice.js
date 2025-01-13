@@ -32,7 +32,7 @@ export const commentsApiSlice = apiSlice.injectEndpoints({
         }),
         deleteComment: builder.mutation({
             query: (id) => ({
-                url: `/delete/${id}`,
+                url: `/comments/delete/${id}`,
                 method: "DELETE"
             }),
             invalidatesTags: ["all_comments"],

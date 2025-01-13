@@ -50,8 +50,16 @@
     font-weight: 600;
 }
 .webinar-card .webinar-inner-card .webinar-card-body .description p{
-    font-size: 13px;
     margin-bottom: 5px;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+    color: #8c8c8c;
+    display: -webkit-box;
+    font-size: 13px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
 }
 .webinar-card .webinar-inner-card .webinar-card-body .speaker-container{
     width: 100%;

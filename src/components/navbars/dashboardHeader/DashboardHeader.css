@@ -293,7 +293,8 @@ header.dashboard-header-wrapper nav ul.nav-body li.nav-notification-container .n
   flex-shrink: 0;
 }
 header.dashboard-header-wrapper nav ul.nav-body li.nav-notification-container .notification-dropdown-wrapper .notification-dropdown-inner-wrapper .single-notification:hover{
-    background-color: #5DEF782B;
+    /* background-color: #5DEF782B; */
+    background-color: #5eb9f02b;
 }
 header.dashboard-header-wrapper nav ul.nav-body li.nav-notification-container .notification-dropdown-wrapper .notification-dropdown-inner-wrapper .single-notification .single-notification-body span{
     font-weight: 500;

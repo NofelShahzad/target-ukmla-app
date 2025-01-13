@@ -1,8 +1,9 @@
 // import React from 'react'
+import moment from 'moment/moment'
 import './SinglePlan.css'
 // eslint-disable-next-line react/prop-types
-function SinglePlan({plan, status, handleOpenPlansModal, indexCount}) {
-    // console.log("plan::",plan)
+function SinglePlan({plan, handleOpenPlansModal, indexCount}) {
+    console.log("plan::",plan)
     return (
         <>
             <div className='single-plan-container'>
@@ -17,10 +18,10 @@ function SinglePlan({plan, status, handleOpenPlansModal, indexCount}) {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>5 Months</td>
-                            <td>14-04-2024</td>
-                            <td>14-09-2024</td>
-                            <td><span className={`status-tag ${status==='active'?'active':'inactive'}`}>{status}</span> </td>
+                            <td>{plan?.name} </td>
+                            <td>{moment(plan?.start_from).format('ll')}</td>
+                            <td>{moment(plan?.expire_at).format('ll')}</td>
+                            <td><span className={`status-tag ${plan?.status.toLowerCase()==='active'?'active':'inactive'}`}>{plan?.status}</span> </td>
                         </tr>
                     </tbody>
                 </table>

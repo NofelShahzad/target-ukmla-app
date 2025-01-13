@@ -1,7 +1,11 @@
 .single-posted-comment-card {
-    background-color: #fff;
-    margin: 0px auto 20px;
-  }
+  background-color: #fff;
+  margin: 0px auto 15px;
+  padding-bottom: 15px;
+}
+.single-posted-comment-card:not(:last-child){
+  border-bottom: 1px solid #ddd;
+}
   
 .single-posted-comment-card  .single-posted-comment-card-header {
     display: flex;
@@ -31,9 +35,11 @@
   
   .single-posted-comment-card  .single-posted-comment-card-footer {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     color: #777;
     font-size: 0.9em;
+    gap: 10px;
   }
   
   /* .single-posted-comment-card-footer .time {
@@ -47,7 +53,7 @@
   .single-posted-comment-card  .single-posted-comment-card-footer :is(.likes, .dislikes) {
     display: flex;
     align-items: center;
-    margin-left: 15px;
+    /* margin-left: 15px; */
     cursor: pointer;
   }
   
@@ -59,10 +65,14 @@
     margin-left: 5px;
   }
   .single-posted-comment-card  .single-posted-comment-card-footer .comment-actions {
-    margin-left: 15px;
+    /* margin-left: 15px; */
   }
   .single-posted-comment-card  .single-posted-comment-card-footer .comment-actions button{
     font-weight:500;
+  }
+  .single-posted-comment-card  .single-posted-comment-card-footer .comment-actions button{
+    color: #777777;
+    font-weight: 500;
   }
   .single-posted-comment-card  .single-posted-comment-card-footer .comment-actions button:hover{
     color: var(--themecolor);
@@ -71,4 +81,28 @@
   .single-posted-comment-card  .single-posted-comment-card-footer .comment-actions button.btn-del-comment:hover{
     color: var(--err-text-color);
   }
+
   
+  .single-posted-comment-card .update-comment-wrapper{
+    margin-bottom: 15px;
+  }
+  .single-posted-comment-card .update-comment-wrapper textarea{
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    resize: none;
+    font-size: 14px;
+  }
+  .single-posted-comment-card .update-comment-wrapper .update-comment-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .single-posted-comment-card .update-comment-wrapper .update-comment-footer button{
+    width: fit-content;
+    padding: .35rem;
+    font-weight: 500;
+    font-size: 14px;
+    min-width: 57px;
+  }

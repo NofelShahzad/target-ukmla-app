@@ -6,6 +6,7 @@
   --title-color:  #5eb9f0;
   --anchor-hover:  #5eb9f0;
   --checked-question:  #5eb9f0;
+  --text-primary:  #5eb9f0;
   --body-bg: #fff;
   --light-bg: #fff;
   --dark-background: #C5C5C5;
@@ -66,7 +67,7 @@ body{
   border-color: #5eb9f0;
 }
 .text-primary{
-  color: var(--text-primary);
+  color: var(--text-primary)!important;
 }
 input,textarea{
   transition: all 0.15s ease-in-out;
@@ -1172,7 +1173,11 @@ text-align: center;
   width: fit-content;
 }
 
-
+.no-plans-found p{
+  padding: 10px 0;
+  margin: 0;
+  font-weight: 500;
+}
 
 
 @media (max-width: 500px) {
