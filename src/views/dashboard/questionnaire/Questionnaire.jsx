@@ -352,7 +352,7 @@ function Questionnaire({ isMock, type }) {
             console.log("err::",err);
         }
     }
-    
+
     const handleReactOnComment = async(reactBody)=>{
         try {
             const body = {...reactBody}
@@ -378,7 +378,6 @@ function Questionnaire({ isMock, type }) {
 
     const handleDeleteComment = async(id)=>{
         try {
-            
             const { data, error} = await deleteComment(id);
             if (data) {
                 if (data?.status) {

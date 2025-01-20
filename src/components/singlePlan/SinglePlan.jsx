@@ -3,7 +3,7 @@ import moment from 'moment/moment'
 import './SinglePlan.css'
 // eslint-disable-next-line react/prop-types
 function SinglePlan({plan, handleOpenPlansModal, indexCount}) {
-    console.log("plan::",plan)
+
     return (
         <>
             <div className='single-plan-container'>

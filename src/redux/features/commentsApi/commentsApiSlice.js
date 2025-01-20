@@ -37,13 +37,17 @@ export const commentsApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ["all_comments"],
         }),
+        allCommentsHistory: builder.query({
+            query: () => `/comments/history`,
+        }),
 
     })
 })
 export const {
     useAddCommentMutation,
     useGetAllCommentsQuery,
-    useUpdateCommentMutation, 
+    useUpdateCommentMutation,
     useLikeDislikeCommentMutation,
     useDeleteCommentMutation,
+    useAllCommentsHistoryQuery,
 } = commentsApiSlice;

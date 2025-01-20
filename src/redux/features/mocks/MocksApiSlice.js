@@ -52,7 +52,10 @@ export const mocksApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body
             }),
-        }), 
+        }),
+        mockLogs: builder.query({
+            query: (id) => `/logs/mock/${id}`
+        }),
     })
 })
 
@@ -67,4 +70,5 @@ export const {
     useStartMockTimerMutation,
     useFinishMockTimerMutation,
     useMockTimeCheckerMutation,
+    useMockLogsQuery,
 }= mocksApiSlice;

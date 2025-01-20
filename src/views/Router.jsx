@@ -35,6 +35,9 @@ import Webinar from './frontSite/webinar/Webinar';
 import PracticeDetail from './dashboard/practice-mocks/PracticeDetail';
 import AllNotifications from './dashboard/notification/AllNotifications';
 import NotificationDetail from './dashboard/notification/NotificationDetail';
+import MockLog from './dashboard/mock-log/MockLog';
+import PaymentSuccess from './paymentSuccess/PaymentSuccess';
+import PaymentFailure from './paymentFailure/PaymentFailure';
 
 const RouterWrapper = () => {
     const isUserAuthenticated = useSelector(state => !!state.auth.user);
@@ -113,6 +116,8 @@ const RouterWrapper = () => {
                 <Route path="reset-password" element={<ResetPassword title={"Forget Password"}/>} />
                 <Route path="new-password" element={<CreateNewPassword />} />
             </Route>
+            <Route path="payment-success" element={<PaymentSuccess/>}/>
+            <Route path="payment-error" element={<PaymentFailure/>}/>
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route
                 path="/"
@@ -132,10 +137,12 @@ const RouterWrapper = () => {
                 <Route path="big-mocks">
                     <Route index element={<BigMocks/>}/>
                     <Route path='detail/:mock_id' element={<BigmockDetail/>}/>
+                    <Route path='log/:mock_id' element={<MockLog/>}/>
                 </Route>
                 <Route path='practice-mocks'>
                   <Route index element={<PracticeMocks/>}/>
-                  <Route path='detail/:practice_id' element={<PracticeDetail/>}/> 
+                  <Route path='detail/:practice_id' element={<PracticeDetail/>}/>
+                  <Route path='log/:mock_id' element={<MockLog/>}/>
                 </Route>
                 <Route path="webinars" element={<Webinars/>} />
                 <Route path="contactus" element={<ContactUs/>} />
