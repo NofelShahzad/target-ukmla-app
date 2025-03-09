@@ -6,7 +6,7 @@ function PaymentSuccess() {
     const queryParams = new URLSearchParams(location.search);
     const message = queryParams.get('message');
     const backUrl = queryParams.get('url');
-    console.log("backUrl::",backUrl);
+    // console.log("backUrl::",backUrl);
     const handleBackurl = ()=>{
         document.location.href = backUrl;
     }

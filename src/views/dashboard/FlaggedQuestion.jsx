@@ -63,7 +63,7 @@ function FlaggedQuestion() {
             <div className="container-fluid all-flagged-page pb-4">
                 <div className='page-title-container'>
                     <h2 className="title">Flagged {tab}</h2>
-                    <p>Text explaining what these are.</p>
+                    {/* <p>Text explaining what these are.</p> */}
                     <div className="tabs-btn-container">
                         <div className="col-sm-12 col-lg-6 col-xxl-4 col-12">
                             <div className="tabs-btn-inner-container">

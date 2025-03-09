@@ -5,17 +5,66 @@ import QuestionCardStautsInfo from "./QuestionCardStautsInfo"
 import { VITE_REACT_APP_BASE_URL } from "../../config"
 
 // eslint-disable-next-line react/prop-types
-function QuestionCategoryCard({  title,questionData }) {
+function QuestionCategoryCard({ title, questionData }) {
     // console.log("questionData::",questionData)
     return (
         <>
             <div className="col-sm-6 col-md-4 col-lg-3 col-xxl-2 col-12">
                 <Link className="text-decoration-none" to={`/${questionData?.slug}/${questionData?.question?.slug}`}>
-                <div className="single-question-card">
-                    <div className="single-question-header">
-                        <div className="img-container">
-                            <img src={`${VITE_REACT_APP_BASE_URL}/${questionData?.icon}`} alt={`${title} image`} />
-                            {/* <svg id="Group_60" data-name="Group 60" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="55" height="55" viewBox="0 0 55 55">
+                    <div className="single-question-card">
+                        <div className="single-question-header">
+                            <div className="img-container">
+                                <img src={`${VITE_REACT_APP_BASE_URL}/${questionData?.icon}`} alt={`${title} image`} />
+                            </div>
+                            <h2>{questionData?.name}</h2>
+                        </div>
+                        <div className="single-question-body">
+                            {/* <QuestionCardStautsInfo type={'correct'} percentage={(questionData?.correct_answers_count / questionData?.published_questions_count) * 100} />
+                        <QuestionCardStautsInfo type={'wrong'} percentage={(questionData?.wrong_answers_count / questionData?.published_questions_count) * 100} />
+                        <QuestionCardStautsInfo type={'not-attempt'} percentage={((questionData?.published_questions_count - (questionData?.correct_answers_count + questionData?.wrong_answers_count)) / questionData?.published_questions_count) * 100} />
+                        <QuestionCardStautsInfo type={'removed-by-admin'} percentage={0} /> */}
+
+                            <QuestionCardStautsInfo
+                                type={'correct'}
+                                percentage={questionData?.published_questions_count > 0
+                                    ? (questionData?.correct_answers_count / questionData?.published_questions_count) * 100
+                                    : 0}
+                            />
+
+                            <QuestionCardStautsInfo
+                                type={'wrong'}
+                                percentage={questionData?.published_questions_count > 0
+                                    ? (questionData?.wrong_answers_count / questionData?.published_questions_count) * 100
+                                    : 0}
+                            />
+
+                            <QuestionCardStautsInfo
+                                type={'not-attempt'}
+                                percentage={questionData?.published_questions_count > 0
+                                    ? ((questionData?.published_questions_count - (questionData?.correct_answers_count + questionData?.wrong_answers_count)) / questionData?.published_questions_count) * 100
+                                    : 100}
+                            />
+
+                            {/* <QuestionCardStautsInfo type={'removed-by-admin'} percentage={0} /> */}
+
+                        </div>
+                    </div>
+                </Link>
+            </div>
+        </>
+    )
+}
+
+export default QuestionCategoryCard
+{/* <QuestionCardStautsInfo type={'correct'} percentage={ (questionData?.correct_answers_count/questionData?.published_questions_count)*100} />
+<QuestionCardStautsInfo type={'wrong'} percentage={(questionData?.wrong_answers_count/questionData?.published_questions_count)*100} />
+<QuestionCardStautsInfo type={'not-attempt'} percentage={(((questionData?.published_questions_count-(questionData?.correct_answers_count+questionData?.wrong_answers_count)/questionData?.published_questions_count))/questionData?.published_questions_count)*100} />
+<QuestionCardStautsInfo type={'removed-by-admin'} percentage={'0'} /> */}
+{/* <div className="single-question-footer">
+    <Link to={`/${questionData?.slug}/${questionData?.question?.slug}`}>View</Link>
+</div> */}
+
+{/* <svg id="Group_60" data-name="Group 60" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="55" height="55" viewBox="0 0 55 55">
                                 <defs>
                                     <clipPath id="clip-path">
                                         <rect id="Rectangle_477" data-name="Rectangle 477" width="55" height="55" fill="none" stroke="#012f46" strokeWidth="1" />
@@ -28,28 +77,3 @@ function QuestionCategoryCard({  title,questionData }) {
                                     <path id="Path_17" data-name="Path 17" d="M5,11.618l2.206,2.206L16.03,5" transform="translate(6.03 6.03)" fill="none" stroke="#012f46" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                                 </g>
                             </svg> */}
-                        </div>
-                        <h2>{questionData?.name}</h2>
-                    </div>
-                    <div className="single-question-body">
-                        {/* <QuestionCardStautsInfo type={'correct'} percentage={ (questionData?.correct_answers_count/questionData?.published_questions_count)*100} />
-                        <QuestionCardStautsInfo type={'wrong'} percentage={(questionData?.wrong_answers_count/questionData?.published_questions_count)*100} />
-                        <QuestionCardStautsInfo type={'not-attempt'} percentage={(((questionData?.published_questions_count-(questionData?.correct_answers_count+questionData?.wrong_answers_count)/questionData?.published_questions_count))/questionData?.published_questions_count)*100} />
-                        <QuestionCardStautsInfo type={'removed-by-admin'} percentage={'0'} /> */}
-                        <QuestionCardStautsInfo type={'correct'} percentage={(questionData?.correct_answers_count / questionData?.published_questions_count) * 100} />
-                        <QuestionCardStautsInfo type={'wrong'} percentage={(questionData?.wrong_answers_count / questionData?.published_questions_count) * 100} />
-                        <QuestionCardStautsInfo type={'not-attempt'} percentage={((questionData?.published_questions_count - (questionData?.correct_answers_count + questionData?.wrong_answers_count)) / questionData?.published_questions_count) * 100} />
-                        <QuestionCardStautsInfo type={'removed-by-admin'} percentage={0} />
-
-                    </div>
-                    {/* <div className="single-question-footer">
-                        <Link to={`/${questionData?.slug}/${questionData?.question?.slug}`}>View</Link>
-                    </div> */}
-                </div>
-                </Link>
-            </div>
-        </>
-    )
-}
-
-export default QuestionCategoryCard

@@ -18,7 +18,7 @@ function FlaggedGuides() {
     <div className="container-fluid all-flagged-page">
                 <div className='page-title-container'>
                     <h2 className="title">Flagged Guides</h2>
-                    <p>Text explaining what these are.</p>
+                    {/* <p>Text explaining what these are.</p> */}
                     
                 </div>
                 <section className="flagged-wrapper">

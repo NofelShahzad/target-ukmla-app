@@ -122,9 +122,9 @@ function Dashboard() {
           <div className="single-info"><div className="type correct"></div> <div className="info-title"><span> Correct answers </span></div> </div>
           <div className="single-info"><div className="type wrong"></div> <div className="info-title"><span> Wrong answers </span></div> </div>
           <div className="single-info"><div className="type not-attempt"></div> <div className="info-title"><span> Not attempted yet</span></div> </div>
-          <div className="single-info"><div className="type removed-by-admin"></div> <div className="info-title"><span> Removed by the admin</span></div> </div>
+          {/* <div className="single-info"><div className="type removed-by-admin"></div> <div className="info-title"><span> Removed by the admin</span></div> </div> */}
       </section>
-
+    {console.log("allQuestions::",allQuestions)}
       <section className="question-categories-wrapper">
         <div className="question-categories-inner-wrapper">
             {allQuestions.map(quest=> (

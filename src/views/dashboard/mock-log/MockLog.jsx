@@ -66,7 +66,7 @@ function MockLog() {
                                                                             className={`radio-option disable ${question?.attempted_opt_id===opt?.id && opt?.is_correct? 'correct text-light':''} ${question?.attempted_opt_id===opt?.id && !opt?.is_correct? 'wrong text-light':''} ${opt?.is_correct? 'actual-correct wrong':''} ${question?.attempted_opt_id === opt?.id ? 'user-submitted checked' : ''}`}
                                                                             htmlFor={opt?.id}>
                                                                             <div className="question-label-result col-11">
-                                                                                <p>{alphabets[index]}. {opt?.text}</p>
+                                                                                <p>{alphabets[index]}.&nbsp;<Markup markup={opt?.text}/></p>
                                                                                 <div className="result-percentage">
                                                                                     {/* {questionDetails?.answer && totalSelectedCount() > 0 && (
                                                                                         <span>

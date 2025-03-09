@@ -110,7 +110,7 @@ function BigMocks() {
       <div className="container-fluid">
         <div className='page-title-container'>
           <h2 className="title">Big Mock</h2>
-          <p>Text explaining what these are.</p>
+          {/* <p>Text explaining what these are.</p> */}
         </div>
 
         <section className="bigmocks-wrapper pb-3">

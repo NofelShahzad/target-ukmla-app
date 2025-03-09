@@ -71,18 +71,18 @@ function DashboardHeader() {
 
                 </div>
                 <ul className="menu-dropdown">
-                  <li>
+                  {/* <li>
                     <Link className="nav-link" to="/">
                       <div className='dropmenu-item'><span>Revision Course </span></div>
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link className="nav-link" to="/big-mocks">
                       <div className='dropmenu-item'><span>Big Mock </span> </div>
                     </Link>
                   </li>
                   <li>
-                    <Link className="nav-link" to="/">
+                    <Link className="nav-link" to="/webinars">
                       <span>Webinars</span>
                     </Link>
                   </li>

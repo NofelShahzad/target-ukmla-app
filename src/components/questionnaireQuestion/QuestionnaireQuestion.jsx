@@ -33,7 +33,7 @@ function QuestionnaireQuestion({ selectedValue, handleChange, questionDetails,is
                                         disabled={!!questionDetails?.answer && selectedValue !== opt?.id || (!isTimmerRunning && (type==="practice" || type==="mock"))} />
 
                                     <div className="question-label-result col-11">
-                                        <p>{alphabets[index]}. {opt?.description}</p>
+                                        <p>{alphabets[index]}.&nbsp;<Markup markup={opt?.description}/></p>
                                         <div className="result-percentage">
                                             {questionDetails?.answer && totalSelectedCount > 0 && (
                                                 <span>

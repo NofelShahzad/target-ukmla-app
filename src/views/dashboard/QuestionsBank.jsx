@@ -106,7 +106,7 @@ function QuestionsBank() {
             <div className="container-fluid question-bank-page">
                 <div className='page-title-container'>
                     <h2 className="title">Hello, UKMLA</h2>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard.</p>
+                    {/* <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard.</p> */}
                 </div>
 
                 <section className='question-bank-wrapper'>
@@ -152,7 +152,8 @@ function QuestionsBank() {
                                     </div>
                                 </div>
                             </div>
-                            <div className='revision-course-wrapper'>
+
+                            {/* <div className='revision-course-wrapper'>
                                 <div className='my-stuff-inner-wrapper question-bank-bg'>
                                     <h2 className='title'>Revision Course</h2>
                                     <div className='description'>
@@ -188,7 +189,8 @@ function QuestionsBank() {
 
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
+
                             <div className='big-mock-wrapper'>
                                 <div className='my-stuff-inner-wrapper question-bank-bg'>
                                     <h2 className='title'>Big Mock</h2>

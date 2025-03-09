@@ -21,7 +21,9 @@ function PaymentFailure() {
                     <p>{message}</p>
                     <br />
                     <br />
-                    <Link to='/' onClick={handleBackurl}  className='btn btn-primary'>Back</Link>
+                    <Link to='/' 
+                    // onClick={handleBackurl} 
+                     className='btn btn-primary'>Back</Link>
 
                 </div>
 
