@@ -12,3 +12,7 @@
     width: 50%;
     margin-inline: auto;
 }
+
+.z-100{
+    z-index: 100!important;
+}

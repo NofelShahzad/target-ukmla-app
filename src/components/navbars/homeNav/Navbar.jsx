@@ -30,7 +30,7 @@ function Navbar() {
 
             <ul className={`header-ul ${toogleHamburger ? 'show' : ''}`} >
               <li>
-                <NavLink to="/home">
+                <NavLink to="/">
                   Home
                 </NavLink>
               </li>

@@ -4,8 +4,9 @@ import { useGetSingleMockQuery } from "../../../redux/features/mocks/MocksApiSli
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Markup } from "react-render-markup";
+import PageLoader from '../../../components/pageLoader/PageLoader';
 function PracticeDetail() {
-
+    const [isLoading,setIsLoading] = useState(true);
 
     const navigate = useNavigate();  
     const [singleMock,setSingleMock] = useState("");
@@ -17,14 +18,15 @@ function PracticeDetail() {
         if (data) {
             if (data?.status) {
                 // console.log("data::",data); 
-                setSingleMock(data);               
+                setSingleMock(data);
+                setIsLoading(false);
             }
             if (!data?.status) {
             // navigate('/big-mocks')
             }
         }
         if (error) {
-            console.log();
+            console.log("error::",error);
         }
     }, [data,error]);
 
@@ -35,7 +37,7 @@ function PracticeDetail() {
 
 
   return (
-    <>
+    <>{isLoading && <PageLoader/>  }
         <div className="container-fluid bigmock-detail-page">
                 <div className='page-title-container'>
                     <h2 className="title">{singleMock?.mock?.name}</h2>
@@ -56,8 +58,11 @@ function PracticeDetail() {
                                     
                                     {/* <p>Join out new and improved 4-day online PLAB 1 exam Revision Course with Dr. Adam Jakes & Dr. Wei Zian Szetho &apos;Sze&apos;!</p> */}
                                 </div>
-                                <div className="bigmocks-card-footer">
-                                  <button type='button' className='btn btn-primary' onClick={()=>handleNavigate()}>{singleMock?.paused?'Continue':'Start'} Mock</button>
+                                <div className="bigmocks-card-footer gap-2">
+                                  <button type='button' className='btn btn-primary' onClick={()=>handleNavigate()} disabled={singleMock?.paused?false:true}>Continue Mock</button>
+                                  
+                                    <button type='button' className='btn btn-primary' onClick={()=>handleNavigate()} disabled={!singleMock?.paused?false:true} >Create New Mock</button>
+                                  
                                   {/* <button type='button' className='btn btn-primary' onClickCapture={()=>handleNavigate()}>Pruchase</button> */}
                               </div>
 
@@ -68,7 +73,7 @@ function PracticeDetail() {
                         {singleMock?.logs &&
                             singleMock?.logs.map((mock,index)=>
                             <div key={mock?.id} className="col-2">
-                                <Link to={`/practice-mocks/log/${mock?.id}`} className="btn btn-secondary" disabled>Mock {index+1}</Link>
+                                <Link to={`/practice-mocks/log/${mock?.id}`} className="btn btn-secondary w-100" disabled>Mock {index+1}</Link>
                             </div>
                         )}
                     </div>

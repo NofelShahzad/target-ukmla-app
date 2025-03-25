@@ -19,6 +19,7 @@ import Timer from "../../../components/timer/Timer";
 import { getCurrentTimeDate } from "../../../utils/util";
 import { useAddCommentMutation, useDeleteCommentMutation, useGetAllCommentsQuery, useLikeDislikeCommentMutation, useUpdateCommentMutation } from "../../../redux/features/commentsApi/commentsApiSlice";
 import { useSelector } from "react-redux";
+// import ScreenshotProtection from "../../../components/screenshotDetector/ScreenshotDetector";
 
 // const questionNumbers = Array.from({ length: 95 }, (_, i) => i + 1);
 function Questionnaire({ isMock, type }) {
@@ -274,7 +275,12 @@ function Questionnaire({ isMock, type }) {
             if (data) {
                 // console.log("data::",data)
                 if (data?.status) {
-                    setSingleQuestionDetails(data?.question);
+                    if (type==="mock") {
+                        setSingleQuestionDetails({...data?.question, answer: true});
+                    }
+                    else{
+                        setSingleQuestionDetails(data?.question);
+                    }
                     setSelectedValue('');
                     setSelected(false);
                     setFlagMarked(data?.question?.is_flagged_count === 1 ? true : false)
@@ -814,15 +820,21 @@ useEffect(() => {
 }, [isRunning, mockDetail?.id, mockTimeCheckerInterval, type]);
 
 // Handle Start, Pause, and Finish for the timer
+const [isStarted,setIsStarted] = useState(false);
+const [isPaused,setIsPaused] = useState(false);
 const handleStartTimer = () => {
     if (!isConnectionLost) {
         setIsRunning(true); // Start both the timer and the API checker
+        setIsStarted(true);
+        setIsPaused(false);
     }
 };
 
 const handlePauseTimer = async() => {
     if (type === "practice") {
         setIsRunning(false); // Pause both the timer and the API checker only for "practice"
+        setIsPaused(true);
+        setIsStarted(true)
         if (mockTimeCheckerInterval) {
             clearInterval(mockTimeCheckerInterval); // Stop API calls when paused
             setMockTimeCheckerInterval(null);
@@ -847,6 +859,7 @@ const handlePauseTimer = async() => {
 
 const handleFinishSave = async () => {
     try {
+        // console.log("finish::")
         const { data, error } = await finsihMockTimer({ mock_id: mockDetail?.id,current_date: getCurrentTimeDate(new Date()) });
         if (data) {
             if (data?.status) {
@@ -887,13 +900,42 @@ useEffect(() => {
     }
 }, [timeLeft,isRunning])
 
+useEffect(() => {
+    const disableRightClick = (event) => {
+      event.preventDefault();
+    };
+    document.addEventListener("contextmenu", disableRightClick);
+    
+    return () => {
+      document.removeEventListener("contextmenu", disableRightClick);
+    };
+  }, []);
 
+useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (
+        (event.ctrlKey && event.shiftKey && event.key === "I") || // Ctrl + Shift + I (DevTools)
+        (event.ctrlKey && event.shiftKey && event.key === "J") || // Ctrl + Shift + J (Console)
+        (event.ctrlKey && event.key === "U") // Ctrl + U (View Source)
+      ) {
+        event.preventDefault();
+      }
+    };
+  
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
 
 
     return (
         <>
-            <div className="container-fluid">
+
+            {isPaused && <div className="paused-wrapper"><h3 className="title">PAUSED</h3></div>}
+            <div className="container-fluid position-relative">
+                {/* <ScreenshotProtection/> */}
                 <div className="questionnaire-wrapper">
                     <div className="questionnaire-inner-wrapper">
 
@@ -959,7 +1001,7 @@ useEffect(() => {
                                     </form>
 
                                 </div>
-                                {singleQuestionDetails?.description && singleQuestionDetails?.answer &&
+                                {singleQuestionDetails?.description && singleQuestionDetails?.answer && type!=="mock" && 
                                     <div className="notes-container">
                                         <div className="notes-inner-container">
                                             <div className="notes-description">
@@ -1003,6 +1045,7 @@ useEffect(() => {
                                             timeLeft={timeLeft}
                                             isRunning={isRunning}
                                             type={type}
+                                            isStarted={isStarted}
                                         />
 
                                     }

@@ -8,6 +8,8 @@ import { errorMessage, successMessage } from "../../../components/toastMessages/
 import { useSelector } from "react-redux";
 import { useBuyStandardPlanMutation, useGetStandardPlansQuery } from "../../../redux/features/plansApi/plansApiSlice";
 import ExtendPlans from "../../../components/modals/ExtendPlans";
+import PageLoader from "../../../components/pageLoader/PageLoader";
+import { useNavigate } from "react-router-dom";
 
 function PracticeMocks() {
   const auth = useSelector(state => state.auth);
@@ -49,13 +51,20 @@ function PracticeMocks() {
   }, [plansData, plansError])
 
   const { data, error } = useAllPracticeMocksQuery();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (data) {
       if (data?.status) {
         setAllPracticeMocks(data?.mocks);
-        setIsLoading(false);
+        // console.log("data::",data);
+        if (data?.mocks?.length >0) {
+          navigate(`/practice-mocks/detail/${data?.mocks[0]?.slug}`)
+        }
       }
+      setTimeout(() => { 
+        setIsLoading(false);
+       }, 100);
     }
     if (error) {
       if (error?.data?.message) {
@@ -105,6 +114,7 @@ function PracticeMocks() {
 
   return (
     <>
+    {isLoading && <PageLoader/>  }
       <div className="container-fluid">
         <div className='page-title-container'>
           <h2 className="title">Practice Mock</h2>

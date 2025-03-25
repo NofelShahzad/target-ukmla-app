@@ -22,10 +22,22 @@ function QuestionsBank() {
     const [allStandardPlans,setAllStandardPlans] = useState([]);
 
     const handleClosePlansModal = () => {
-        setPlansModal(false)
+        setPlansModal(false);
+        setPlanActionType(null);
     };
-    const handleOpenPlansModal = () => {
+    const [planActionType,setPlanActionType] = useState(null);
+    const [confirmModal, setConfirmModal] = useState(false);
+    const [selectedPlan,setSelectedPlan] = useState(null);
+    const handleShowConfirmModal = (plan)=>{
+        setConfirmModal(true);
+        setSelectedPlan(plan);
+    }
+    const handleCloseConfirmModal = ()=>{
+        setConfirmModal(false);
+    }
+    const handleOpenPlansModal = (type) => {
         setPlansModal(true)
+        setPlanActionType(type)
     };
 
     const {data:plansData , error: plansError} = useGetStandardPlansQuery();
@@ -69,35 +81,42 @@ function QuestionsBank() {
     const [buyStandardPlan] = useBuyStandardPlanMutation();
 
 
-    const handlePurchansePlan = async(plan)=>{
-        // console.log("handlePurchansePlan::",plan);
-        if (plan?.link.trim()) {
-          window.location = plan?.link;
-        }else{
-          try {
-            const body = {
-              plan_id: plan?.id,
-              days: plan?.days
-            }
-            const { data, error} = await buyStandardPlan(body);
-            if (data) {
-              // console.log(data)
-              if (data?.status) {
-                successMessage(data?.message);
-                handleClosePlansModal();
+    const handlePurchansePlan = async()=>{
+        // console.log("handlePurchansePlan::",selectedPlan);
+        // return;
+        if (planActionType === "reset") {
+            window.location = selectedPlan?.reset_link;
+        }
+        if (planActionType === "extend") {
+            if (selectedPlan?.link.trim()) {
+              window.location = selectedPlan?.link;
+            }else{
+              try {
+                const body = {
+                  plan_id: selectedPlan?.id,
+                  days: selectedPlan?.days
+                }
+                const { data, error} = await buyStandardPlan(body);
+                if (data) {
+                  // console.log(data)
+                  if (data?.status) {
+                    successMessage(data?.message);
+                    handleClosePlansModal();
+                  }
+                  if (!data?.status) {
+                    errorMessage(data?.message);
+                  }
+                }
+                if (error) {
+                  errorMessage(error?.data?.message);
+                }
+                
+              } catch (err) {
+                console.log("err::",err)
               }
-              if (!data?.status) {
-                errorMessage(data?.message);
-              }
+             
             }
-            if (error) {
-              errorMessage(error?.data?.message);
-            }
-            
-          } catch (err) {
-            console.log("err::",err)
-          }
-         
+
         }
       }
 
@@ -117,17 +136,17 @@ function QuestionsBank() {
                                     <h2 className='title'>My Stuff</h2>
                                     <div className='footer'>
                                         <div className='col-6 p-1'>
-                                            <Link to='questions-bank/flagged-questions' className='btn btn-secondary my-1 w-100'>Flagged Questions</Link>
+                                            <Link to='flagged-questions' className='btn btn-secondary my-1 w-100'>Flagged Questions</Link>
                                         </div>
+                                        {/* <div className='col-6 p-1'>
+                                            <Link to='flagged-guides' className='btn btn-secondary my-1 w-100'>Flagged Guides</Link>
+                                        </div> */}
                                         <div className='col-6 p-1'>
-                                            <Link to='questions-bank/flagged-guides' className='btn btn-secondary my-1 w-100'>Flagged Guides</Link>
+                                            <Link to='comments' className='btn btn-secondary my-1 w-100'>View Comments</Link>
                                         </div>
-                                        <div className='col-6 p-1'>
-                                            <Link to='questions-bank/comments' className='btn btn-secondary my-1 w-100'>View Comments</Link>
-                                        </div>
-                                        <div className='col-6 p-1'>
+                                        {/* <div className='col-6 p-1'>
                                             <button className='btn btn-secondary my-1 w-100'>View Notes</button>
-                                        </div>
+                                        </div> */}
 
                                     </div>
                                 </div>
@@ -232,8 +251,8 @@ function QuestionsBank() {
                                     <h2 className="title">Question Bank (Plans)</h2>
                                     {allUserPlans.length >0 &&
                                         allUserPlans.map((plan, index) =>
-                                            <SinglePlan key={plan.id} plan={plan} indexCount={index} handleOpenPlansModal={handleOpenPlansModal} />
-                                    )} 
+                                            <SinglePlan key={plan.id} plan={plan} indexCount={index} handleOpenPlansModal={handleOpenPlansModal} planActionType={planActionType}/>
+                                    )}
                                     {
                                         !allUserPlans.length > 0 &&
                                         <div className='no-plans-found'>
@@ -262,9 +281,40 @@ function QuestionsBank() {
             </div>
             {plansModal &&
                 <ReactPortal wrapperId="external_modal_container">
-                    <ExtendPlans closeBtn={closeBtn} closeModal={handleClosePlansModal} type={"extend"} handlePurchase={handlePurchansePlan} purchasedPlan={allUserPlans[0]} allPlans={allStandardPlans}/>
+                    <ExtendPlans closeBtn={closeBtn} closeModal={handleClosePlansModal} type={planActionType} handlePurchase={handleShowConfirmModal} purchasedPlan={allUserPlans[0]} allPlans={allStandardPlans}/>
                 </ReactPortal>
             }
+
+            {confirmModal &&
+                <ReactPortal wrapperId="external_modal_container">
+                                    <section className='detail-modal'>
+                                        <div className='close-btn-container'>
+                                            <img src={closeBtn} alt='close' onClick={() => handleCloseConfirmModal()} />
+                                        </div>
+                                        <div className='title-wrapper'>
+                                            <h2 className='title text-warning'>Confirm</h2>
+                                            {/* <div className='date-time-wrapper'><span>18th May 2024 (9:00 AM to 11:00 AM UK time)</span></div> */}
+                                        </div>
+                                        <div className='description'>
+                                            <p className="text-balance mb-2">
+                                                {planActionType ==="reset" &&
+                                                    <>All attempted mock answers, practice mock responses, flagged questions, and comments will be permanently removed.<br/>
+                                                        Are you sure you want to reset your account and pay <strong>£{selectedPlan?.price}</strong>?
+                                                    </>
+                                                }
+                                                {planActionType ==="extend" &&
+                                                    <>Are you sure you want to extend your plan and pay <strong>£{selectedPlan?.price}</strong>?</>
+                                                }
+                                            </p>
+                                        </div>
+                                        <div className="modal-footer-custom">
+                                            <button className="btn btn-primary mb-2" onClick={() => handlePurchansePlan()}>Yes, {planActionType ==="reset" &&"Reset"}{planActionType ==="extend"&&"Extend"}</button>
+                                            <button className="btn btn-secondary" onClick={() => handleCloseConfirmModal(false)}>No</button>
+                                        </div>
+                                    </section>
+                                </ReactPortal>
+            }
+
         </>
     )
 }

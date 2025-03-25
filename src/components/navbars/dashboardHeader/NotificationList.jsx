@@ -31,6 +31,9 @@ function NotificationList() {
                     <SingleNotification key={notification?.id} notificationData={notification}/>
                 )
             }
+            {allNotifications?.length ===0 &&
+                <div className="emtpy-mg-container"><p>No New and notificaton.</p></div>
+            }
             {/* <SingleNotification/>
             <SingleNotification/>
             <SingleNotification/>

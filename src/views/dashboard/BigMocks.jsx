@@ -15,6 +15,7 @@ import closeBtn from '../../assets/icons/dashboard/modal-close.svg';
 import BigmockInfo from "../../components/modals/BigmockInfo";
 import { useBuyMockPlanMutation, useGetAllMocksQuery } from "../../redux/features/mocks/MocksApiSlice";
 import { errorMessage, successMessage } from "../../components/toastMessages/ToastifyMsg";
+import PageLoader from "../../components/pageLoader/PageLoader";
 
 
 
@@ -42,8 +43,10 @@ function BigMocks() {
           const purchased=data?.purchased_mocks?.map(pur=>({...pur,purchase :true}))
           const not_purchased=data?.mocks?.map(pur=>({...pur,purchase :false}))
           setAllMocks([...purchased,...not_purchased]);
-          setIsLoading(false);
         }
+        setTimeout(() => { 
+          setIsLoading(false);
+        }, 100);
       }
       if (error) {
         if (error?.data?.message) {
@@ -107,6 +110,7 @@ function BigMocks() {
     }
   return (
     <>
+    {isLoading && <PageLoader/>  }
       <div className="container-fluid">
         <div className='page-title-container'>
           <h2 className="title">Big Mock</h2>

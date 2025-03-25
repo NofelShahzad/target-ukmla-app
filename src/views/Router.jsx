@@ -88,74 +88,150 @@ const RouterWrapper = () => {
   }, [data,error,isLoading]);
 
     return (
-        <Routes>
+        // <Routes>
 
-            <Route path='/' element={
-                <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/">
-                    <UnauthenticatedLayout />
+        //     <Route path='/' element={
+        //         <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/">
+        //             <UnauthenticatedLayout />
+        //         </ProtectedRoute>
+        //     }>
+        //         {/* <Route index element={<div className="container"> <h3 className="my-4 text-center">Home</h3></div>} /> */}
+
+        //         <Route path="signup" element={<Signup />} />
+        //         {/* <Route path="login" element={<Login />} /> */}
+        //         <Route
+        //             path="/login" 
+        //             element={
+        //                 <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/">
+        //                     <Login />
+        //                 </ProtectedRoute>
+        //             }
+        //         />
+        //         <Route path="/home" element={ <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/"><Home/></ProtectedRoute>} />
+        //         <Route path="question-bank" element={<QuestionBank/>} />
+        //         <Route path="mocks" element={<BigMock/>} />
+        //         <Route path="webinar" element={<Webinar/>} />
+        //         <Route path="contact-us" element={<Contactus/>} />
+
+        //         <Route path="reset-password" element={<ResetPassword title={"Forget Password"}/>} />
+        //         <Route path="new-password" element={<CreateNewPassword />} />
+        //     </Route>
+        //     <Route path="payment-success" element={<PaymentSuccess/>}/>
+        //     <Route path="payment-error" element={<PaymentFailure/>}/>
+        //     {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+        //     <Route
+        //         path="/"
+        //         element={
+        //             <ProtectedRoute isAllowed={!!isUserAuthenticated} redirectedPath="/login">
+        //                 <AuthenticatedLayout />
+        //             </ProtectedRoute>
+        //         }
+        //     >
+        //             <Route index element={<QuestionsBank/>} />
+        //         <Route path="questions-bank">
+        //           <Route index element={<Dashboard />} />
+        //           <Route path='comments' element={<AllComments/>}/>
+        //           <Route path='flagged-questions' element={<FlaggedQuestion/>}/>
+        //           <Route path='flagged-guides' element={<FlaggedGuides/>}/>
+        //         </Route>
+        //         <Route path="big-mocks">
+        //             <Route index element={<BigMocks/>}/>
+        //             <Route path='detail/:mock_id' element={<BigmockDetail/>}/>
+        //             <Route path='log/:mock_id' element={<MockLog/>}/>
+        //         </Route>
+        //         <Route path='practice-mocks'>
+        //           <Route index element={<PracticeMocks/>}/>
+        //           <Route path='detail/:practice_id' element={<PracticeDetail/>}/>
+        //           <Route path='log/:mock_id' element={<MockLog/>}/>
+        //         </Route>
+        //         <Route path="webinars" element={<Webinars/>} />
+        //         <Route path="contactus" element={<ContactUs/>} />
+        //         <Route path=':questionnaire_Id/:question_Id' element={<Questionnaire isMock={false} type={"category"}/>}/>
+        //         {/* <Route path=':questionnaire_Id' element={<Questionnaire isMock={false}/>}/> */}
+        //         <Route path='/mock/:mock_id/:question_Id' element={<Questionnaire isMock={true} type={"mock"}/>}/>
+        //         <Route path='/practice/:practice_id/:question_Id' element={<Questionnaire isMock={true} type={"practice"}/>}/>
+        //         <Route path='/notifications' element={<AllNotifications/>} />
+        //         <Route path='/notifications/:notification_id' element={<NotificationDetail/>} />
+
+        //     </Route>
+        // </Routes>
+    
+      
+<Routes>
+    {/* Unauthenticated Routes (including Home) */}
+    <Route
+        element={
+          <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/dashboard">
+                <UnauthenticatedLayout />
+            </ProtectedRoute>
+        }
+    >
+        <Route path="/" element={
+          <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/">
+            <Home />
+                    {/* <Login /> */}
                 </ProtectedRoute>
-            }>
-                {/* <Route index element={<div className="container"> <h3 className="my-4 text-center">Home</h3></div>} /> */}
+          } />
+        <Route path="signup" element={<Signup />} />
+        <Route
+            path="login"
+            element={
+                <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/">
+                    <Login />
+                </ProtectedRoute>
+            }
+        />
+        <Route path="question-bank" element={<QuestionBank />} />
+        <Route path="mocks" element={<BigMock />} />
+        <Route path="webinar" element={<Webinar />} />
+        <Route path="contact-us" element={<Contactus />} />
+        <Route path="reset-password" element={<ResetPassword title={"Forget Password"} />} />
+        <Route path="new-password" element={<CreateNewPassword />} />
+    </Route>
 
-                <Route path="signup" element={<Signup />} />
-                {/* <Route path="login" element={<Login />} /> */}
-                <Route
-                    path="/login" 
-                    element={
-                        <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/">
-                            <Login />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route path="/home" element={ <ProtectedRoute isAllowed={!isUserAuthenticated} redirectedPath="/"><Home/></ProtectedRoute>} />
-                <Route path="question-bank" element={<QuestionBank/>} />
-                <Route path="mocks" element={<BigMock/>} />
-                <Route path="webinar" element={<Webinar/>} />
-                <Route path="contact-us" element={<Contactus/>} />
+    {/* Payment Routes (Accessible without login) */}
+    <Route path="payment-success" element={<PaymentSuccess />} />
+    <Route path="payment-error" element={<PaymentFailure />} />
 
-                <Route path="reset-password" element={<ResetPassword title={"Forget Password"}/>} />
-                <Route path="new-password" element={<CreateNewPassword />} />
-            </Route>
-            <Route path="payment-success" element={<PaymentSuccess/>}/>
-            <Route path="payment-error" element={<PaymentFailure/>}/>
-            {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-            <Route
-                path="/"
-                element={
-                    <ProtectedRoute isAllowed={!!isUserAuthenticated} redirectedPath="/login">
-                        <AuthenticatedLayout />
-                    </ProtectedRoute>
-                }
-            >
-                    <Route index element={<QuestionsBank/>} />
-                <Route path="questions-bank">
-                  <Route index element={<Dashboard />} />
-                  <Route path='comments' element={<AllComments/>}/>
-                  <Route path='flagged-questions' element={<FlaggedQuestion/>}/>
-                  <Route path='flagged-guides' element={<FlaggedGuides/>}/>
-                </Route>
-                <Route path="big-mocks">
-                    <Route index element={<BigMocks/>}/>
-                    <Route path='detail/:mock_id' element={<BigmockDetail/>}/>
-                    <Route path='log/:mock_id' element={<MockLog/>}/>
-                </Route>
-                <Route path='practice-mocks'>
-                  <Route index element={<PracticeMocks/>}/>
-                  <Route path='detail/:practice_id' element={<PracticeDetail/>}/>
-                  <Route path='log/:mock_id' element={<MockLog/>}/>
-                </Route>
-                <Route path="webinars" element={<Webinars/>} />
-                <Route path="contactus" element={<ContactUs/>} />
-                <Route path=':questionnaire_Id/:question_Id' element={<Questionnaire isMock={false} type={"category"}/>}/>
-                {/* <Route path=':questionnaire_Id' element={<Questionnaire isMock={false}/>}/> */}
-                <Route path='/mock/:mock_id/:question_Id' element={<Questionnaire isMock={true} type={"mock"}/>}/>
-                <Route path='/practice/:practice_id/:question_Id' element={<Questionnaire isMock={true} type={"practice"}/>}/>
-                <Route path='/notifications' element={<AllNotifications/>} />
-                <Route path='/notifications/:notification_id' element={<NotificationDetail/>} />
+    {/* Authenticated Routes */}
+    <Route
+        element={
+            <ProtectedRoute isAllowed={!!isUserAuthenticated} redirectedPath="/login">
+                <AuthenticatedLayout />
+            </ProtectedRoute>
+        }
+    >
+            <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="questions-bank">
+            <Route index element={<QuestionsBank />} />
+            <Route path="comments" element={<AllComments />} />
+            <Route path="flagged-questions" element={<FlaggedQuestion />} />
+            <Route path="flagged-guides" element={<FlaggedGuides />} />
+        </Route>
 
-            </Route>
-        </Routes>
-    );
+        <Route path="big-mocks">
+            <Route index element={<BigMocks />} />
+            <Route path="detail/:mock_id" element={<BigmockDetail />} />
+            <Route path="log/:mock_id" element={<MockLog />} />
+        </Route>
+
+        <Route path="practice-mocks">
+            <Route index element={<PracticeMocks />} />
+            <Route path="detail/:practice_id" element={<PracticeDetail />} />
+            <Route path="log/:mock_id" element={<MockLog />} />
+        </Route>
+
+        <Route path="webinars" element={<Webinars />} />
+        <Route path="contactus" element={<ContactUs />} />
+        <Route path=":questionnaire_Id/:question_Id" element={<Questionnaire isMock={false} type={"category"} />} />
+        <Route path="/mock/:mock_id/:question_Id" element={<Questionnaire isMock={true} type={"mock"} />} />
+        <Route path="/practice/:practice_id/:question_Id" element={<Questionnaire isMock={true} type={"practice"} />} />
+        <Route path="/notifications" element={<AllNotifications />} />
+        <Route path="/notifications/:notification_id" element={<NotificationDetail />} />
+    </Route>
+</Routes>
+    
+      );
 };
 
 export default RouterWrapper;

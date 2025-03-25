@@ -18,7 +18,7 @@ const persistConfig = {
     key: "target-ukmla",
     version: 1,
     storage,
-    whitelist: ["auth"], // only auth will be saved
+    whitelist: ["auth","screenshot"], // only auth will be saved
   };
 
 

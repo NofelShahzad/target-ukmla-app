@@ -73,13 +73,15 @@ function Signup() {
     });
 
     const isAllFieldsValid = () => {
-      const { firstName, lastName, email, password, terms_cond, receive_email } = signupData;
+      const { firstName, lastName, email, password, terms_cond, 
+        // receive_email 
+      } = signupData;
       return (
         firstName.trim() !== '' &&
         lastName.trim() !== '' &&
         email.trim() !== '' &&
         terms_cond &&
-        receive_email &&
+        // receive_email &&
         password.length >= 8 &&
         /[a-zA-Z]/.test(password) &&
         /\d/.test(password)

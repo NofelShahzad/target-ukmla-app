@@ -25,7 +25,7 @@ function SideBar({toogleSideBar, sidebar}) {
             <div className='sidebar-body'>
                 <ul className='sidebar-menu'>
                     <li>
-                        <NavLink to='/'>
+                        <NavLink to='/dashboard'>
                             {/* <img src={homeIcon} alt='home icon' /> */}
                             <svg xmlns="http://www.w3.org/2000/svg" width="17.585" height="18.51" viewBox="0 0 17.585 18.51">
                                 <g id="Iconly_Bold_Home" data-name="Iconly/Bold/Home" transform="translate(-2.5 -2)">

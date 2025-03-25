@@ -32,6 +32,7 @@ function WebinarsCard({imgSrc,handleOpenWebinarModal, handleConfirmPurchase, web
                                         {/* <p>{webinar?.description}</p> */}
                                         <Markup markup={webinar?.description} />
                                     </div>
+                                    
                                     <div className='speaker-container'>
                                         <table>
                                             <thead>
@@ -51,7 +52,6 @@ function WebinarsCard({imgSrc,handleOpenWebinarModal, handleConfirmPurchase, web
                                         </table>
 
                                     </div>
-                                    
                                     <div className="webinar-card-footer">
                                         <div className='col-6 pe-1'>
                                             <button type='button' className='btn btn-detail' onClick={()=>handleOpenWebinarModal(webinar)}>More Info</button>

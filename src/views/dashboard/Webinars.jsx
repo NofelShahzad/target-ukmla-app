@@ -19,8 +19,10 @@ import { errorMessage,
     // successMessage 
 } from "../../components/toastMessages/ToastifyMsg";
 import moment from "moment/moment";
+import PageLoader from '../../components/pageLoader/PageLoader';
 
 function Webinars() {
+    const [isLoading,setIsLoading] = useState(true);
     const [allWebinars,setAllWebinars] = useState([]);
     const [detailModal, setDetailModal] = useState(false);
     const [webinarDetail,setWebinarDetail] = useState();
@@ -45,6 +47,7 @@ function Webinars() {
                 if (!data?.status) {
                     errorMessage(data?.message)
                 }
+                setIsLoading(false);
             }
             if (error) {
                 console.log("error::",error);
@@ -107,6 +110,7 @@ function Webinars() {
 
     return (
         <>
+        {isLoading && <PageLoader/>  }
             <div className='container-fluid'>
                 <div className='page-title-container'>
                     <h2 className="title">Webinars</h2>

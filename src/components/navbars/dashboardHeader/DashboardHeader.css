@@ -217,7 +217,7 @@ header.dashboard-header-wrapper nav ul.nav-body li .nav-icon-container .menu-dro
     border-radius: 5px;
     min-width: 141px;
     display: none;
-    z-index: 10;
+    z-index: 101;
 }
 
 header.dashboard-header-wrapper nav ul.nav-body li:hover .nav-icon-container .menu-dropdown {
@@ -258,6 +258,7 @@ header.dashboard-header-wrapper nav ul.nav-body li.nav-notification-container .n
 }
 header.dashboard-header-wrapper nav ul.nav-body li:hover .nav-icon-container .notification-dropdown-wrapper{
     display: block;
+    z-index: 101;
 }
 header.dashboard-header-wrapper nav ul.nav-body li.nav-notification-container .notification-dropdown-wrapper .notification-dropdown-inner-wrapper{
     padding: 5px 0;

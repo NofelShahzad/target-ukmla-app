@@ -1,0 +1,12 @@
+.screenshot-detector-wrapper{
+    position: relative;
+}
+.screenshot-detector-inner-wrapper{
+    padding-top: 120px;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    inset: 0;
+    background: #fff;
+    z-index: 100;
+}

@@ -36,9 +36,9 @@ function WebinarsInfo({closeBtn,handleCloseWebinarModal,webinarDetail}) {
                             </table>
 
                         </div>
-                        <div className='price-details'>
+                        {/* <div className='price-details'>
                             <p>£{webinarDetail?.price} per webinar (includes dedicated WhatsApp group +<br/> revision summary Slides post-webinar)</p>
-                        </div>
+                        </div> */}
                     </section>
     </>
   )

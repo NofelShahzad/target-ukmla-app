@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import SideBar from "../components/navbars/sidebar/SideBar";
 import DashboardHeader from "../components/navbars/dashboardHeader/DashboardHeader";
 import { useCallback, useEffect, useState } from "react";
+import ScreenshotProtection from "../components/screenshotDetector/ScreenshotDetector";
 
 function AuthenticatedLayout() {
 
@@ -43,7 +44,10 @@ function AuthenticatedLayout() {
         {/* </div> */}
         <main className="dashboard-wrapper">
           <DashboardHeader />
-          <Outlet />
+          <div className="position-relative">
+            <ScreenshotProtection/>
+            <Outlet />
+          </div>
         </main>
       {/* </div> */}
     </>

@@ -20,6 +20,10 @@
     left: 3px;
 }
 
+.question-index-btn-wrapper button .btn-flagged-question-container svg path{
+    fill: red;
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
+}
 .question-index-btn-wrapper button.wrong-index-btn{
     background-color: var(--wrong-question-btn-bg)!important;
     border-color: var(--wrong-question-btn-bg)!important;

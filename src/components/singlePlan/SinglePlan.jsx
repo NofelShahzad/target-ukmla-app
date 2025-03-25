@@ -29,10 +29,10 @@ function SinglePlan({plan, handleOpenPlansModal, indexCount}) {
                 {indexCount===0 && 
                     <div className='plan-action'>
                         <div className="col-6 p-1">
-                            <button className='btn btn-secondary' onClick={()=>handleOpenPlansModal()}>Reset Plan</button>
+                            <button className='btn btn-secondary' onClick={()=>handleOpenPlansModal("reset")}>Reset Plan</button>
                         </div>
                         <div className="col-6 p-1">
-                            <button className='btn btn-primary' onClick={()=>handleOpenPlansModal()}>Extend Plan</button>
+                            <button className='btn btn-primary' onClick={()=>handleOpenPlansModal("extend")}>Extend Plan</button>
                         </div>
                     </div>
                 }

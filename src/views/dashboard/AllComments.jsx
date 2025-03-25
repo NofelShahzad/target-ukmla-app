@@ -44,6 +44,9 @@ function AllComments() {
               allCommentsList?.map(comment =>
                 <CommentCard key={comment?.id} content={comment} userInfo={authUser} />
               )}
+              {!isLoading && allCommentsList.length===0 &&
+                <div className="emtpy-mg-container"><p>No comment found!</p></div>
+              }
           </div>
         </section>
       </div>

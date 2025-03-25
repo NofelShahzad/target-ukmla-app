@@ -27,21 +27,21 @@ function QuestionCategoryCard({ title, questionData }) {
                             <QuestionCardStautsInfo
                                 type={'correct'}
                                 percentage={questionData?.published_questions_count > 0
-                                    ? (questionData?.correct_answers_count / questionData?.published_questions_count) * 100
+                                    ? Math.max((questionData?.correct_answers_count / questionData?.published_questions_count) * 100, 0)
                                     : 0}
                             />
 
                             <QuestionCardStautsInfo
                                 type={'wrong'}
                                 percentage={questionData?.published_questions_count > 0
-                                    ? (questionData?.wrong_answers_count / questionData?.published_questions_count) * 100
+                                    ? Math.max((questionData?.wrong_answers_count / questionData?.published_questions_count) * 100, 0)
                                     : 0}
                             />
 
                             <QuestionCardStautsInfo
                                 type={'not-attempt'}
                                 percentage={questionData?.published_questions_count > 0
-                                    ? ((questionData?.published_questions_count - (questionData?.correct_answers_count + questionData?.wrong_answers_count)) / questionData?.published_questions_count) * 100
+                                    ? Math.max(((questionData?.published_questions_count - (questionData?.correct_answers_count + questionData?.wrong_answers_count)) / questionData?.published_questions_count) * 100, 0)
                                     : 100}
                             />
 

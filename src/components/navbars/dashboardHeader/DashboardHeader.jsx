@@ -131,11 +131,11 @@ function DashboardHeader() {
                       </ul>
                     </div>
                   </li>
-                  <li>
+                  {/* <li>
                     <div className="nav-link" to="/">
                       <div className='dropmenu-item'>
                         <span>Revision Guides</span>
-                        {/* <img src={downArrow} alt='other icons' /> */}
+                        <img src={downArrow} alt='other icons' />
                         <svg xmlns="http://www.w3.org/2000/svg" width="12.5" height="6.855" viewBox="0 0 12.5 6.855">
                           <g id="Iconly_Light-Outline_Arrow---Down-2" data-name="Iconly/Light-Outline/Arrow---Down-2" transform="translate(-4.25 -7.75)">
                             <g id="Arrow---Down-2" transform="translate(4.25 7.75)">
@@ -150,7 +150,7 @@ function DashboardHeader() {
                         <li><Link to='/'>Flagged Guides</Link></li>
                       </ul>
                     </div>
-                  </li>
+                  </li> */}
 
 
                 </ul>

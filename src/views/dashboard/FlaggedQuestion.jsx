@@ -67,8 +67,8 @@ function FlaggedQuestion() {
                     <div className="tabs-btn-container">
                         <div className="col-sm-12 col-lg-6 col-xxl-4 col-12">
                             <div className="tabs-btn-inner-container">
-                                <button type="button" className={`btn${tab === 'question' ? ' btn-primary' : ' btn-secondary'}`} onClick={() => setTab('question')}>Flagged Question</button>
-                                <button type="button" className={`btn${tab === 'mock' ? ' btn-primary' : ' btn-secondary'}`} onClick={() => setTab('mock')}>Flagged Mock</button>
+                                {/* <button type="button" className={`btn${tab === 'question' ? ' btn-primary' : ' btn-secondary'}`} onClick={() => setTab('question')}>Flagged Question</button> */}
+                                {/* <button type="button" className={`btn${tab === 'mock' ? ' btn-primary' : ' btn-secondary'}`} onClick={() => setTab('mock')}>Flagged Mock</button> */}
                                 {/* <button type="button" className={`btn${tab === 'guide' ? ' btn-primary' : ' btn-secondary'}`} onClick={() => setTab('guide')}>Flagged Quides</button> */}
 
 

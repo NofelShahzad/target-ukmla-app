@@ -8,7 +8,9 @@ import { useGetSingleMockQuery } from "../../redux/features/mocks/MocksApiSlice"
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Markup } from "react-render-markup";
+import PageLoader from '../../components/pageLoader/PageLoader';
 function BigmockDetail() {
+    const [isLoading,setIsloading] = useState(true);
     const navigate = useNavigate();
     const [singleMock,setSingleMock] = useState("");
     const { mock_id } = useParams();
@@ -24,6 +26,7 @@ function BigmockDetail() {
             if (!data?.status) {
             navigate('/big-mocks')
             }
+            setIsloading(false);
         }
         if (error) {
             console.log();
@@ -36,6 +39,7 @@ function BigmockDetail() {
 
     return (
         <>
+        {isLoading && <PageLoader/>  }
             <div className="container-fluid bigmock-detail-page">
                 <div className='page-title-container'>
                     <h2 className="title">{singleMock?.mock?.name}</h2>
@@ -64,7 +68,7 @@ function BigmockDetail() {
                         {singleMock?.logs &&
                             singleMock?.logs.map((mockLog,index)=>
                             <div key={mockLog?.id} className="col-2">
-                                <Link to={`/big-mocks/log/${mockLog?.id}`} className="btn btn-secondary w-100">Mock {index+1}</Link>
+                                <Link to={`/big-mocks/log/${mockLog?.id}`} className="btn btn-secondary w-100">Attempt {index+1}</Link>
                             </div>
                         )}
                     </div>

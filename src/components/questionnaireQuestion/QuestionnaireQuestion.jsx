@@ -36,6 +36,7 @@ function QuestionnaireQuestion({ selectedValue, handleChange, questionDetails,is
                                         <p>{alphabets[index]}.&nbsp;<Markup markup={opt?.description}/></p>
                                         <div className="result-percentage">
                                             {questionDetails?.answer && totalSelectedCount > 0 && (
+                                                type !=="mock" &&
                                                 <span>
                                                     {((opt?.correct_answers_count + opt?.wrong_answers_count) / totalSelectedCount * 100).toFixed()}%
                                                 </span>
@@ -43,11 +44,21 @@ function QuestionnaireQuestion({ selectedValue, handleChange, questionDetails,is
                                         </div>
                                     </div>
 
-                                    <div className="submitted-status-wrapper">
-                                        <div className="submitted-status-inner-wrapper"
-                                            style={{ width: `${totalSelectedCount > 0 ? (opt?.correct_answers_count + opt?.wrong_answers_count) / totalSelectedCount * 100 : 0}%` }}>
+                                    {type!=="mock" &&
+                                        
+                                        <div className="submitted-status-wrapper">
+                                            <div className="submitted-status-inner-wrapper"
+                                                style={{ width: `${totalSelectedCount > 0 ? (opt?.correct_answers_count + opt?.wrong_answers_count) / totalSelectedCount * 100 : 0}%` }}>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
+                                    {type==="mock" && selectedValue === opt?.id &&
+                                            <div className="submitted-status-wrapper">
+                                            <div className="submitted-status-inner-wrapper"
+                                                style={{ width: `${totalSelectedCount > 0 ? (opt?.correct_answers_count + opt?.wrong_answers_count) / totalSelectedCount * 100 : 0}%` }}>
+                                            </div>
+                                        </div>
+                                    }
                                 </label>
                             ))
                         }

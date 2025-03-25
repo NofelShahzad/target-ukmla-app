@@ -855,7 +855,7 @@ input.input-error{
   padding-bottom: 20px;
 }
 .extend-plans-wrapper .single-extend-plan .title{
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 600;
   color: var(--theme-heading-color);
 }
@@ -1032,6 +1032,7 @@ input.input-error{
 }
 .questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option .question-label-result p{
   margin: 0;
+  display: inline-block;
 }
 .questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option .question-label-result .result-percentage span{
   margin: 0;
@@ -1223,3 +1224,20 @@ text-align: center;
 
 
 /* -------------------DASHBOARD CSS END-------------------- */
+.paused-wrapper{
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paused-wrapper .title{
+  color: #fff;
+  font-size: 40px;
+}

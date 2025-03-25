@@ -18,12 +18,13 @@ import { errorMessage, successMessage } from "../../components/toastMessages/Toa
 import ReactPortal from "../../components/portal/ReactPortal";
 import ExtendPlans from "../../components/modals/ExtendPlans";
 import closeBtn from '../../assets/icons/dashboard/modal-close.svg'
+import PageLoader from "../../components/pageLoader/PageLoader";
 // import ReactPortal from "../../components/portal/ReactPortal";
 
 
 
 function Dashboard() {
-
+  const [isLoading,setIsloading] = useState(true);
   const auth = useSelector(state=>state.auth);
   const [plansModal, setPlansModal] = useState(false);
 
@@ -66,6 +67,7 @@ function Dashboard() {
     if (data?.status) {
       setAllQuestions(data?.categories);
     }
+    setIsloading(false)
     }
     if (error) {
       console.log("error::",error);
@@ -105,7 +107,7 @@ function Dashboard() {
 
 
   return (
-    <>
+    <>{isLoading && <PageLoader/>}
     <div className="container-fluid">
       <section className="dashboard-wrapper-banner">
         <div className="dashboard-banner">
@@ -124,7 +126,6 @@ function Dashboard() {
           <div className="single-info"><div className="type not-attempt"></div> <div className="info-title"><span> Not attempted yet</span></div> </div>
           {/* <div className="single-info"><div className="type removed-by-admin"></div> <div className="info-title"><span> Removed by the admin</span></div> </div> */}
       </section>
-    {console.log("allQuestions::",allQuestions)}
       <section className="question-categories-wrapper">
         <div className="question-categories-inner-wrapper">
             {allQuestions.map(quest=> (
