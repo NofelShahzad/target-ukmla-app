@@ -176,7 +176,7 @@ function DashboardHeader() {
                     </Link>
                   </li>
                   <li>
-                    <Link className="nav-link" href="/">
+                    <Link className="nav-link" to='/change-password'>
                       <span>Change Password</span>
                     </Link>
                   </li>

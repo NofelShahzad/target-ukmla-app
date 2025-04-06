@@ -1,6 +1,6 @@
 // Router.js
 // import React from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 // import Root from '../root/Root';
 import Signup from './auth/Signup';
 import Login from './auth/Login';
@@ -38,6 +38,7 @@ import NotificationDetail from './dashboard/notification/NotificationDetail';
 import MockLog from './dashboard/mock-log/MockLog';
 import PaymentSuccess from './paymentSuccess/PaymentSuccess';
 import PaymentFailure from './paymentFailure/PaymentFailure';
+import ChangePassword from './dashboard/ChangePassword';
 
 const RouterWrapper = () => {
     const isUserAuthenticated = useSelector(state => !!state.auth.user);
@@ -46,6 +47,7 @@ const RouterWrapper = () => {
 
   const [getuserisLoading, setGetuserisLoading] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   
 
@@ -73,8 +75,11 @@ const RouterWrapper = () => {
           
         
         // dispatch(logOut());
-        navigate(`/login`);
+        // navigate(`/login`);
         // navigate(`/${app_routes.signin}`);
+        // if (!['/login', '/reset-password', '/new-password','/signup'].includes(location.pathname)) {
+        //   navigate('/');
+        // }
       }
       
     } catch (err) {
@@ -196,12 +201,13 @@ const RouterWrapper = () => {
     {/* Authenticated Routes */}
     <Route
         element={
-            <ProtectedRoute isAllowed={!!isUserAuthenticated} redirectedPath="/login">
+            <ProtectedRoute isAllowed={!!isUserAuthenticated} redirectedPath="/">
                 <AuthenticatedLayout />
             </ProtectedRoute>
         }
     >
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/change-password" element={<ChangePassword/>}/>
         <Route path="questions-bank">
             <Route index element={<QuestionsBank />} />
             <Route path="comments" element={<AllComments />} />

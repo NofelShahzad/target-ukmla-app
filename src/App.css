@@ -1241,3 +1241,22 @@ text-align: center;
   color: #fff;
   font-size: 40px;
 }
+
+
+.btn-log{
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-log .btn-progress{
+  position: absolute;
+  top: calc(100% - 3px);
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #ededed;
+}
+.btn-log .btn-progress .progress-success{
+  background-color: var(--correct-color);
+  height: 100%;
+}

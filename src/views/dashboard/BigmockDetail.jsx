@@ -68,7 +68,12 @@ function BigmockDetail() {
                         {singleMock?.logs &&
                             singleMock?.logs.map((mockLog,index)=>
                             <div key={mockLog?.id} className="col-2">
-                                <Link to={`/big-mocks/log/${mockLog?.id}`} className="btn btn-secondary w-100">Attempt {index+1}</Link>
+                                <Link to={`/big-mocks/log/${mockLog?.id}`} className="btn btn-secondary w-100 btn-log">
+                                    Attempt {index+1}
+                                    <div className='btn-progress'>
+                                        <div className='progress-success' style={{width: `${mockLog?.progress}%`}}></div>
+                                    </div>
+                                </Link>
                             </div>
                         )}
                     </div>

@@ -73,7 +73,12 @@ function PracticeDetail() {
                         {singleMock?.logs &&
                             singleMock?.logs.map((mock,index)=>
                             <div key={mock?.id} className="col-2">
-                                <Link to={`/practice-mocks/log/${mock?.id}`} className="btn btn-secondary w-100" disabled>Mock {index+1}</Link>
+                                <Link to={`/practice-mocks/log/${mock?.id}`} className="btn btn-secondary w-100 btn-log">
+                                Mock {index+1}
+                                <div className='btn-progress'>
+                                        <div className='progress-success' style={{width: `${mock?.progress}%`}}></div>
+                                    </div>
+                                </Link>
                             </div>
                         )}
                     </div>
