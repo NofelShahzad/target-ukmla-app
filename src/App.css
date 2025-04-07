@@ -107,6 +107,10 @@ input[type='checkbox'] {
   background: #FFFFFF 0% 0% no-repeat padding-box;
   background: transparent url('./assets/icons/input-checkbox.svg') 0% 0% no-repeat padding-box; */
 }
+.form-control:disabled {
+  background-color: var(--bs-secondary-bg)!important;
+  opacity: 1;
+}
 label.form-label{
   font-weight: 500;
 }

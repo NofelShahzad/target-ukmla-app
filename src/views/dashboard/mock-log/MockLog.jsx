@@ -56,7 +56,7 @@ function MockLog() {
                                         <div className='question-body'>
                                             {allQuestions.map((question,index) =>
                                                 <>
-                                                    <div className="questionnaire-question-container" style={{borderBottom: '1px solid #fff'}}>
+                                                    <div className="questionnaire-question-container" style={{borderBottom: '2px solid #fff'}}>
                                                         <span className='fw-bold'>Q{index+1}. &nbsp;&nbsp;</span><Markup markup={question?.question} />
                                                         {/* <p>{questionDetails?.title}</p> */}
                                                         {/* <p>A 26 year old man presents to the Emergency Department complaining of difficulty in raising his arm above his head following a minor traffic accident a week ago, where he injured his left shoulder. On examination, there is noticeable winging of the scapula on the affected side when he presses against the wall with his hands. There is also weakness in forward flexion of the arm at the shoulder. Sensory examination is normal. Which nerve is most likely injured?</p> */}
@@ -88,8 +88,17 @@ function MockLog() {
                                                             </div>
                                                         </div>
                                                         <div className='mt-2'>
+                                                            <p className="m-0"><b> Correct Answers:</b>&nbsp;
+                                                                <strong className='text-success'> {question?.options.map((opt, index)=>{
+                                                                    return opt?.is_correct===true?`${alphabets[index]}`:''
+                                                                })
+                                                                }</strong>
+                                                            </p>
                                                             <span className='fw-bold'>Explanation</span>
-                                                            <p className="mb-0">{question?.explanation}</p>
+                                                            <p className="mb-0">
+                                                                <Markup markup={question?.explanation}/>
+                                                                {/* {question?.explanation} */}
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </>

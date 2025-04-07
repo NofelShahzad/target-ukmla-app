@@ -22,15 +22,28 @@ function QuestionnaireQuestion({ selectedValue, handleChange, questionDetails,is
                                 <label key={opt?.id}
                                     className={`radio-option ${selectedValue === opt?.id ? 'checked' : ''} ${questionDetails?.answer?.correct === 'yes' ? 'correct' : ''} ${questionDetails?.answer?.correct === 'no' ? 'wrong' : ''} ${questionDetails?.answer?.correct === 'no' && opt?.correct === 'yes' ? 'actual-correct' : ''} ${questionDetails?.answer ? 'disable' : ''} ${selectedValue !== opt?.id?'user-submitted':''}`}
                                     htmlFor={opt?.id}>
+                                    {(type === "practice" || type === "mock") &&
+                                        <input type="radio"
+                                            className="col-1"
+                                            id={opt?.id}
+                                            name={opt?.question_id}
+                                            value={opt?.id}
+                                            checked={selectedValue === opt?.id}
+                                            onChange={(e) => handleChange(e)}
+                                            // disabled={!!questionDetails?.answer && selectedValue !== opt?.id || (!isTimmerRunning && (type==="practice" || type==="mock"))} 
+                                        />
+                                    }
+                                    {(type !== "practice" && type !== "mock") &&
+                                        <input type="radio"
+                                            className="col-1"
+                                            id={opt?.id}
+                                            name={opt?.question_id}
+                                            value={opt?.id}
+                                            checked={selectedValue === opt?.id}
+                                            onChange={(e) => handleChange(e)}
+                                            disabled={!!questionDetails?.answer && selectedValue !== opt?.id || (!isTimmerRunning && (type==="practice" || type==="mock"))} />
 
-                                    <input type="radio"
-                                        className="col-1"
-                                        id={opt?.id}
-                                        name={opt?.question_id}
-                                        value={opt?.id}
-                                        checked={selectedValue === opt?.id}
-                                        onChange={(e) => handleChange(e)}
-                                        disabled={!!questionDetails?.answer && selectedValue !== opt?.id || (!isTimmerRunning && (type==="practice" || type==="mock"))} />
+                                    }
 
                                     <div className="question-label-result col-11">
                                         <p>{alphabets[index]}.&nbsp;<Markup markup={opt?.description}/></p>

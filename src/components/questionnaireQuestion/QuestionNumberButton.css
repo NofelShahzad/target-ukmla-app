@@ -44,3 +44,6 @@
     border-color: var(--active-color)!important;
     color: var(--text-light)!important;
 }
+.question-index-btn-wrapper button.attempted-index-btn{
+    background-color: #DEDEDE;
+}

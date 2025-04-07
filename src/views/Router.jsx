@@ -207,7 +207,7 @@ const RouterWrapper = () => {
         }
     >
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/change-password" element={<ChangePassword/>}/>
+            <Route path="account" element={<ChangePassword/>}/>
         <Route path="questions-bank">
             <Route index element={<QuestionsBank />} />
             <Route path="comments" element={<AllComments />} />

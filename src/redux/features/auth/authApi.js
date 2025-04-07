@@ -55,6 +55,13 @@ export const authApi = apiSlice.injectEndpoints({
                 body
             })
         }),
+        updatePassword: builder.mutation({
+            query: ({current_password,new_password,new_password_confirmation}) => ({
+                url: `/reset-password?current_password=${current_password}&new_password=${new_password}&new_password_confirmation=${new_password_confirmation}`,
+                method: "POST",
+                // body
+                })
+                }),
 
 
     }),
@@ -69,5 +76,6 @@ export const {
     useAddNewPasswordMutation,
     useLogoutMutation,
     useGetLoggedInUserQuery,
-    useContactusMutation
+    useContactusMutation,
+    useUpdatePasswordMutation
 } = authApi; 

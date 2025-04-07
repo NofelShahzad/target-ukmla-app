@@ -977,7 +977,14 @@ useEffect(() => {
 
                                             }
                                             <div className="questionnaire-form-actions-btn-wrapper">
-                                                {!singleQuestionDetails?.answer && !removedQuestion &&
+                                                { (type === "practice" || type === "mock") &&
+                                                    <div className="col-12 py-1">
+                                                        <button type="submit" className="btn btn-primary" >
+                                                            {isSubmitting ? <ButtonLoader /> : 'Submit Answer'}
+                                                        </button>
+                                                    </div>
+                                                }
+                                                {(type !== "practice" || type !== "mock") && !singleQuestionDetails?.answer && !removedQuestion &&
                                                     <div className="col-12 py-1">
                                                         <button type="submit" className="btn btn-primary" disabled={!selected || apiCall || isSubmitting || (!isRunning && (type==="practice" || type==="mock"))}>
                                                             {isSubmitting ? <ButtonLoader /> : 'Submit Answer'}

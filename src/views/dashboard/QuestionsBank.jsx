@@ -237,7 +237,7 @@ function QuestionsBank() {
                                     </div>
                                     <div className='footer'>
                                         <div className='col-12 p-1'>
-                                            <Link to='webinars' type='button' className='btn btn-secondary w-100 my-1'>View Webinars</Link>
+                                            <Link to='/webinars' type='button' className='btn btn-secondary w-100 my-1'>View Webinars</Link>
                                         </div>
 
 

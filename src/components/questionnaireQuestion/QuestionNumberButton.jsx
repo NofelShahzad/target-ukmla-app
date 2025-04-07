@@ -8,7 +8,7 @@ function QuestionNumberButton({ number, activeQuestionIndex, handleChangeQuestio
   return (
     <div className="question-index-btn-wrapper">
       <button
-        className={`question-index-btn  ${questCountDetails?.customer_answer === 'Incorrect' ? ' wrong-index-btn' : ''} ${questCountDetails?.customer_answer === 'Correct' ? ' correct-index-btn' : ''} ${questCountDetails?.customer_answer === 'Removed' ? ' removed-index-btn' : ''} ${questCountDetails?.slug === activeQuestionIndex ? ' active-index-btn' : ''} ${questCountDetails?.removed === 1 ? 'removed-index-btn' : ''}`}
+        className={`question-index-btn  ${questCountDetails?.customer_answer === 'attempted' ? ' attempted-index-btn' : ''} ${questCountDetails?.customer_answer === 'Incorrect' ? ' wrong-index-btn' : ''} ${questCountDetails?.customer_answer === 'Correct' ? ' correct-index-btn' : ''} ${questCountDetails?.customer_answer === 'Removed' ? ' removed-index-btn' : ''} ${questCountDetails?.slug === activeQuestionIndex ? ' active-index-btn' : ''} ${questCountDetails?.removed === 1 ? 'removed-index-btn' : ''}`}
         onClick={() => handleChangeQuestion(questCountDetails?.slug)}
         disabled={apiCall || (!isTimmerRunning && (type==="practice" || type==="mock"))}
       >

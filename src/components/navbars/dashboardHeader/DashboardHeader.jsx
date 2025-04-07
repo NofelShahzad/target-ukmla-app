@@ -48,12 +48,12 @@ function DashboardHeader() {
       <div className='container-fluid'>
         <nav>
           <div className='col-xl-5 search-field-container'>
-            <input type="text"
+            {/* <input type="text"
               defaultValue={navSearch}
               onChange={(e) => handleChange(e)}
               placeholder='Search by Keyword (e.g. Asthma) or Question Code (e.g. GY 2042)'
             />
-            <img src={searchIcon} alt="search icon" />
+            <img src={searchIcon} alt="search icon" /> */}
           </div>
 
           <ul className='nav-body'>
@@ -171,15 +171,15 @@ function DashboardHeader() {
                 <img src={profileIcon} alt='arrow icons' />
                 <ul className="menu-dropdown">
                   <li>
-                    <Link className="nav-link" href="/">
+                    <Link className="nav-link" to='/account'>
                       <span>Account</span>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link className="nav-link" to='/change-password'>
                       <span>Change Password</span>
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <div className="nav-link" onClick={handleLogout}>
                       <span>Log out</span>
