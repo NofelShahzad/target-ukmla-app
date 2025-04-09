@@ -227,7 +227,7 @@ const RouterWrapper = () => {
             <Route index element={<PracticeMocks />} />
             <Route path="detail/:practice_id" element={<PracticeDetail />} />
             <Route path="log/:mock_id" element={<MockLog />} />
-        </Route>
+        </Route> 
         
         <Route path="webinars" element={<Webinars />} />
         <Route path="contactus" element={<ContactUs />} />
