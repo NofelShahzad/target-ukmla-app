@@ -160,11 +160,11 @@ function QuestionsBank() {
                                         </p>
                                     </div>
                                     <div className='footer'>
-                                        <div className='col-6 p-1'>
+                                        {/* <div className='col-6 p-1'>
                                             <button type='button' className='btn btn-secondary my-1'>Get Gems</button>
-                                        </div>
-                                        <div className='col-6 p-1'>
-                                            <button type='button' className='btn btn-secondary my-1'>View Gems</button>
+                                        </div> */}
+                                        <div className='col-12 p-1'>
+                                            <Link to="/gems" type='button' className='btn btn-secondary my-1 w-100'>View Gems</Link>
                                         </div>
 
 

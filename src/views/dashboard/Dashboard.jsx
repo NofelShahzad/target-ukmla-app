@@ -11,12 +11,13 @@ import QuestionCategoryCard from "../../components/questionCategoryCard/Question
 // import breastSurgery from '../../assets/icons/dashboard/breast-surgery-icon.svg';
 // import dermatology from '../../assets/icons/dashboard/dermatology-icon.svg';
 import { useCallback, useEffect, useState } from "react";
-import { useAllQuestionsCategoriesQuery } from "../../redux/features/questionnaire/questionnaireApiSlice";
+import { useAllQuestionsCategoriesQuery, useResetQuestionsCategoryMutation } from "../../redux/features/questionnaire/questionnaireApiSlice";
 import { useSelector } from "react-redux";
 import { useBuyStandardPlanMutation, useGetStandardPlansQuery } from "../../redux/features/plansApi/plansApiSlice";
 import { errorMessage, successMessage } from "../../components/toastMessages/ToastifyMsg";
 import ReactPortal from "../../components/portal/ReactPortal";
 import ExtendPlans from "../../components/modals/ExtendPlans";
+// import closeBtn from '../../assets/icons/dashboard/modal-close.svg'
 import closeBtn from '../../assets/icons/dashboard/modal-close.svg'
 import PageLoader from "../../components/pageLoader/PageLoader";
 // import ReactPortal from "../../components/portal/ReactPortal";
@@ -104,6 +105,45 @@ function Dashboard() {
        
       }
     }
+    const [resetConfirmModal,setResetConfirmModal] = useState(false);
+    const [singleQuestionCat,setSingleQuestionCat] = useState(null);
+
+    const [resetQuestionsCategory] = useResetQuestionsCategoryMutation();
+
+    const handleResetConfirmModal = (singleQuestion)=>{
+      // console.log("singleQuestion::",singleQuestion)
+      setResetConfirmModal(true);
+      setSingleQuestionCat(singleQuestion);
+    }
+
+    const handleCloseResetConfirmModal = ()=>{
+      setResetConfirmModal(false);
+      setSingleQuestionCat(null);
+    }
+
+    const handleSubmitResetQuestionnaire = async()=>{
+      try {
+        setIsloading(true);
+        handleCloseResetConfirmModal();
+        const { data, error } = await resetQuestionsCategory(singleQuestionCat?.id);
+        if (data) {
+          if (data?.status) {
+            successMessage(data?.message);
+          }
+          if (!data?.status) {
+            errorMessage(data?.message);
+          }
+          setIsloading(false);
+        }
+        if (error) {
+          console.log("error::",error);
+          setIsloading(false);
+          errorMessage(error?.data?.message);
+        }
+      } catch (err) {
+        console.log("err::",err)
+      }
+    }
 
 
   return (
@@ -129,7 +169,7 @@ function Dashboard() {
       <section className="question-categories-wrapper">
         <div className="question-categories-inner-wrapper">
             {allQuestions.map(quest=> (
-              <QuestionCategoryCard key={quest?.id} questionData={quest} />
+              <QuestionCategoryCard key={quest?.id} questionData={quest} handleResetConfirmModal={handleResetConfirmModal} />
             ))
 
             }
@@ -151,6 +191,27 @@ function Dashboard() {
       {plansModal &&
         <ReactPortal wrapperId="external_modal_container">
           <ExtendPlans allPlans={allStandardPlans} closeBtn={closeBtn} closeModal={handleClosePlansModal} handlePurchase={handlePurchansePlan} />
+        </ReactPortal>
+      }
+      {resetConfirmModal &&
+        <ReactPortal wrapperId="external_modal_container">
+          <section className="backdrop-container">
+            <section className="detail-modal">
+              <div className="close-btn-container">
+                <img src={closeBtn} alt="close" onClick={handleCloseResetConfirmModal}/>
+              </div>
+              <div className="title-wrapper">
+                <h2 className="title">{singleQuestionCat?.name}</h2>
+              </div>
+              <div className="description">
+                <p className="text-balance mb-2">Are you sure you want to reset<br /> <strong> {singleQuestionCat?.name}</strong> questionnaire?</p>
+              </div>
+              <div className="modal-footer-custom">
+                <button className="btn btn-primary mb-2" onClick={handleSubmitResetQuestionnaire}>Yes</button>
+                <button className="btn btn-secondary" onClick={handleCloseResetConfirmModal}>No</button>
+              </div>
+            </section>
+          </section>
         </ReactPortal>
       }
     </>

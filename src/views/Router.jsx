@@ -39,6 +39,7 @@ import MockLog from './dashboard/mock-log/MockLog';
 import PaymentSuccess from './paymentSuccess/PaymentSuccess';
 import PaymentFailure from './paymentFailure/PaymentFailure';
 import ChangePassword from './dashboard/ChangePassword';
+import Gems from './dashboard/gems/Gems';
 
 const RouterWrapper = () => {
     const isUserAuthenticated = useSelector(state => !!state.auth.user);
@@ -214,6 +215,7 @@ const RouterWrapper = () => {
             <Route path="flagged-questions" element={<FlaggedQuestion />} />
             <Route path="flagged-guides" element={<FlaggedGuides />} />
         </Route>
+            <Route path="/gems" element={<Gems />} />
 
         <Route path="big-mocks">
             <Route index element={<BigMocks />} />
@@ -226,7 +228,7 @@ const RouterWrapper = () => {
             <Route path="detail/:practice_id" element={<PracticeDetail />} />
             <Route path="log/:mock_id" element={<MockLog />} />
         </Route>
-
+        
         <Route path="webinars" element={<Webinars />} />
         <Route path="contactus" element={<ContactUs />} />
         <Route path=":questionnaire_Id/:question_Id" element={<Questionnaire isMock={false} type={"category"} />} />

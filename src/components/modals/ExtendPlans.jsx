@@ -2,7 +2,7 @@
 
 // eslint-disable-next-line react/prop-types
 function ExtendPlans({allPlans, closeBtn, closeModal, type, handlePurchase}) {
-    console.log("allPlans::",allPlans)
+    // console.log("allPlans::",allPlans)
     return (
         <>
             <div className="detail-modal detail-modal-lg">

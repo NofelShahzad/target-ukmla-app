@@ -512,16 +512,20 @@ input.input-error{
 }
 .single-question-card .single-question-footer{
   text-align: center;
+  display: flex;
+  justify-content: space-between;
+
 }
 
-.single-question-card .single-question-footer a{
-  width: 125px;
+.single-question-card .single-question-footer :is(a,button){
+  width: 49%;
   border: 1px solid #707070;
   border-radius: 6px;
   text-decoration: none;
   color: var(--text-dark);
   font-weight: 500;
-  padding: 5px 10px;
+  /* padding: 5px 10px; */
+  padding: 2px 6px;
   font-size: 16px;
   transition: all 0.1s ease-in-out;
   display: inline-block;
@@ -530,6 +534,14 @@ input.input-error{
   color: var(--anchor-hover);
   border-color: var(--anchor-hover);
 }
+.single-question-card .single-question-footer button {
+  /* background-color: var(--active-color); */
+  border-color: var(--active-color);
+  color: #fff;
+}
+/* .single-question-card .single-question-footer button:hover {
+  background-color: ;
+} */
 .question-status-info{
   width: 100%;
   display: flex;
@@ -652,6 +664,7 @@ input.input-error{
   text-align: center;
   font-weight: 700;
   margin-bottom: 2px;
+  text-transform: capitalize;
 }
 .detail-modal.lab-values-modal .title-wrapper .title{
   line-height: 24px;
@@ -1196,6 +1209,9 @@ text-align: center;
   .extend-plans-wrapper{
     padding: 0;
   }
+  .update-password-wrapper .field-wrapper{
+    display: block!important;
+  }
 }
 
 @media (min-width: 576px) {
@@ -1263,4 +1279,9 @@ text-align: center;
 .btn-log .btn-progress .progress-success{
   background-color: var(--correct-color);
   height: 100%;
+}
+
+
+.update-password-wrapper {
+
 }

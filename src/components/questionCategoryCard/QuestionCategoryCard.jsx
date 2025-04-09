@@ -5,13 +5,13 @@ import QuestionCardStautsInfo from "./QuestionCardStautsInfo"
 import { VITE_REACT_APP_BASE_URL } from "../../config"
 
 // eslint-disable-next-line react/prop-types
-function QuestionCategoryCard({ title, questionData }) {
+function QuestionCategoryCard({ title, questionData, handleResetConfirmModal}) {
     // console.log("questionData::",questionData)
     return (
         <>
             <div className="col-sm-6 col-md-4 col-lg-3 col-xxl-2 col-12">
-                <Link className="text-decoration-none" to={`/${questionData?.slug}/${questionData?.question?.slug}`}>
-                    <div className="single-question-card">
+                <div className="single-question-card">
+                    <Link className="text-decoration-none" to={`/${questionData?.slug}/${questionData?.question?.slug}`}>
                         <div className="single-question-header">
                             <div className="img-container">
                                 <img src={`${VITE_REACT_APP_BASE_URL}/${questionData?.icon}`} alt={`${title} image`} />
@@ -48,8 +48,12 @@ function QuestionCategoryCard({ title, questionData }) {
                             {/* <QuestionCardStautsInfo type={'removed-by-admin'} percentage={0} /> */}
 
                         </div>
+                    </Link>
+                    <div className="single-question-footer">
+                                    <Link type="button" to={`/${questionData?.slug}/${questionData?.question?.slug}`}>View </Link>
+                                    <button type="button" className="btn btn-primary" onClick={()=>handleResetConfirmModal(questionData)}>Reset </button>
                     </div>
-                </Link>
+                </div>
             </div>
         </>
     )

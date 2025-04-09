@@ -1,10 +1,11 @@
 import apiSlice from "../api/apiSlice";
 
 export const questionnaireApiSlice = apiSlice.injectEndpoints({
-    tagType: ["all_marked_questions"],
+    tagType: ["all_marked_questions","all_categories"],
     endpoints: (builder) => ({
         allQuestionsCategories: builder.query({
-            query: () => `/categories`
+            query: () => `/categories`,
+            providesTags: ["all_categories"]
         }),
         getAllQuestionsOfCat: builder.query({
             query: (catId) => `/categories/${catId}`,
@@ -33,6 +34,13 @@ export const questionnaireApiSlice = apiSlice.injectEndpoints({
             query: () => `/questions/flagged`,
             providesTags: ["all_marked_questions"]
         }),
+        resetQuestionsCategory:  builder.mutation({
+            query: (id) =>({
+                url: `reset-category/${id}`,
+                method: "POST"
+            }),
+            invalidatesTags: ["all_categories"],
+        })
     })
 })
 
@@ -44,4 +52,5 @@ export const {
     useQuestionAnswerMutation,
     useMarkFlagMutation,
     useGetAlMarkedQuestionsQuery,
+    useResetQuestionsCategoryMutation
 } = questionnaireApiSlice;

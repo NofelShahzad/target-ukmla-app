@@ -984,7 +984,7 @@ useEffect(() => {
                                                         </button>
                                                     </div>
                                                 }
-                                                {(type !== "practice" || type !== "mock") && !singleQuestionDetails?.answer && !removedQuestion &&
+                                                {(type !== "practice" && type !== "mock") && !singleQuestionDetails?.answer && !removedQuestion &&
                                                     <div className="col-12 py-1">
                                                         <button type="submit" className="btn btn-primary" disabled={!selected || apiCall || isSubmitting || (!isRunning && (type==="practice" || type==="mock"))}>
                                                             {isSubmitting ? <ButtonLoader /> : 'Submit Answer'}
@@ -1012,6 +1012,7 @@ useEffect(() => {
                                     <div className="notes-container">
                                         <div className="notes-inner-container">
                                             <div className="notes-description">
+                                                <strong>Explanation</strong><br/>
                                                 {/* <p>
                                                 The term here would be &quot;Saturday night palsy&quot;. It can result from resting the medial side of the arm against an edge of the operating table for a prolonged period when the patient is anaesthetised. This results in compression of the radial nerve. Ideally, the anaesthetist should realise this and move the patient&aps;s hand back.<br/><br/> Clear hints in this question are the &quot;wrist drop&quot; and sensory loss of the dorsal aspect of 1st and 2nd metacarpals.
                                                 </p>
