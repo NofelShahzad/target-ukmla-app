@@ -17,7 +17,6 @@ const DragableOptions = ({
     return (
         <div style={{ display: 'flex', gap: '20px' }}>
       {/* Source List */}
-      {console.log("questionDetails::",questionDetails)}
       <div
       className={`dragable-wrapper ${isSourceOptionsDivEmpty?'empty-source':''}`}
         style={{

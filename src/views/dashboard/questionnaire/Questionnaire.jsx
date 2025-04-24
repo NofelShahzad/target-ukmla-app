@@ -1170,7 +1170,7 @@ useEffect(() => {
                                         <div className="notes-inner-container">
                                             <div className="notes-description">
                                                 {singleQuestionDetails?.question_type !== "ranking" && 
-                                                    <p className="m-0"><b> Correct Answers:</b>&nbsp;
+                                                    <p className="mb-3"><b> Correct Answers:</b>&nbsp;
                                                         {singleQuestionDetails?.question_type === "single_choice" &&
                                                             <strong className='text-success'> {singleQuestionDetails?.options.map((opt, index) => {
                                                                 return opt?.correct === "yes" ? `${alphabets[index]}` : ''
