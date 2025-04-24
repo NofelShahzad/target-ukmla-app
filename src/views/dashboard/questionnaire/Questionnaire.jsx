@@ -26,7 +26,7 @@ function Questionnaire({ isMock, type }) {
     const userAuth = useSelector(state=>state.auth);
     const { questionnaire_Id, question_Id, mock_id, practice_id } = useParams();
     const navigate = useNavigate();
-    const [selectedValue, setSelectedValue] = useState('');
+    const [selectedValue, setSelectedValue] = useState([]);
     const [flagMarked, setFlagMarked] = useState(false);
     const [selected, setSelected] = useState(false);
     const [activeQuestionIndex, setActiveQuestionIndex] = useState(null);
@@ -165,8 +165,16 @@ function Questionnaire({ isMock, type }) {
                 setActiveQuestionIndex(question_Id);
                 setFlagMarked(getSingleQuestionData?.question?.is_flagged_count === 1 ? true : false);
                 if (getSingleQuestionData?.question?.answer) {
-                    setSelectedValue(getSingleQuestionData?.question?.answer?.option_id)
+                    const question = getSingleQuestionData?.question;
+                    if (question?.question_type === "single_choice") {
+                        setSelectedValue(question?.answer?.option_id ? [question.answer.option_id] : []);
+                    } else if (question?.question_type === "multiple_choice") {
+                        setSelectedValue(question?.answer?.options || []);
+                    }
+                } else {
+                    setSelectedValue([]);
                 }
+
                 setRemovedQuestion(false);
             }
             if (!getSingleQuestionData.status) {
@@ -217,7 +225,18 @@ function Questionnaire({ isMock, type }) {
 
 
     const handleChange = (event) => {
-        setSelectedValue(JSON.parse(event.target.value));
+        // console.log("event.target.value:::",event.target.value)
+        // console.log("singleQuestionDetails?.question_type::",singleQuestionDetails?.question_type)
+        // setSelectedValue(JSON.parse(event.target.value));
+        if (singleQuestionDetails?.question_type === "single_choice") {
+            setSelectedValue([JSON.parse(event.target.value)]);
+        } else if (singleQuestionDetails?.question_type === "multiple_choice") {
+            setSelectedValue((prev) =>
+                prev.includes(JSON.parse(event.target.value))
+                    ? prev.filter((item) => item !== JSON.parse(event.target.value))
+                    : [...prev, JSON.parse(event.target.value)]
+            );
+        }
         setSelected(true);
         // console.log("handleChange::",event.target.value)
     };
@@ -264,11 +283,25 @@ function Questionnaire({ isMock, type }) {
             e.preventDefault();
             setApiCall(true);
             setIsSubmitting(true);
-            const body = {
+            // const body = {
+            //     question_id: singleQuestionDetails?.id,
+            //     option_id: selectedValue,
+            //     parent_id: parentId,
+            //     type: questionnaire_Id ? "category" : mock_id ? "big-mocks" : "practice-mocks"
+            // }
+            let body = {
                 question_id: singleQuestionDetails?.id,
-                option_id: selectedValue,
                 parent_id: parentId,
-                type: questionnaire_Id ? "category" : mock_id ? "big-mocks" : "practice-mocks"
+                type: questionnaire_Id ? "category" : mock_id ? "big-mocks" : "practice-mocks",
+            };
+    
+            // If the question type is "single_choice", use option_id
+            if (singleQuestionDetails?.question_type === "single_choice") {
+                body.option_id = selectedValue[0]; // For single choice, take the first selected value as option_id
+            } 
+            // If the question type is "multiple_choice", use options
+            else if (singleQuestionDetails?.question_type === "multiple_choice") {
+                body.options = selectedValue; // For multiple choice, send the array of selected options
             }
 
             const { data, error } = await questionAnswer(body);
@@ -281,11 +314,25 @@ function Questionnaire({ isMock, type }) {
                     else{
                         setSingleQuestionDetails(data?.question);
                     }
-                    setSelectedValue('');
+                    setSelectedValue([]);
                     setSelected(false);
                     setFlagMarked(data?.question?.is_flagged_count === 1 ? true : false)
+                    // if (data?.question?.answer) {
+                    //     setSelectedValue(data?.question?.answer?.option_id)
+                    // }
                     if (data?.question?.answer) {
-                        setSelectedValue(data?.question?.answer?.option_id)
+                        if (data?.question?.question_type === "single_choice") {
+                            setSelectedValue([Number(data?.question?.answer.option_id)]);
+                        } else if (data?.question?.question_type === "multiple_choice") {
+                            // setSelectedValue(
+                            //     Array.isArray(data?.question?.answer.option_id)
+                            //         ? data?.question?.answer.option_id.map(Number)
+                            //         : [Number(data?.question?.answer.option_id)]
+                            // );
+                            setSelectedValue(data?.question.answer?.options || []);
+                        }
+                    } else {
+                        setSelectedValue([]);
                     }
                 }
                 setApiCall(false);
@@ -977,7 +1024,42 @@ useEffect(() => {
 
                                             }
                                             <div className="questionnaire-form-actions-btn-wrapper">
-                                                { (type === "practice" || type === "mock") &&
+                                                {/* For Practice / Mock Types */}
+                                                {(type === "practice" || type === "mock") && !removedQuestion && (
+                                                    <div className="col-12 py-1">
+                                                        <button
+                                                            type="submit"
+                                                            className="btn btn-primary"
+                                                            disabled={
+                                                                !selected ||
+                                                                apiCall ||
+                                                                isSubmitting ||
+                                                                (!isRunning && (type === "practice" || type === "mock"))
+                                                            }
+                                                        >
+                                                            {isSubmitting ? <ButtonLoader /> : 'Submit Answer'}
+                                                        </button>
+                                                    </div>
+                                                )}
+
+                                                {/* For Other Types */}
+                                                {(type !== "practice" && type !== "mock") && !singleQuestionDetails?.answer && !removedQuestion && (
+                                                    <div className="col-12 py-1">
+                                                        <button
+                                                            type="submit"
+                                                            className="btn btn-primary"
+                                                            disabled={
+                                                                !selected ||
+                                                                apiCall ||
+                                                                isSubmitting
+                                                            }
+                                                        >
+                                                            {isSubmitting ? <ButtonLoader /> : 'Submit Answer'}
+                                                        </button>
+                                                    </div>
+                                                )}
+
+                                                {/* { (type === "practice" || type === "mock") &&
                                                     <div className="col-12 py-1">
                                                         <button type="submit" className="btn btn-primary" >
                                                             {isSubmitting ? <ButtonLoader /> : 'Submit Answer'}
@@ -990,16 +1072,16 @@ useEffect(() => {
                                                             {isSubmitting ? <ButtonLoader /> : 'Submit Answer'}
                                                         </button>
                                                     </div>
-                                                }
+                                                } */}
                                                 <div className="col-6 pe-1 pt-3">
                                                     <button type="button" className="btn btn-secondary" onClick={handlePreviousQuestion}
-                                                        disabled={currentIndex === 0 || apiCall || (!isRunning && (type==="practice" || type==="mock"))}>
+                                                        disabled={currentIndex === 0 || apiCall || (!isRunning && (type === "practice" || type === "mock"))}>
                                                         {isGettingPrevious ? <ButtonLoader /> : 'Previous Question'}
                                                     </button>
                                                 </div>
                                                 <div className="col-6 ps-1 pt-3">
                                                     <button type="button" className={`btn ${isGettingNext ? 'btn-secondary' : 'btn-primary'}`} onClick={handleNextQuestion}
-                                                        disabled={currentIndex === questionsCount.length - 1 || apiCall || (!isRunning && (type==="practice" || type==="mock"))}>
+                                                        disabled={currentIndex === questionsCount.length - 1 || apiCall || (!isRunning && (type === "practice" || type === "mock"))}>
                                                         {isGettingNext ? <ButtonLoader /> : 'Next Question'}
                                                     </button>
                                                 </div>

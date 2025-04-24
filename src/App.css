@@ -1015,13 +1015,13 @@ input.input-error{
   color: white;
 }
 
-.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option input[type="radio"] {
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option :is(input[type="radio"],input[type="checkbox"]) {
   /* display: none; */
   accent-color: #000;
   z-index: 9;
   height: 20px;
 }
-.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option input[type="radio"]:focus-visible{
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option :is(input[type="radio"]:focus-visible,input[type="checkbox"]:focus-visible){
   outline: none;
 }
 
@@ -1029,12 +1029,12 @@ input.input-error{
   margin-left: 10px;
 }
 
-.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option input[type="radio"]:checked + span {
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option :is(input[type="radio"]:checked + span,input[type="checkbox"]:checked + span)  {
   background-color: #1e90ff;
   color: white;
   border-color: #1e90ff;
 }
-.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option input[type="radio"]:checked + label {
+.questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option :is(input[type="radio"]:checked + label, input[type="checkbox"]:checked + label)  {
   background-color: var(--checked-question);
   color: white;
 }
@@ -1086,7 +1086,7 @@ input.input-error{
     border: 1px solid var(--wrong-color);
 }
 .questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option.checked.disable {
-  background-color: #fff;
+  background-color: #fff!important;
   color: #000;
 }
 .questionnaire-wrapper .questionnaire-inner-wrapper .question-container .question-radio-group .radio-option.checked.wrong.disable .submitted-status-wrapper .submitted-status-inner-wrapper{
