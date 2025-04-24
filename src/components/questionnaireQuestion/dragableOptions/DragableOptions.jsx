@@ -21,7 +21,8 @@ const DragableOptions = ({
       className={`dragable-wrapper ${isSourceOptionsDivEmpty?'empty-source':''}`}
         style={{
           minHeight: '200px',
-          width: '350px',
+          minwidth: '200px',
+          width: '50%',
           padding: '10px',
           backgroundColor: isSourceOptionsDivEmpty ? '#f0f0f0' : '#fff',
           opacity: isSourceOptionsDivEmpty ? 0.6 : 1,
