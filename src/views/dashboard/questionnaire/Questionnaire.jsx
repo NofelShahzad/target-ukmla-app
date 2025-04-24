@@ -155,6 +155,8 @@ function Questionnaire({ isMock, type }) {
     // }, [activeQuestionIndex])
     const { data: getSingleQuestionData, error: getSingleQuestionError } = useGetSingleQuestionQuery({id:question_Id,mock_id:mock_id??practice_id??questionnaire_Id},{skip:!shouldFetch});
 
+    const [sourceOptions, setSourceOptions] = useState([]);
+    const [targetDroppedOptions, setTargetDroppedOptions] = useState([]);
     useEffect(() => {
         if (getSingleQuestionData) {
             if (getSingleQuestionData.status) {
@@ -164,12 +166,29 @@ function Questionnaire({ isMock, type }) {
                 setSelected(false);
                 setActiveQuestionIndex(question_Id);
                 setFlagMarked(getSingleQuestionData?.question?.is_flagged_count === 1 ? true : false);
+                // console.log("getSingleQuestion?.question:::",getSingleQuestionData?.question?.options)
+                if (getSingleQuestionData?.question?.answer===null) {
+                    setSourceOptions(structuredClone(getSingleQuestionData?.question?.options))
+                    setTargetDroppedOptions([])
+                }
                 if (getSingleQuestionData?.question?.answer) {
                     const question = getSingleQuestionData?.question;
                     if (question?.question_type === "single_choice") {
                         setSelectedValue(question?.answer?.option_id ? [question.answer.option_id] : []);
                     } else if (question?.question_type === "multiple_choice") {
                         setSelectedValue(question?.answer?.options || []);
+                    }
+                    if (question?.question_type === "ranking"){
+                        // console.log("question:::",question)
+                        // Create a map of options by ID for quick lookup
+                        const optionMap = new Map(question.options.map(option => [option.id, option]));
+
+                        // Sort options according to answer.options order
+                        const sortedOptions = question.answer.options.map(id => optionMap.get(id));
+
+                        // console.log("sortedOptions::",sortedOptions);
+                        setSourceOptions([]);
+                        setTargetDroppedOptions(structuredClone(sortedOptions));
                     }
                 } else {
                     setSelectedValue([]);
@@ -222,7 +241,7 @@ function Questionnaire({ isMock, type }) {
     const handleCloseLabValuesModal = useCallback(() => {
         setLabValuesModal(false)
     }, [])
-
+    
 
     const handleChange = (event) => {
         // console.log("event.target.value:::",event.target.value)
@@ -240,6 +259,27 @@ function Questionnaire({ isMock, type }) {
         setSelected(true);
         // console.log("handleChange::",event.target.value)
     };
+
+    const handleAddDropOption = (evt) => {
+        const droppedId = parseFloat(evt.item.dataset.id);
+        const itemToMove = sourceOptions.find((item) => item.id === parseFloat(droppedId));
+        // console.log("droppedId:::",droppedId)
+        // console.log("itemToMove::::",itemToMove)
+        if (!itemToMove) return;
+
+        // console.log("droppedId::",droppedId)
+    
+        setTargetDroppedOptions((prev) => [...prev, itemToMove]);
+        setSourceOptions((prev) => prev.filter((item) => item.id !== droppedId));
+      };
+    
+      const isSourceOptionsDivEmpty = sourceOptions?.length === 0;
+
+      useEffect(() => {
+      if (!isSourceOptionsDivEmpty) {
+        setSelected(true);
+      }
+      }, [isSourceOptionsDivEmpty])
 
 
     const handleFlagMark = async () => {
@@ -277,7 +317,7 @@ function Questionnaire({ isMock, type }) {
         if (type === "mock") return `/mock/${mock_id}/${questionNumber}`;
         if (type === "practice") return `/practice/${practice_id}/${questionNumber}`;
     };
-
+// console.log("targetDroppedOptions::",targetDroppedOptions)
     const handleSubmitAnswer = async (e) => {
         try {
             e.preventDefault();
@@ -302,6 +342,8 @@ function Questionnaire({ isMock, type }) {
             // If the question type is "multiple_choice", use options
             else if (singleQuestionDetails?.question_type === "multiple_choice") {
                 body.options = selectedValue; // For multiple choice, send the array of selected options
+            }else if (singleQuestionDetails?.question_type === "ranking") {
+                body.options= targetDroppedOptions.map(opt=>opt.id)
             }
 
             const { data, error } = await questionAnswer(body);
@@ -1015,7 +1057,19 @@ useEffect(() => {
 
                                         <div className="question-body">
                                             {!removedQuestion &&
-                                                <QuestionnaireQuestion selectedValue={selectedValue} handleChange={handleChange} questionDetails={singleQuestionDetails} isTimmerRunning={isRunning} type={type} />
+                                                <QuestionnaireQuestion 
+                                                    selectedValue={selectedValue} 
+                                                    handleChange={handleChange} 
+                                                    questionDetails={singleQuestionDetails} 
+                                                    isTimmerRunning={isRunning} 
+                                                    type={type}
+                                                    sourceOptions={sourceOptions}
+                                                    setSourceOptions={setSourceOptions}
+                                                    handleAddDropOption={handleAddDropOption}
+                                                    targetDroppedOptions={targetDroppedOptions}
+                                                    isSourceOptionsDivEmpty={isSourceOptionsDivEmpty}
+                                                    setTargetDroppedOptions={setTargetDroppedOptions}
+                                                />
                                             }
                                             {removedQuestion &&
                                                 <div className="removed-question">
@@ -1023,6 +1077,7 @@ useEffect(() => {
                                                 </div>
 
                                             }
+                                            {/* {console.log("isSourceOptionsDivEmpty::",isSourceOptionsDivEmpty)} */}
                                             <div className="questionnaire-form-actions-btn-wrapper">
                                                 {/* For Practice / Mock Types */}
                                                 {(type === "practice" || type === "mock") && !removedQuestion && (
@@ -1034,7 +1089,8 @@ useEffect(() => {
                                                                 !selected ||
                                                                 apiCall ||
                                                                 isSubmitting ||
-                                                                (!isRunning && (type === "practice" || type === "mock"))
+                                                                (!isRunning && (type === "practice" || type === "mock")) 
+                                                                // || ( !isSourceOptionsDivEmpty )
                                                             }
                                                         >
                                                             {isSubmitting ? <ButtonLoader /> : 'Submit Answer'}
@@ -1051,7 +1107,8 @@ useEffect(() => {
                                                             disabled={
                                                                 !selected ||
                                                                 apiCall ||
-                                                                isSubmitting
+                                                                isSubmitting 
+                                                                // || ( !isSourceOptionsDivEmpty )
                                                             }
                                                         >
                                                             {isSubmitting ? <ButtonLoader /> : 'Submit Answer'}

@@ -1,9 +1,18 @@
 import { Markup } from "react-render-markup";
+import DragableOptions from "./dragableOptions/DragableOptions";
 
 
 const alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S'];
 
-function QuestionnaireQuestion({ selectedValue, handleChange, questionDetails,isTimmerRunning,type }) {
+function QuestionnaireQuestion({ 
+    selectedValue, handleChange, questionDetails,isTimmerRunning,type,
+    sourceOptions,
+    setSourceOptions,
+    handleAddDropOption,
+    targetDroppedOptions,
+    isSourceOptionsDivEmpty,
+    setTargetDroppedOptions,
+}) {
     // console.log("questionDetails::", questionDetails)
     // console.log("selectedValue::",selectedValue)
     const totalSelectedCount = questionDetails?.options.reduce((acc, opt) => {
@@ -18,8 +27,8 @@ function QuestionnaireQuestion({ selectedValue, handleChange, questionDetails,is
                 <div className="question-single-option">
                     <div className="question-radio-group">
                         {/* {console.log("questionDetails?.answer?.correct",selectedValue)} */}
-                        {console.log("questionDetails:::",questionDetails)}
-                        {
+                        {/* {console.log("questionDetails:::",questionDetails)} */}
+                        {questionDetails?.question_type !== "ranking"&&
                             questionDetails?.options?.map((opt, index) => (
                                 <label key={opt?.id}
                                     className={`radio-option 
@@ -129,7 +138,19 @@ function QuestionnaireQuestion({ selectedValue, handleChange, questionDetails,is
                                 </label>
                             ))
                         }
-
+                        
+                        {questionDetails?.question_type === "ranking"&&
+                                <DragableOptions 
+                                    questionDetails={questionDetails} 
+                                    alphabets={alphabets}
+                                    sourceOptions={sourceOptions}
+                                    setSourceOptions={setSourceOptions}
+                                    handleAddDropOption={handleAddDropOption}
+                                    targetDroppedOptions={targetDroppedOptions}
+                                    isSourceOptionsDivEmpty={isSourceOptionsDivEmpty}
+                                    setTargetDroppedOptions={setTargetDroppedOptions}
+                                />
+                        }
 
                     </div>
                 </div>

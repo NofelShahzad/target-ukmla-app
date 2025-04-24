@@ -19,6 +19,8 @@
   --validator-background: #F4F0F8;
   --err-text-color: #ea0000;
   --err-bg: #ea0000;
+  --err-border: #ea0000;
+  --err-light-bg: #ea000030;
   --flag-marked: #ea0000;
   --btn-primary-bg:  #5eb9f0;
   --btn-primary-text: #fff;
@@ -32,6 +34,8 @@
   --dash-navitem-bg: #F6F6F6;
   --wrong-color: #BF0303;
   --correct-color: #0DC900;
+  --correct-border: #0DC900;
+  --correct-light-bg: #0dc9003b;
   --not-attempt-color: #BFBFBF;
   --removed-color: #535353;
   --backdrop-color: #012f46d4;
