@@ -16,7 +16,7 @@ import ButtonLoader from '../../../components/loaders/ButtonLoader';
 import { errorMessage, successMessage } from "../../../components/toastMessages/ToastifyMsg";
 import { useFinishMockTimerMutation, useGetAllQuesionOfMockQuery, useMockTimeCheckerMutation, useResetMockMutation, useStartMockTimerMutation } from "../../../redux/features/mocks/MocksApiSlice";
 import Timer from "../../../components/timer/Timer";
-import { getCurrentTimeDate } from "../../../utils/util";
+import { alphabets, getCurrentTimeDate } from "../../../utils/util";
 import { useAddCommentMutation, useDeleteCommentMutation, useGetAllCommentsQuery, useLikeDislikeCommentMutation, useUpdateCommentMutation } from "../../../redux/features/commentsApi/commentsApiSlice";
 import { useSelector } from "react-redux";
 // import ScreenshotProtection from "../../../components/screenshotDetector/ScreenshotDetector";
@@ -188,7 +188,7 @@ function Questionnaire({ isMock, type }) {
 
                         // console.log("sortedOptions::",sortedOptions);
                         setSourceOptions([]);
-                        setTargetDroppedOptions(structuredClone(sortedOptions));
+                        setTargetDroppedOptions(structuredClone(sortedOptions.length>0?sortedOptions:question.options));
                     }
                 } else {
                     setSelectedValue([]);
@@ -276,10 +276,10 @@ function Questionnaire({ isMock, type }) {
       const isSourceOptionsDivEmpty = sourceOptions?.length === 0;
 
       useEffect(() => {
-      if (!isSourceOptionsDivEmpty) {
+      if (sourceOptions?.length === 0) {
         setSelected(true);
       }
-      }, [isSourceOptionsDivEmpty])
+      }, [sourceOptions])
 
 
     const handleFlagMark = async () => {
@@ -365,7 +365,8 @@ function Questionnaire({ isMock, type }) {
                     if (data?.question?.answer) {
                         if (data?.question?.question_type === "single_choice") {
                             setSelectedValue([Number(data?.question?.answer.option_id)]);
-                        } else if (data?.question?.question_type === "multiple_choice") {
+                        }
+                        if (data?.question?.question_type === "multiple_choice") {
                             // setSelectedValue(
                             //     Array.isArray(data?.question?.answer.option_id)
                             //         ? data?.question?.answer.option_id.map(Number)
@@ -373,6 +374,23 @@ function Questionnaire({ isMock, type }) {
                             // );
                             setSelectedValue(data?.question.answer?.options || []);
                         }
+                        if (data?.question?.question_type === "ranking") {
+                            // console.log("question:::", data?.question);
+                          
+                            const options = data?.question.options || [];
+                            const answerOptionIds = data?.question?.answer?.options || [];
+                          
+                            // Create a map for quick lookup
+                            const optionMap = new Map(options.map(option => [option.id, option]));
+                          
+                            // If answerOptionIds are available, sort based on them; else use default options
+                            const sortedOptions = answerOptionIds.length > 0
+                              ? answerOptionIds.map(id => optionMap.get(id)).filter(Boolean): options;
+                          
+                            setSourceOptions([]); // Source is empty initially
+                            setTargetDroppedOptions(structuredClone(sortedOptions));
+                          }
+                          
                     } else {
                         setSelectedValue([]);
                     }
@@ -1151,6 +1169,27 @@ useEffect(() => {
                                     <div className="notes-container">
                                         <div className="notes-inner-container">
                                             <div className="notes-description">
+                                                {singleQuestionDetails?.question_type !== "ranking" && 
+                                                    <p className="m-0"><b> Correct Answers:</b>&nbsp;
+                                                        {singleQuestionDetails?.question_type === "single_choice" &&
+                                                            <strong className='text-success'> {singleQuestionDetails?.options.map((opt, index) => {
+                                                                return opt?.correct === "yes" ? `${alphabets[index]}` : ''
+                                                            })
+                                                            }</strong>
+
+                                                        }
+                                                        {singleQuestionDetails?.question_type === "multiple_choice" &&
+                                                            <strong className='text-success'>
+                                                                {
+                                                                    singleQuestionDetails?.options
+                                                                        .map((opt, index) => opt?.correct === "yes" ? alphabets[index] : '')
+                                                                        .filter(Boolean)
+                                                                        .join(", ")
+                                                                }
+                                                            </strong>
+                                                        }
+                                                    </p>
+                                                }
                                                 <strong>Explanation</strong><br/>
                                                 {/* <p>
                                                 The term here would be &quot;Saturday night palsy&quot;. It can result from resting the medial side of the arm against an edge of the operating table for a prolonged period when the patient is anaesthetised. This results in compression of the radial nerve. Ideally, the anaesthetist should realise this and move the patient&aps;s hand back.<br/><br/> Clear hints in this question are the &quot;wrist drop&quot; and sensory loss of the dorsal aspect of 1st and 2nd metacarpals.

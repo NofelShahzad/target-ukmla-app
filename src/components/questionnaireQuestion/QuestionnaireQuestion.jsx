@@ -58,7 +58,7 @@ function QuestionnaireQuestion({
                                             // disabled={!!questionDetails?.answer && selectedValue !== opt?.id || (!isTimmerRunning && (type==="practice" || type==="mock"))} 
                                         />
                                     }
-                                    {console.log("selectedValue.includes(opt?.id)::",selectedValue.includes(opt?.id))}
+                                    {/* {console.log("selectedValue.includes(opt?.id)::",selectedValue.includes(opt?.id))} */}
                                     {(type !== "practice" && type !== "mock") &&
                                         <input type={questionDetails?.question_type === "single_choice" ? "radio" : "checkbox"}
                                             className="col-1"

@@ -17,7 +17,9 @@ const DragableOptions = ({
     return (
         <div style={{ display: 'flex', gap: '20px' }}>
       {/* Source List */}
+      {console.log("questionDetails::",questionDetails)}
       <div
+      className={`dragable-wrapper ${isSourceOptionsDivEmpty?'empty-source':''}`}
         style={{
           minHeight: '200px',
           width: '350px',
@@ -51,7 +53,8 @@ const DragableOptions = ({
       </div>
 
       {/* Target List */}
-      {console.log("questionDetails::",questionDetails)}
+      {/* {console.log("questionDetails::",questionDetails)} */}
+      
       <ReactSortable
         list={targetDroppedOptions}
         setList={setTargetDroppedOptions}
@@ -59,16 +62,15 @@ const DragableOptions = ({
         animation={200}
         onAdd={handleAddDropOption}
         sort={questionDetails?.answer === null} disabled={questionDetails?.answer !== null}
-        className={`dragable-wrapper ${questionDetails?.answer!==null && questionDetails?.answer.correct==='no'? 'incorrect':''}`}
+        className={`dragable-wrapper ${targetDroppedOptions.length===0?'empty-bg':''} ${questionDetails?.answer!==null && questionDetails?.answer.correct==='no'? 'incorrect':''}`}
       >
         {targetDroppedOptions?.map((item,index) => (
           <div key={item?.id} className={`item ${(questionDetails?.answer !== null && item?.rank===index)?'correct':''} ${(questionDetails?.answer !== null && item?.rank!==index)?'wrong':''}`}>
-            <span className="">{index+1}.</span><Markup markup={item?.description}/>{console.log("item::",item)}
+            <span className="">{index+1}.</span><Markup markup={item?.description}/>
             {/* <div dangerouslySetInnerHTML={{ __html: item.description }} /> */}
           </div>
         ))}
       </ReactSortable>
-
     </div>
     );
 };
