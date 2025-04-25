@@ -12,6 +12,8 @@ function QuestionnaireQuestion({
     targetDroppedOptions,
     isSourceOptionsDivEmpty,
     setTargetDroppedOptions,
+    isRankingSubmitted,
+    isRankingAnswerShow
 }) {
     // console.log("questionDetails::", questionDetails)
     // console.log("selectedValue::",selectedValue)
@@ -140,7 +142,12 @@ function QuestionnaireQuestion({
                         }
                         
                         {questionDetails?.question_type === "ranking"&&
-                                <DragableOptions 
+                            <>
+                            <div className="" style={{ display: 'flex', gap: '20px' }}>
+                                <div className='w-50 mb-2 ps-2'><strong>Drag Options From here</strong></div>
+                                <div className='w-50 mb-2 ps-2'><strong>Drop Options here and arrange them</strong></div>
+                            </div> 
+                                <DragableOptions
                                     questionDetails={questionDetails} 
                                     alphabets={alphabets}
                                     sourceOptions={sourceOptions}
@@ -149,7 +156,11 @@ function QuestionnaireQuestion({
                                     targetDroppedOptions={targetDroppedOptions}
                                     isSourceOptionsDivEmpty={isSourceOptionsDivEmpty}
                                     setTargetDroppedOptions={setTargetDroppedOptions}
+                                    type={type}
+                                    isRankingSubmitted={isRankingSubmitted}
+                                    isRankingAnswerShow={isRankingAnswerShow}
                                 />
+                            </>
                         }
 
                     </div>

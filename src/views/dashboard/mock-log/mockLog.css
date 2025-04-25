@@ -1,0 +1,39 @@
+.ranking-options-container  .item {
+    padding: 10px;
+    margin: 5px 0;
+    background: #e0e0e0;
+    border-radius: 6px;
+    /* cursor: grab; */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    gap: 5px;
+    width: 100%;
+    border: 1px solid var(--themecolor);
+}
+.ranking-options-container  .item p {
+    margin: 0;
+}
+.ranking-options-container  .item.wrong {
+    border: 1px solid var(--err-border);
+    background-color: var(--wrong-color);
+    color: #fff;
+}
+.ranking-options-container  .item.correct {
+    border: 1px solid var(--correct-border);
+    background-color: var(--correct-color);
+}
+.ranking-logs-container{
+    display: flex;
+    gap: 20px;
+}
+
+.ranking-options-container {
+    min-height: 250px;
+    min-width: 200px;
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    opacity: 1;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+}

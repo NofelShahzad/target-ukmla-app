@@ -38,6 +38,10 @@
     display: inline-flex;
     gap: 5px;
     width: 100%;
+    border: 1px solid var(--themecolor);
+}
+.dragable-wrapper .item p {
+    margin: 0;
 }
 
 .dragable-wrapper .item.wrong {

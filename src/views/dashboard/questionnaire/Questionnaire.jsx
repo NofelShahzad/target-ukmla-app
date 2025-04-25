@@ -155,6 +155,9 @@ function Questionnaire({ isMock, type }) {
     // }, [activeQuestionIndex])
     const { data: getSingleQuestionData, error: getSingleQuestionError } = useGetSingleQuestionQuery({id:question_Id,mock_id:mock_id??practice_id??questionnaire_Id},{skip:!shouldFetch});
 
+    const [isRankingSubmitted,setIsRankingSubmitted] = useState(false);
+    const [isRankingAnswerShow,setIsRankingAnswerShow] = useState(false);
+
     const [sourceOptions, setSourceOptions] = useState([]);
     const [targetDroppedOptions, setTargetDroppedOptions] = useState([]);
     useEffect(() => {
@@ -172,6 +175,7 @@ function Questionnaire({ isMock, type }) {
                     setTargetDroppedOptions([])
                 }
                 if (getSingleQuestionData?.question?.answer) {
+                    setSelected(true);
                     const question = getSingleQuestionData?.question;
                     if (question?.question_type === "single_choice") {
                         setSelectedValue(question?.answer?.option_id ? [question.answer.option_id] : []);
@@ -181,13 +185,25 @@ function Questionnaire({ isMock, type }) {
                     if (question?.question_type === "ranking"){
                         // console.log("question:::",question)
                         // Create a map of options by ID for quick lookup
-                        const optionMap = new Map(question.options.map(option => [option.id, option]));
+                        const optionMap = new Map(question?.options.map(option => [option?.id, option]));
 
+                        const sortedByRank = [...question.options].sort((a, b) => a.rank - b.rank);
+                        // console.log("sortedByRank:::",sortedByRank)
+                        // console.log("optionMap:::",optionMap)
                         // Sort options according to answer.options order
                         const sortedOptions = question.answer.options.map(id => optionMap.get(id));
 
                         // console.log("sortedOptions::",sortedOptions);
-                        setSourceOptions([]);
+                        if (type==="mock") {
+                            
+                            setIsRankingSubmitted(true);
+                            setIsRankingAnswerShow(false);
+                            setSourceOptions([]);
+                        }else{
+                            setIsRankingSubmitted(true);
+                            setIsRankingAnswerShow(true);
+                            setSourceOptions(structuredClone(sortedByRank));
+                        }
                         setTargetDroppedOptions(structuredClone(sortedOptions.length>0?sortedOptions:question.options));
                     }
                 } else {
@@ -352,17 +368,19 @@ function Questionnaire({ isMock, type }) {
                 if (data?.status) {
                     if (type==="mock") {
                         setSingleQuestionDetails({...data?.question, answer: true});
+                        setSelected(true);
+                        successMessage("Answer submitted successfully.")
                     }
                     else{
                         setSingleQuestionDetails(data?.question);
+                        setSelected(false);
                     }
                     setSelectedValue([]);
-                    setSelected(false);
                     setFlagMarked(data?.question?.is_flagged_count === 1 ? true : false)
                     // if (data?.question?.answer) {
                     //     setSelectedValue(data?.question?.answer?.option_id)
                     // }
-                    if (data?.question?.answer) {
+                    if (data?.question?.answer && type!=="mock") {
                         if (data?.question?.question_type === "single_choice") {
                             setSelectedValue([Number(data?.question?.answer.option_id)]);
                         }
@@ -387,12 +405,32 @@ function Questionnaire({ isMock, type }) {
                             const sortedOptions = answerOptionIds.length > 0
                               ? answerOptionIds.map(id => optionMap.get(id)).filter(Boolean): options;
                           
-                            setSourceOptions([]); // Source is empty initially
+                              const sortedByRank = [...options].sort((a, b) => a.rank - b.rank);
+                            // setSourceOptions([]); // Source is empty initially
+                            if (type==="mock") {
+                                setIsRankingSubmitted(true);
+                                setIsRankingAnswerShow(false);
+                                setSourceOptions([]);
+                            }else{
+                                setIsRankingSubmitted(true);
+                                setIsRankingAnswerShow(true);
+                                setSourceOptions(structuredClone(sortedByRank));
+                            }
                             setTargetDroppedOptions(structuredClone(sortedOptions));
                           }
                           
                     } else {
-                        setSelectedValue([]);
+                        if (data?.question?.question_type === "single_choice") {
+                            setSelectedValue([Number(data?.question?.answer.option_id)]);
+                        }
+                        if (data?.question?.question_type === "multiple_choice") {
+                            // setSelectedValue(
+                            //     Array.isArray(data?.question?.answer.option_id)
+                            //         ? data?.question?.answer.option_id.map(Number)
+                            //         : [Number(data?.question?.answer.option_id)]
+                            // );
+                            setSelectedValue(data?.question.answer?.options || []);
+                        }
                     }
                 }
                 setApiCall(false);
@@ -516,6 +554,8 @@ function Questionnaire({ isMock, type }) {
         if (currentIndex < questionsCount.length - 1) {
             setIsGettingNext(true);
             handleChangeQuestion(questionsCount[currentIndex + 1].slug);
+            setIsRankingAnswerShow(false);
+            setIsRankingSubmitted(false);
         }
     };
 
@@ -524,6 +564,8 @@ function Questionnaire({ isMock, type }) {
         if (currentIndex > 0) {
             setIsGettingPrevious(true);
             handleChangeQuestion(questionsCount[currentIndex - 1].slug);
+            setIsRankingAnswerShow(false);
+            setIsRankingSubmitted(false);
         }
     };
     const [confirmResetMockModal, setConfirmResetMockModal] = useState(false);
@@ -1087,6 +1129,8 @@ useEffect(() => {
                                                     targetDroppedOptions={targetDroppedOptions}
                                                     isSourceOptionsDivEmpty={isSourceOptionsDivEmpty}
                                                     setTargetDroppedOptions={setTargetDroppedOptions}
+                                                    isRankingSubmitted={isRankingSubmitted}
+                                                    isRankingAnswerShow={isRankingAnswerShow}
                                                 />
                                             }
                                             {removedQuestion &&
@@ -1100,6 +1144,11 @@ useEffect(() => {
                                                 {/* For Practice / Mock Types */}
                                                 {(type === "practice" || type === "mock") && !removedQuestion && (
                                                     <div className="col-12 py-1">
+                                                        {/* {console.log("!selected::",!selected)}
+                                                        {console.log("apiCall::",apiCall)}
+                                                        {console.log("isSubmitting::",isSubmitting)}
+                                                        {console.log("!isRunning::",!isRunning)}
+                                                        {console.log("type === practice || type === mock::",type === "practice" || type === "mock")} */}
                                                         <button
                                                             type="submit"
                                                             className="btn btn-primary"

@@ -4,6 +4,7 @@ import { useMockLogsQuery } from '../../../redux/features/mocks/MocksApiSlice';
 import { useEffect } from 'react';
 import { Markup } from 'react-render-markup';
 import PageLoader from '../../../components/pageLoader/PageLoader';
+import './mockLog.css'
 // import QuestionnaireQuestion from '../../../components/questionnaireQuestion/QuestionnaireQuestion';
 const alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S'];
 
@@ -54,18 +55,25 @@ function MockLog() {
                                 <div className='question-container'>
                                     <div className='question-container'>
                                         <div className='question-body'>
-                                            {allQuestions.map((question,index) =>
-                                                <>
+                                            {allQuestions.map((question,index) =>{
+                                                    const optionMap = new Map(question?.options.map(option => [option?.id, option]));
+
+                                                    const sortedByRank = [...question.options].sort((a, b) => a.rank - b.rank);
+                                                    // console.log("sortedByRank:::",sortedByRank)
+                                                    // console.log("optionMap:::",optionMap)
+                                                    // Sort options according to answer.options order
+                                                    const sortedOptions = question.attempted_options.map(id => optionMap.get(id));
+                                               return( <>
                                                     <div className="questionnaire-question-container" style={{borderBottom: '2px solid #fff'}}>
                                                         <span className='fw-bold'>Q{index+1}. &nbsp;&nbsp;</span><Markup markup={question?.question} />
                                                         {/* <p>{questionDetails?.title}</p> */}
                                                         {/* <p>A 26 year old man presents to the Emergency Department complaining of difficulty in raising his arm above his head following a minor traffic accident a week ago, where he injured his left shoulder. On examination, there is noticeable winging of the scapula on the affected side when he presses against the wall with his hands. There is also weakness in forward flexion of the arm at the shoulder. Sensory examination is normal. Which nerve is most likely injured?</p> */}
                                                         <div className="question-single-option">
-                                                            <div className="question-radio-group">
-                                                                {
+                                                            <div className={`question-radio-group ${question?.question_type==="ranking"? 'ranking-logs-container':''}`}>
+                                                                {question?.question_type==="single_choice"&&
                                                                     question?.options?.map((opt, index) => (
                                                                         <label key={opt?.id}
-                                                                            className={`radio-option disable ${question?.attempted_opt_id===opt?.id && opt?.is_correct? 'correct text-light':''} ${question?.attempted_opt_id===opt?.id && !opt?.is_correct? 'wrong text-light':''} ${opt?.is_correct? 'actual-correct wrong':''} ${question?.attempted_opt_id === opt?.id ? 'user-submitted checked' : ''}`}
+                                                                            className={`radio-option disable ${ question?.attempted_opt_id===opt?.id && opt?.is_correct? 'correct text-light':''} ${question?.attempted_opt_id===opt?.id && !opt?.is_correct? 'wrong text-light':''} ${opt?.is_correct? 'actual-correct wrong':''} ${question?.attempted_opt_id === opt?.id ? 'user-submitted checked' : ''}`}
                                                                             htmlFor={opt?.id}>
                                                                             <div className="question-label-result col-11">
                                                                                 <p>{alphabets[index]}.&nbsp;<Markup markup={opt?.text}/></p>
@@ -85,6 +93,68 @@ function MockLog() {
                                                                         </label>
                                                                     ))
                                                                 }
+                                                                {question?.question_type==="multiple_choice"&&
+                                                                    question?.options?.map((opt, index) => (
+                                                                        <label key={opt?.id}
+                                                                            className={`radio-option disable ${ question?.attempted_options.includes(opt?.id) && opt?.is_correct? 'correct':''} 
+                                                                                ${question?.attempted_options.includes(opt?.id) && !opt?.is_correct? 'wrong checked text-light':''} 
+                                                                                ${opt?.is_correct? 'actual-correct wrong':''} 
+                                                                                ${question?.attempted_opt_id === opt?.id ? 'user-submitted checked' : ''}`}
+                                                                            htmlFor={opt?.id}>
+                                                                            <div className="question-label-result col-11">
+                                                                                <p>{alphabets[index]}.&nbsp;<Markup markup={opt?.text}/></p>
+                                                                                <div className="result-percentage">
+                                                                                    {/* {questionDetails?.answer && totalSelectedCount() > 0 && (
+                                                                                        <span>
+                                                                                            {((opt?.correct_answers_count + opt?.wrong_answers_count) / totalSelectedCount() * 100).toFixed()}%
+                                                                                        </span>
+                                                                                    )} */}
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div className="submitted-status-wrapper">
+                                                                                <div className="submitted-status-inner-wrapper" style={{ width: `${(question?.attempted_options.includes(opt?.id) && !opt?.is_correct)||(question?.attempted_options.includes(opt?.id) && opt?.is_correct)? '100%':'0'} ` }}>
+                                                                                </div>
+                                                                            </div>
+                                                                        </label>
+                                                                    ))
+                                                                }
+                                                                {question?.question_type==="ranking"&& 
+                                                                    <>
+                                                                    <div className="w-50">
+                                                                        <p className="mb-1">
+                                                                            <strong>Correct Sqeuence</strong>
+                                                                        </p>
+                                                                    <div className="ranking-options-container ">
+                                                                        {
+                                                                            sortedByRank.map((item,index)=>
+                                                                                <div key={item.id} className='item correct'>
+                                                                                    <span className="">{alphabets[index]}.</span><Markup markup={item?.text}/>
+                                                                                </div>
+                                                                            )
+                                                                        }
+                                                                    </div>
+
+                                                                    </div>
+                                                                    <div className="w-50">
+                                                                        <p className="mb-1">
+                                                                            <strong>Your submitted sequence</strong>
+                                                                        </p>
+                                                                    <div className="ranking-options-container">
+                                                                        {
+                                                                            sortedOptions.map((item,index)=>
+                                                                                <div key={item.id} className={`item ${item.rank===index+1?'correct':'wrong'}`}>
+                                                                                    <span className="">{index+1}.</span><Markup markup={item?.text}/>
+                                                                                </div>
+                                                                            )
+                                                                        }
+
+                                                                    </div>
+
+                                                                    </div>
+
+                                                                    </>
+                                                                }
                                                             </div>
                                                         </div>
                                                         <div className='mt-2'>
@@ -101,7 +171,8 @@ function MockLog() {
                                                             </p>
                                                         </div>
                                                     </div>
-                                                </>
+                                                </>)
+                                                }
                                             )}
 
                                             {allQuestions.length === 0 &&
