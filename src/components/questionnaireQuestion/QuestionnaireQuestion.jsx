@@ -144,8 +144,8 @@ function QuestionnaireQuestion({
                         {questionDetails?.question_type === "ranking"&&
                             <>
                             <div className="" style={{ display: 'flex', gap: '20px' }}>
-                                <div className='w-50 mb-2 ps-2'><strong>Drag Options From here</strong></div>
-                                <div className='w-50 mb-2 ps-2'><strong>Drop Options here and arrange them</strong></div>
+                                <div className='w-50 mb-2 ps-2 text-center'><strong>Drag Options From here</strong></div>
+                                <div className='w-50 mb-2 ps-2 text-center'><strong>Drop and Rank</strong></div>
                             </div> 
                                 <DragableOptions
                                     questionDetails={questionDetails} 

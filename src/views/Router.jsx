@@ -40,6 +40,7 @@ import PaymentSuccess from './paymentSuccess/PaymentSuccess';
 import PaymentFailure from './paymentFailure/PaymentFailure';
 import ChangePassword from './dashboard/ChangePassword';
 import Gems from './dashboard/gems/Gems';
+import AboutUs from './dashboard/AboutUs';
 
 const RouterWrapper = () => {
     const isUserAuthenticated = useSelector(state => !!state.auth.user);
@@ -231,6 +232,7 @@ const RouterWrapper = () => {
         
         <Route path="webinars" element={<Webinars />} />
         <Route path="contactus" element={<ContactUs />} />
+        <Route path="about-us" element={<AboutUs />} />
         <Route path=":questionnaire_Id/:question_Id" element={<Questionnaire isMock={false} type={"category"} />} />
         <Route path="/mock/:mock_id/:question_Id" element={<Questionnaire isMock={true} type={"mock"} />} />
         <Route path="/practice/:practice_id/:question_Id" element={<Questionnaire isMock={true} type={"practice"} />} />

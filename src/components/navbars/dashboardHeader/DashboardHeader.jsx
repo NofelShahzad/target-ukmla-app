@@ -59,7 +59,7 @@ function DashboardHeader() {
           <ul className='nav-body'>
             <li className='nav-resources-container'>
               <div className='dropdown'>
-                <div className='item'> <span> Resources</span>
+                <div className='item'> <span>Additional Resources</span>
                   {/* <img src={downArrow} alt='arrow icons' /> */}
                   <svg xmlns="http://www.w3.org/2000/svg" width="12.5" height="6.855" viewBox="0 0 12.5 6.855">
                     <g id="Iconly_Light-Outline_Arrow---Down-2" data-name="Iconly/Light-Outline/Arrow---Down-2" transform="translate(-4.25 -7.75)">
@@ -107,16 +107,32 @@ function DashboardHeader() {
                 </div>
                 <ul className="menu-dropdown">
                   <li>
-                    <Link className="nav-link" to="/">
+                    <Link className="nav-link" to="/gems">
                       <span>Gems</span>
                     </Link>
                   </li>
-
                   <li>
+                    <Link className="nav-link" to="/dashboard">
+                      <span>Question Bank</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="nav-link" to="/questions-bank/flagged-questions">
+                      <span>Flagged Questions</span>
+                    </Link>
+                    {/* <li><Link to='/questions-bank/flagged-questions'> </Link></li> */}
+                  </li>
+                  <li>
+                    <Link className="nav-link" to="/practice-mocks">
+                      <div className='dropmenu-item'><span>Practice Mock </span> </div>
+                    </Link>
+                  </li>
+
+                  {/* <li>
                     <div className="nav-link" to="/">
                       <div className='dropmenu-item'>
                         <span>Questions</span>
-                        {/* <img src={downArrow} alt='other icons' /> */}
+                        <img src={downArrow} alt='other icons' />
                         <svg xmlns="http://www.w3.org/2000/svg" width="12.5" height="6.855" viewBox="0 0 12.5 6.855">
                           <g id="Iconly_Light-Outline_Arrow---Down-2" data-name="Iconly/Light-Outline/Arrow---Down-2" transform="translate(-4.25 -7.75)">
                             <g id="Arrow---Down-2" transform="translate(4.25 7.75)">
@@ -130,7 +146,7 @@ function DashboardHeader() {
                         <li><Link to='/questions-bank/flagged-questions'> Flagged Questions</Link></li>
                       </ul>
                     </div>
-                  </li>
+                  </li> */}
                   {/* <li>
                     <div className="nav-link" to="/">
                       <div className='dropmenu-item'>
@@ -195,11 +211,11 @@ function DashboardHeader() {
                 <img src={otherLinksIcon} alt='other icons' />
                 <ul className="menu-dropdown">
                   <li>
-                    <Link className="nav-link" href="/quotation">
+                    <Link className="nav-link" to="/about-us">
                       <span>About us</span>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link className="nav-link" href="/contracts">
                       <span>News</span>
                     </Link>
@@ -208,7 +224,7 @@ function DashboardHeader() {
                     <Link className="nav-link" href="/contracts">
                       <span>FAQ</span>
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link className="nav-link" to={`/contactus`}>
                       <span>Contact Us</span>

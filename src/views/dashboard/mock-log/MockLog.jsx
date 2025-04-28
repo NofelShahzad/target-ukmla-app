@@ -123,7 +123,7 @@ function MockLog() {
                                                                     <>
                                                                     <div className="w-50">
                                                                         <p className="mb-1">
-                                                                            <strong>Correct Sqeuence</strong>
+                                                                            <strong>Correct Ranking</strong>
                                                                         </p>
                                                                     <div className="ranking-options-container ">
                                                                         {
@@ -138,7 +138,7 @@ function MockLog() {
                                                                     </div>
                                                                     <div className="w-50">
                                                                         <p className="mb-1">
-                                                                            <strong>Your submitted sequence</strong>
+                                                                            <strong>Your submitted Ranking</strong>
                                                                         </p>
                                                                     <div className="ranking-options-container">
                                                                         {
@@ -158,12 +158,14 @@ function MockLog() {
                                                             </div>
                                                         </div>
                                                         <div className='mt-2'>
-                                                            <p className="m-0"><b> Correct Answers:</b>&nbsp;
-                                                                <strong className='text-success'> {question?.options.map((opt, index)=>{
-                                                                    return opt?.is_correct===true?`${alphabets[index]}`:''
-                                                                })
-                                                                }</strong>
-                                                            </p>
+                                                            {question?.question_type!=="ranking" &&
+                                                                <p className="m-0"><b> Correct Answers:</b>&nbsp;
+                                                                    <strong className='text-success'> {question?.options.map((opt, index)=>{
+                                                                        return opt?.is_correct===true?`${alphabets[index]}`:''
+                                                                    })
+                                                                    }</strong>
+                                                                </p>
+                                                            }
                                                             <span className='fw-bold'>Explanation</span>
                                                             <p className="mb-0">
                                                                 <Markup markup={question?.explanation}/>

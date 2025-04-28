@@ -58,7 +58,7 @@ function PracticeMocks() {
       if (data?.status) {
         setAllPracticeMocks(data?.mocks);
         // console.log("data::",data);
-        if (data?.mocks?.length >0) {
+        if (data?.mocks?.length ===1) {
           navigate(`/practice-mocks/detail/${data?.mocks[0]?.slug}`)
         }
       }

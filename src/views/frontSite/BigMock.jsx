@@ -9,11 +9,20 @@ function BigMock() {
 
     <h1 className="big-mock-heading">Big Mock</h1>
     <p className="big-mock-description">
-    Featuring 180 high yield questions not found in the Question Bank to ensure you are ready for the PLAB 1 exam and the new UKMLA exam! The BIG MOCKS are valid for 6 months from purchase. They cost £30 for each BIG MOCK. You must log in before purchase but you do not require an active subscription to access the BIG MOCKS.  </p>  
+      180 brand-new high-yield questions—not found in the main Question Bank—designed to truly test your readiness for <span className='fw-600'>PLAB 1</span> and the <span className='fw-600'>UKMLA AKT</span>.</p>  
+    <br />
     <p> <strong>Why do the BIG MOCK?</strong></p>
     <p className="big-mock-description">
-    The BIG MOCK is catered for when you are close to finishing your preparation. It has a mix of topics that you might find familiar with and topics that you may not have been prepared for at all. This is what you would expect in the PLAB part 1 exam. We have produced the BIG MOCKS to give you a more accurate prediction of your exam marks. It is useful to go through this using a 3-hour timer so that you know the exact time challenge that you may face in the real exam.    </p>
-    
+    The BIG MOCK is built for the final phase of your preparation—when you’re nearly exam-ready and need to challenge yourself. It’s designed to:</p>
+    <ul className='big-mock-description'>
+      <li>Mix familiar topics with ones you might not be prepared for</li>
+      <li>Mimic the pressure, pacing, and unpredictability of the real exam</li>
+      <li>Help predict your actual exam score with greater accuracy</li>
+      <li>Identify weak spots under timed conditions</li>
+    </ul>
+    <p className='big-mock-description mb-4'>
+     <span className='fw-600'>Tip:</span> Use it under timed conditions (3 hours) to get the full benefit and a realistic exam-day feel.
+    </p>
     <div className="big-mock-box">
         <img src={bigmockOne} alt="Big Mock Image" className="big-mock-image"/>
         <div className="big-mock-details">

@@ -16,6 +16,8 @@ const baseQuery = fetchBaseQuery({
       }
       headers.set("Access-Control-Allow-Origin", "*");
       headers.set("Access-Control-Request-Method", "*");
+      headers.set("Access-Control-Request-Method", "*");
+      headers.set("Time-Zone", Intl.DateTimeFormat().resolvedOptions().timeZone);
   
       return headers;
     },

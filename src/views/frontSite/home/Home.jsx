@@ -17,19 +17,10 @@ function Home() {
                     <div className="container flex_center">
                         <div className="banner_text_box flex_center">
                             <h1>
-                                Are you a medical student or international doctor planning to work
-                                in the UK?
+                            Planning to take the UKMLA or looking to kickstart your medical career in the UK?
                             </h1>
                             <p>
-                                Join thousands of others using Plabable to ace the Professional and
-                                Linguistic Assessment Board (PLAB) part 1 and Medical Licensing
-                                Assessment (MLA) Applied Knowledge Test (AKT). We offer thousands of
-                                high-yield questions written and reviewed by ourselves, our NHS
-                                colleagues and those who have passed the exams. Our resources are
-                                specifically designed to cater to the needs of two major exams: The
-                                PLAB exam (for international medical graduates) and the UK MLA AKT
-                                (for UK medical students). They both are set at similar levels and
-                                share the same MLA content map.
+                            Join a growing community of medical students and international doctors using Target UKMLA to master the Medical Licensing Assessment (MLA) Applied Knowledge Test (AKT). Our extensive question bank is crafted by UK-based doctors, educators, and recent test-takers to reflect the real exam and the MLA content map. Whether you’re preparing for the UKMLA AKT or the PLAB 1, our high-yield, exam-focused resources are designed to help you succeed—confidently and efficiently.
                                  {/* Find out more here: */}
                             </p>
                             {/* <div className="banner_buttons">
@@ -45,7 +36,7 @@ function Home() {
                 <div className="container">
                     <div className="motive_content">
                         <h2 className="text-center text-md-start text-sm-center flex-center">
-                            We aim to make studying more sociable
+                        We make studying more connected—and a lot less lonely
                         </h2>
                         <div className="row mt-4">
                             <div
@@ -55,8 +46,7 @@ function Home() {
                                     <img src={aim_one} alt="aim_image" />
                                 </div>
                                 <p className="text-center text-md-start text-sm-center my-3 my-md-0">
-                                    Exchange opinions with other candidates via each questionʼs
-                                    comments section.
+                                Every question has a discussion space where you can exchange insights, clarify doubts, and learn from others preparing for the UKMLA or PLAB.
                                 </p>
                             </div>
                             <div
@@ -66,8 +56,7 @@ function Home() {
                                     <img src={aim_two} alt="aim_image" />
                                 </div>
                                 <p className="text-center text-md-start text-sm-center my-3 my-md-0">
-                                    Dedicated Whatsapp groups for members sitting for the exam based
-                                    on location and date of the exam.
+                                Connect with fellow candidates sitting the exam at the same time and in the same region. Share resources, tips, and support each other right up to exam day.
                                 </p>
                             </div>
                             <div
@@ -77,9 +66,7 @@ function Home() {
                                     <img src={aim_three} alt="aim_image" />
                                 </div>
                                 <p className="text-center text-md-start text-sm-center my-3 my-md-0">
-                                    Revision guides that take you through topics and clinical
-                                    categories highlighting the most important KEYS for the exam,
-                                    pretty much like a textbook (but better).
+                                Our topic-based revision notes break down key concepts by clinical category—concise, high-yield, and designed to feel like the textbook you wish you had.
                                 </p>
                             </div>
                         </div>
@@ -98,13 +85,9 @@ function Home() {
                             </div>
                         </div>
                         <div className="why_content col-12 col-lg-5">
-                            <h2>Why choose Plabable?</h2>
-                            <p
-                                >We have written more than 4300 high-yield questions that mimic the
-                                level of the PLAB part 1 exam and the United Kingdom Medical
-                                Licensing Assessment (UKMLA) or the Medical Licensing Assessment
-                                (MLA). Our explanations aim to deliver concise learning points,
-                                giving you the best opportunity to pass on the first attempt.
+                            <h2>Why choose Target UKMLA?</h2>
+                            <p>
+                                We’ve created thousands of <span className='fw-600'>high-yield MCQs</span> designed to mirror the real level and style of the <span className='fw-600'>PLAB 1</span> and the <span className='fw-600'>UKMLA Applied Knowledge Test (AKT)</span>. Each question comes with clear, focused explanations that highlight key clinical concepts—helping you learn faster and retain more. Our goal? To give you the best possible chance of passing first time.
                             </p>
                             <div className="why_action">
                                 <button type="button" className="el-button el-button--primary is-plain">
@@ -127,12 +110,9 @@ function Home() {
                 <div className="container">
                     <div className="signup_section_bg flex_center">
                         <div className="signup_section_content">
-                            <h2>Sign up with Plabable today</h2>
-                            <span
-                                >Embark on your journey to success by joining the thriving community
-                                of Plabable users worldwide. Join thousands of individuals who rely
-                                on Plabable to conquer the PLAB exam or diligently prepare for the
-                                United Kingdom Medical Licensing Assessment (UKMLA).</span>
+                            <h2>Sign up with Target UKMLA today</h2>
+                            <span>
+                            Start your journey to UK medical registration with the support of a growing community of future doctors. Thousands of candidates trust <span className='fw-600'>Target UKMLA</span> to help them succeed in the <span className='fw-600'>PLAB 1</span> and <span className='fw-600'>UKMLA AKT</span>. Join them—and take the next step with confidence.</span>
                             <div>
                                 <Link to={'/signup'} className="el-button el-button--primary is-plain">
                                     <span>Sign Up</span>

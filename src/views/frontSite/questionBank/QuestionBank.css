@@ -23,6 +23,10 @@
     align-items: center;
     justify-content: space-between;
 }
+.subscription-box ul.no-bullets{
+    list-style: none;
+    padding-left: 10px;
+}
 
 /* Left Box Icon */
 .subscription-icon {

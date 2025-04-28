@@ -9,18 +9,22 @@ import GlobalErrorBoundary from './components/errorBoundary/GlobalErrorBoundary'
 import { useGetLoggedInUserQuery } from './redux/features/auth/authApi';
 import { useEffect, useState } from 'react';
 import { setAuth } from './redux/features/auth/authSlice';
+import ScreenshotProtection from './components/screenshotDetector/ScreenshotDetector';
 
 function App() {
   const auth =  useSelector((state) => state.auth);
   // console.log("auth::",auth)
  
-
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+  };
 
 
   return (
     <>
       {/* <RouterProvider router={Router}/> */}
-      <div className='app'>
+      <div className='app' onContextMenu={handleContextMenu}>
+      {/* <ScreenshotProtection/> */}
         <GlobalErrorBoundary>
           <Router>
             <RouterWrapper />

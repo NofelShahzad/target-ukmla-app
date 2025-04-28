@@ -135,6 +135,7 @@ function Questionnaire({ isMock, type }) {
             }
             if (!mockData?.status) {
                 // console.log(mockData?.status)
+                navigate(-1)
                 errorMessage(mockData?.message);
             }
             setApiCall(false);
@@ -206,8 +207,11 @@ function Questionnaire({ isMock, type }) {
                         }
                         setTargetDroppedOptions(structuredClone(sortedOptions.length>0?sortedOptions:question.options));
                     }
+                    
                 } else {
                     setSelectedValue([]);
+                    setIsRankingAnswerShow(false);
+                    setIsRankingSubmitted(false)
                 }
 
                 setRemovedQuestion(false);
@@ -1020,7 +1024,8 @@ const handleFinishSave = async () => {
                 }
                 if (type === "practice") {
                     // console.log("practice")
-                    navigate(`/practice-mocks`);
+                    // navigate(`/practice-mocks`);
+                    navigate(-1);
                 }
             } else {
                 errorMessage(data?.message);

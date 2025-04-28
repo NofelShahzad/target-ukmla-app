@@ -54,7 +54,8 @@ function Timer({
           navigate("/big-mocks")
         }
         if (type==="practice") {
-          navigate("/practice-mocks")
+          // navigate("/practice-mocks")
+          navigate(-1);
         }
         if (type==="category") {
           navigate("/questions-bank")

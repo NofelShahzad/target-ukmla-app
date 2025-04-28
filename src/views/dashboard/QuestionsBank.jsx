@@ -153,10 +153,10 @@ function QuestionsBank() {
                             </div>
                             <div className='high-yield-card-wrapper'>
                                 <div className='my-stuff-inner-wrapper question-bank-bg'>
-                                    <h2 className='title'>High Yield Cards</h2>
+                                    <h2 className='title'>High-Yield Gems</h2>
                                     <div className='description'>
                                         <p>
-                                            You have yet to subscribe to Plabable Gems. Plabable Gems contain high yield revision notes in a concise and organised manner according to clinical topics to help you maximise learning. The Gems are also packed with clinical drawings, images and mnemonics to make studying more enjoyable.
+                                           <strong>Supercharge your revision</strong> with our High-Yield Gems Cards—concise, clinically-focused notes designed to help you retain more in less time.
                                         </p>
                                     </div>
                                     <div className='footer'>

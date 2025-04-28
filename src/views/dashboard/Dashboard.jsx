@@ -37,6 +37,7 @@ function Dashboard() {
     }, []);
   // console.log("auth::",auth)
   const [allQuestions,setAllQuestions] = useState([]);
+  const [allQuestionsType,setAllQuestionsTypes] = useState([]);
   const [allStandardPlans,setAllStandardPlans] = useState([]);
 
   const {data:plansData , error: plansError} = useGetStandardPlansQuery(undefined,{
@@ -67,6 +68,7 @@ function Dashboard() {
     // console.log(data)
     if (data?.status) {
       setAllQuestions(data?.categories);
+      setAllQuestionsTypes(data?.types);
     }
     setIsloading(false)
     }
@@ -167,13 +169,36 @@ function Dashboard() {
           {/* <div className="single-info"><div className="type removed-by-admin"></div> <div className="info-title"><span> Removed by the admin</span></div> </div> */}
       </section>
       <section className="question-categories-wrapper">
-        <div className="question-categories-inner-wrapper">
-            {allQuestions.map(quest=> (
-              <QuestionCategoryCard key={quest?.id} questionData={quest} handleResetConfirmModal={handleResetConfirmModal} />
-            ))
+        <div>
+          {allQuestionsType.map(type=>(
+            <>
+              <h2 className="cat-title">{type?.name}</h2>
+              <div className="question-categories-inner-wrapper">
+                {
+                  type?.categories?.map(quest=>
+                    <QuestionCategoryCard key={quest?.id} questionData={quest} handleResetConfirmModal={handleResetConfirmModal} />
+                  )
 
-            }
-           
+                }
+              </div>
+            </>
+          ))
+
+          }
+        </div>
+        <div>
+          {allQuestions.length>0 && allQuestionsType.length>0 &&
+            <h2 className="cat-title">All categories</h2>
+          }
+          <div className="question-categories-inner-wrapper">
+
+              {allQuestions.map(quest=> (
+                <QuestionCategoryCard key={quest?.id} questionData={quest} handleResetConfirmModal={handleResetConfirmModal} />
+              ))
+
+              }
+            
+          </div>
         </div>
       </section>
         {!auth.plan_info &&

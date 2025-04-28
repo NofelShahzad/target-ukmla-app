@@ -65,16 +65,16 @@ const DragableOptions = ({
         group="shared"
         animation={200}
         onAdd={handleAddDropOption}
-        sort={questionDetails?.answer === null && type!=="mock"} 
-        disabled={!!questionDetails?.answer && type!=="mock"}
+        sort={questionDetails?.answer === null && (type!=="mock" || type !=="practice")} 
+        disabled={!!questionDetails?.answer && (type!=="mock" || type !=="practice")}
         className={`dragable-wrapper 
           ${targetDroppedOptions.length===0?'empty-bg':''} 
-          ${questionDetails?.answer!==null && questionDetails?.answer.correct==='no' && type!=="mock"? 'incorrect':''}
-          ${questionDetails?.answer!==null && questionDetails?.answer.correct==='yes' && type!=="mock"? 'correct':''}
+          ${questionDetails?.answer!==null && questionDetails?.answer.correct==='no' && (type!=="mock" || type !=="practice")? 'incorrect':''}
+          ${questionDetails?.answer!==null && questionDetails?.answer.correct==='yes' && (type!=="mock" || type !=="practice")? 'correct':''}
           `}
       >
         {targetDroppedOptions?.map((item,index) => (
-          <div key={item?.id} className={`item ${(questionDetails?.answer !== null && item?.rank===index+1 && type!=="mock")?'correct':''} ${(questionDetails?.answer !== null && item?.rank!==index+1 && type!=="mock")?'wrong':''}`}>
+          <div key={item?.id} className={`item ${(questionDetails?.answer !== null && item?.rank===index+1 && (type!=="mock" || type !=="practice"))?'correct':''} ${(questionDetails?.answer !== null && item?.rank!==index+1 && type!=="mock")?'wrong':''}`}>
             <span className="">{index+1}.</span><Markup markup={item?.description}/>
             {/* <div dangerouslySetInnerHTML={{ __html: item.description }} /> */}
           </div>

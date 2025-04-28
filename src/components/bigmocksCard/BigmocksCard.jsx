@@ -52,7 +52,7 @@ function BigmocksCard({handleBigmockModal, mockDetail, isPurchasing,type,handleC
                                 }
                                 {type === "practice" &&
                                   <div className='col-6 ps-1'>
-                                    <button type='button' className='btn btn-primary' disabled={(mockDetail?.published_questions_count <1 )}  onClick={()=>navigate(`/practice-mocks/detail/${mockDetail?.slug}`)}>Questions</button>
+                                    <button type='button' className='btn btn-primary' disabled={(mockDetail?.published_questions_count <1 )}  onClick={()=>navigate(`/practice-mocks/detail/${mockDetail?.slug}`)}>Practice Mocks</button>
                                   </div>
                                 }
                               </div>
