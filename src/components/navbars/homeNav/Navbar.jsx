@@ -22,7 +22,7 @@ function Navbar() {
                 <img src={logo} alt="logo" />
                 {/* <span>TARGET</span> UKMLA */}
                 <span className="text-danger px-1">Target</span>
-                <span className="text-primary"> MSRA</span>
+                <span className="text-primary"> Ukmla</span>
               </h1>
             </Link>
             <li className="toggle-btn">
