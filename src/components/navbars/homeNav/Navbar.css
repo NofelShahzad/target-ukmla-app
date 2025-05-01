@@ -46,6 +46,7 @@
     align-content: center;
     list-style: none;
     margin-bottom: 0;
+    padding: 0;
 }
 .header ul li{
     padding: 0 10px;

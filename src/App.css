@@ -1,4 +1,5 @@
 :root {
+  --font-family: "Poppins", sans-serif;
   --themecolor:  #5eb9f0;
   --text-dark: #0f0f0f;
   --text-light: #fff;
@@ -32,7 +33,7 @@
   --dash-nav-icon-bg:  #5eb9f0;
   --dash-nav-icon-hoverbg : #0F0F0F;
   --dash-navitem-bg: #F6F6F6;
-  --wrong-color: #BF0303;
+  --wrong-color: #ff7272;
   --correct-color: #0DC900;
   --correct-border: #0DC900;
   --correct-light-bg: #0dc9003b;
@@ -40,8 +41,8 @@
   --removed-color: #535353;
   --backdrop-color: #012f46d4;
   --theme-heading-color:  #5eb9f0;
-  --wrong-question-btn-bg: #ea0000;
-  --correct-question-btn-bg: #00B221;
+  --wrong-question-btn-bg: #ff7272;
+  --correct-question-btn-bg: #7beb7b;
   --removed-question-btn-bg: #555555;
   --btn-loader: #5eb9f0;
 }
@@ -59,7 +60,7 @@ body{
 .app {
   min-height: 100vh;
   width: 100%;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-family);
   color: var(--text-dark);
   /* background-color: #FBFFF4; */
 }

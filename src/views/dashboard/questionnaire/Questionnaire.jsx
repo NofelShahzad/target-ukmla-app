@@ -276,7 +276,7 @@ function Questionnaire({ isMock, type }) {
                     : [...prev, JSON.parse(event.target.value)]
             );
         }
-        setSelected(true);
+        // setSelected(true);
         // console.log("handleChange::",event.target.value)
     };
 
@@ -300,6 +300,18 @@ function Questionnaire({ isMock, type }) {
         setSelected(true);
       }
       }, [sourceOptions])
+
+      useEffect(() => {
+      if (singleQuestionDetails?.question_type==="multiple_choice" && selectedValue.length>=3) {
+        setSelected(true)
+      }
+      if (singleQuestionDetails?.question_type==="multiple_choice" && selectedValue.length<3) {
+        setSelected(false)
+      }
+      if(singleQuestionDetails?.question_type==="single_choice" && selectedValue.length===1){
+        setSelected(true)
+    }
+      }, [selectedValue])
 
 
     const handleFlagMark = async () => {
@@ -1161,15 +1173,16 @@ useEffect(() => {
                                                                 !selected ||
                                                                 apiCall ||
                                                                 isSubmitting ||
-                                                                (!isRunning && (type === "practice" || type === "mock")) 
+                                                                (!isRunning && (type === "practice" || type === "mock"))
                                                                 // || ( !isSourceOptionsDivEmpty )
+
                                                             }
                                                         >
                                                             {isSubmitting ? <ButtonLoader /> : 'Submit Answer'}
                                                         </button>
                                                     </div>
                                                 )}
-
+                                                {console.log("singleQuestionDetails::",singleQuestionDetails?.question_type==="multiple_choice")}
                                                 {/* For Other Types */}
                                                 {(type !== "practice" && type !== "mock") && !singleQuestionDetails?.answer && !removedQuestion && (
                                                     <div className="col-12 py-1">
@@ -1179,7 +1192,7 @@ useEffect(() => {
                                                             disabled={
                                                                 !selected ||
                                                                 apiCall ||
-                                                                isSubmitting 
+                                                                isSubmitting
                                                                 // || ( !isSourceOptionsDivEmpty )
                                                             }
                                                         >

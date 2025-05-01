@@ -14,7 +14,7 @@ function Navbar() {
   return (
     <>
       <div className="header">
-        <div className="container">
+        <div className="container-fluid container-lg">
           <nav>
             <Link className="brand-logo" to="/">
               <h1>
@@ -36,7 +36,7 @@ function Navbar() {
               </li>
               <li>
                 <NavLink to="/question-bank">
-                  Question Bank</NavLink>
+                  Question Bank & Pratice Mocks</NavLink>
               </li>
               {/* <li>
                 <NavLink to="/big-mock">
@@ -49,6 +49,10 @@ function Navbar() {
               <li>
                 <NavLink to="/mocks">
                   Big Mocks</NavLink>
+              </li>
+              <li>
+                <NavLink to="/gem">
+                  Gems</NavLink>
               </li>
               <li>
                 <NavLink to="/contact-us">

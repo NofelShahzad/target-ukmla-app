@@ -76,7 +76,7 @@ function Gems() {
                     <div className="bigmocks-inner-wrapper">
                         {!isLoading && allGems.length > 0 &&
                             allGems.map(gem =>
-                                <div key={gem.id} className='col-sm-12 col-xl-6 col-12'>
+                                <div key={gem.id} className='col-sm-12 col-md-6 col-xl-4 col-xxl-3 col-12'>
                                     <div className='bigmocks-card'>
                                         <div className='bigmocks-inner-card'>
                                             {/* <div className='bigmocks-img'>

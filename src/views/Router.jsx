@@ -41,6 +41,7 @@ import PaymentFailure from './paymentFailure/PaymentFailure';
 import ChangePassword from './dashboard/ChangePassword';
 import Gems from './dashboard/gems/Gems';
 import AboutUs from './dashboard/AboutUs';
+import Gem from './frontSite/gems/Gem';
 
 const RouterWrapper = () => {
     const isUserAuthenticated = useSelector(state => !!state.auth.user);
@@ -192,6 +193,7 @@ const RouterWrapper = () => {
         <Route path="mocks" element={<BigMock />} />
         <Route path="webinar" element={<Webinar />} />
         <Route path="contact-us" element={<Contactus />} />
+        <Route path="gem" element={<Gem/>}/>
         <Route path="reset-password" element={<ResetPassword title={"Forget Password"} />} />
         <Route path="new-password" element={<CreateNewPassword />} />
     </Route>

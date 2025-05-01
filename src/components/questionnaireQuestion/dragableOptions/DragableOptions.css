@@ -47,7 +47,8 @@
 .dragable-wrapper .item.wrong {
     border: 1px solid var(--err-border);
     background-color: var(--wrong-color);
-    color: #fff;
+    /* color: #fff; */
+    color: var(--text-dark);
 }
 
 .dragable-wrapper .item.correct {

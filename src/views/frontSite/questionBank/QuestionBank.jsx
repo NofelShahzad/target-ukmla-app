@@ -38,9 +38,9 @@ function QuestionBank() {
     </p> */}
 
     <div className="subscription-box">
-        <div className="subscription-icon">
+        {/* <div className="subscription-icon">
             <span>T</span>
-        </div>
+        </div> */}
         <div className="subscription-details">
             <h2 className="subscription-title">Target/UKMLA Question Bank</h2>
             <p className="subscription-description">

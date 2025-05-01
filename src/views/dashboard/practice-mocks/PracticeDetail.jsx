@@ -1,16 +1,27 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import '../../../components/bigmocksCard/BigmocksCard.css'
 import { useGetSingleMockQuery } from "../../../redux/features/mocks/MocksApiSlice";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Markup } from "react-render-markup";
 import PageLoader from '../../../components/pageLoader/PageLoader';
+import ReactPortal from '../../../components/portal/ReactPortal';
+import closeBtn from '../../../assets/icons/dashboard/modal-close.svg'
+
 function PracticeDetail() {
     const [isLoading,setIsLoading] = useState(true);
 
     const navigate = useNavigate();  
     const [singleMock,setSingleMock] = useState("");
     const { practice_id } = useParams();
+    const [confirmModal,setConfirmModal] = useState(false);
+
+      const handleClosePlansModal = useCallback(() => {
+        setConfirmModal(false)
+      }, []);
+      const handleOpenPlansModal = useCallback(() => {
+        setConfirmModal(true)
+      }, []);
 
     const {data, error} = useGetSingleMockQuery(practice_id);
 
@@ -61,7 +72,7 @@ function PracticeDetail() {
                                 <div className="bigmocks-card-footer gap-2">
                                   <button type='button' className='btn btn-primary' onClick={()=>handleNavigate()} disabled={singleMock?.paused?false:true}>Continue Mock</button>
                                   
-                                    <button type='button' className='btn btn-primary' onClick={()=>handleNavigate()} disabled={!singleMock?.paused?false:true} >Create New Mock</button>
+                                    <button type='button' className='btn btn-primary' onClick={()=>handleOpenPlansModal()} disabled={!singleMock?.paused?false:true} >Create New Mock</button>
                                   
                                   {/* <button type='button' className='btn btn-primary' onClickCapture={()=>handleNavigate()}>Pruchase</button> */}
                               </div>
@@ -84,6 +95,27 @@ function PracticeDetail() {
                     </div>
                 </div>
             </div>
+            { confirmModal &&
+                <ReactPortal wrapperId="external_modal_container">
+                        <section className="backdrop-container">
+                                    <section className="detail-modal">
+                                      <div className="close-btn-container">
+                                        <img src={closeBtn} alt="close" onClick={handleClosePlansModal}/>
+                                      </div>
+                                      <div className="title-wrapper">
+                                        <h2 className="title">{}</h2>
+                                      </div>
+                                      <div className="description">
+                                        <p className="text-balance mb-2">Your practice mock <strong>no.{singleMock?.logs.length+1}</strong> is created. <br/> Click to start.</p>
+                                      </div>
+                                      <div className="modal-footer-custom">
+                                        <button className="btn btn-primary mb-2" onClick={handleNavigate}>Continue</button>
+                                        {/* <button className="btn btn-secondary" onClick={handleClosePlansModal}>No</button> */}
+                                      </div>
+                                    </section>
+                                  </section>
+              </ReactPortal>
+            }
     </>
   )
 } 

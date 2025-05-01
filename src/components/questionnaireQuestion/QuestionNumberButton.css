@@ -42,7 +42,8 @@
 .question-index-btn-wrapper button.active-index-btn{
     background-color: var(--active-color)!important;
     border-color: var(--active-color)!important;
-    color: var(--text-light)!important;
+    /* color: var(--text-light)!important; */
+    color: var(--text-dark)!important;
 }
 .question-index-btn-wrapper button.attempted-index-btn{
     background-color: #DEDEDE;
