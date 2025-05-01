@@ -6,11 +6,12 @@ import './Navbar.css'
 // import { NavLink } from "react-router-dom";
 import hamburger from '../../../assets/icons/hamburger-icon.svg'
 import close from '../../../assets/icons/hamburger-close.svg'
-import logo from '../../../assets/logo/TARGET-UKMLA.png'
+// import logo from '../../../assets/logo/TARGET-UKMLA.png'
+import logo from '../../../assets/logo/logo-svg-svg.png'
 import { useState } from "react"
 
 function Navbar() {
-  const [toogleHamburger, setToogleHamburger] = useState(false);
+  const [toogleHamburger, setToogleHamburger] = useState(false); 
   return (
     <>
       <div className="header">
@@ -20,6 +21,8 @@ function Navbar() {
               <h1>
                 <img src={logo} alt="logo" />
                 {/* <span>TARGET</span> UKMLA */}
+                <span className="text-danger px-1">Target</span>
+                <span className="text-primary"> MSRA</span>
               </h1>
             </Link>
             <li className="toggle-btn">

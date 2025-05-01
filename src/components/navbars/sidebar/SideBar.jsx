@@ -19,7 +19,7 @@ function SideBar({toogleSideBar, sidebar}) {
                 <div className='logo-container'>
                     <img src={logo} width={'100%'} />
                 </div>
-                    <span className='text-danger px-1'>Target</span> <span className='text-primary'> Ukmla</span>
+                    <span className='text-danger px-1'>Target</span> <span className='text-primary'> MSRA</span>
                 {/* </NavLink> */}
             </div>
             <div className='sidebar-body'>
