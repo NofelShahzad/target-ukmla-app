@@ -131,15 +131,18 @@ function BigMocks() {
                       />
                   )
               }
-              {
+              
+
+          </div>
+              {!isLoading && allMocks.length === 0 &&
+                        <div className="emtpy-mg-container"><p>No big mocks found.</p></div>
+                    }
+              {/* {
                 !allMocks.length >0 && !isLoading &&
                 <div className="emtpy-mg-container">
                     <p>No big mocks found.</p>
                 </div>
-              }
-              
-
-          </div>
+              } */}
         </section>
       </div>
       {detailModal &&

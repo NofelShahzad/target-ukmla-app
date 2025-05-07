@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useGetAllGemsQuery, useLazyGetSingleGemQuery } from '../../../redux/features/gemsApi/gemsApiSlice'
 import PageLoader from '../../../components/pageLoader/PageLoader';
-import { VITE_REACT_APP_BASE_URL } from '../../../config';
-import babiesImg from '../../../assets/images/dashboard/webinars/babies.webp'
+// import { VITE_REACT_APP_BASE_URL } from '../../../config';
+// import babiesImg from '../../../assets/images/dashboard/webinars/babies.webp'
 import { Markup } from 'react-render-markup';
 import closeBtn from '../../../assets/icons/dashboard/modal-close.svg'
 import ReactPortal from '../../../components/portal/ReactPortal'
