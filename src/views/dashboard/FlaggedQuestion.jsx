@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import FlaggedQuestionCard from "../../components/flaggedQuestionCard/FlaggedQuestionCard";
-import withAuth from "../../components/withAuth/withAuth";
-import withLayout from "../../components/withAuth/withLayout";
+// import withAuth from "../../components/withAuth/withAuth";
+// import withLayout from "../../components/withAuth/withLayout";
 import ReactPortal from "../../components/portal/ReactPortal";
 import UnflagQuestion from "../../components/modals/UnflagQuestion";
 import { useGetAlMarkedQuestionsQuery, useMarkFlagMutation } from "../../redux/features/questionnaire/questionnaireApiSlice";
@@ -82,9 +82,9 @@ function FlaggedQuestion() {
                         {tab === 'question' &&
                             <>
                                 {
-                                    allFlaggedQuestions.map(item => {
+                                    allFlaggedQuestions.map((item,index) => {
                                         return (
-                                            <FlaggedQuestionCard key={item?.id} flaggedQuestion={item} handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
+                                            <FlaggedQuestionCard key={item?.id} index={index} flaggedQuestion={item} handleFlagModal={handleFlagModal} type={tab} content={mockContent}/>
                                         )
                                     })
                                 }

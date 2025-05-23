@@ -29,6 +29,9 @@
     text-wrap: balance;
     width: 73%;
 }
+.flagged-question-card-wrapper .flagged-question-card-inner-wrapper .question-body p {
+    margin-bottom: 5px;
+}
 .flagged-question-card-wrapper .flagged-question-card-inner-wrapper .flag-action {
     display: flex;
     align-items: center;

@@ -227,7 +227,7 @@ function QuestionsBank() {
                                     </div>
                                 </div>
                             </div>
-                            <div className='webinars-wrapper'>
+                            {/* <div className='webinars-wrapper'>
                                 <div className='my-stuff-inner-wrapper question-bank-bg'>
                                     <h2 className='title'>Webinars</h2>
                                     <div className='description'>
@@ -243,7 +243,7 @@ function QuestionsBank() {
 
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className='col-lg-6 col-12'>
                             <div className='plans-wrapper'>

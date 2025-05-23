@@ -174,20 +174,20 @@ function Home() {
                             </div>
                         </div>
                     </div>
-                    <div className='col-sm-12 col-md-6 col-lg-4'>
+                    {/* <div className='col-sm-12 col-md-6 col-lg-4'>
                         <div className="services-card">
                             <div className="card-content">
                                 <div className="card-image">
                                 <img src={webinars} alt=""/>
                                     <div className="glow"></div>
-                                    {/* <i className="fas fa-shield-alt fa-2x"></i> */}
+                                    <i className="fas fa-shield-alt fa-2x"></i>
                                 </div>
                                 <h2><i className="fas fa-check-circle"></i> Webinars</h2>
                                 <p>We’re currently preparing more high-yield sessions to support your UKMLA and PLAB 1 prep.</p>
                                 <Link to={'/webinar'}><i className="fas fa-arrow-right"></i> View More</Link>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className='col-sm-12 col-md-6 col-lg-4'>
                         <div className="services-card">
                             <div className="card-content">

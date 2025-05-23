@@ -1,14 +1,14 @@
 // import React from 'react'
 
 import BigmocksCard from "../../components/bigmocksCard/BigmocksCard";
-import withAuth from "../../components/withAuth/withAuth";
-import withLayout from "../../components/withAuth/withLayout";
-import april from '../../assets/images/dashboard/bigmocks/april.webp'
+// import withAuth from "../../components/withAuth/withAuth";
+// import withLayout from "../../components/withAuth/withLayout";
+// import april from '../../assets/images/dashboard/bigmocks/april.webp'
 // import october from '../../assets/images/dashboard/bigmocks/october.webp'
 // import january from '../../assets/images/dashboard/bigmocks/january.webp'
 // import july from '../../assets/images/dashboard/bigmocks/july.webp'
 // import may from '../../assets/images/dashboard/bigmocks/may.webp'
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ReactPortal from "../../components/portal/ReactPortal";
 
 import closeBtn from '../../assets/icons/dashboard/modal-close.svg';
@@ -16,6 +16,9 @@ import BigmockInfo from "../../components/modals/BigmockInfo";
 import { useBuyMockPlanMutation, useGetAllMocksQuery } from "../../redux/features/mocks/MocksApiSlice";
 import { errorMessage, successMessage } from "../../components/toastMessages/ToastifyMsg";
 import PageLoader from "../../components/pageLoader/PageLoader";
+import { useSelector } from "react-redux";
+import { useBuyStandardPlanMutation, useGetStandardPlansQuery } from "../../redux/features/plansApi/plansApiSlice";
+import ExtendPlans from "../../components/modals/ExtendPlans";
 
 
 
@@ -31,10 +34,43 @@ function BigMocks() {
       loading: false,
     });
 
+    const [allStandardPlans, setAllStandardPlans] = useState([]);
+    const auth = useSelector(state => state.auth);
+
+      const [plansModal, setPlansModal] = useState(false);
+    
+      const handleClosePlansModal = useCallback(() => {
+        setPlansModal(false)
+      }, []);
+      const handleOpenPlansModal = useCallback(() => {
+        setPlansModal(true)
+      }, []);
+
+      const { data: plansData, error: plansError } = useGetStandardPlansQuery(undefined, {
+        skip: auth?.plan_info !== null
+      });
+
+        useEffect(() => {
+          if (plansData) {
+            if (plansData?.status) {
+              // console.log("plansData::",plansData)
+              setAllStandardPlans(plansData.plans)
+            }
+            if (!plansData.status) {
+              setAllStandardPlans([]);
+            }
+          }
+          if (plansError) {
+            errorMessage(plansError?.data?.message);
+            setAllStandardPlans([])
+          }
+      
+        }, [plansData, plansError])
+
     const [confirmPurchaseModal,setConfirmPurchaseModal] = useState(false);
     const [purchaseId,setPurchaseId] = useState(null);
 
-    const [buyMockPlan] = useBuyMockPlanMutation();
+    // const [buyMockPlan] = useBuyMockPlanMutation();
 
     useEffect(() => {
       if (data) {
@@ -108,6 +144,35 @@ function BigMocks() {
       setConfirmPurchaseModal(true);
       setPurchaseId(purchaseMock);
     }
+
+      const [buyStandardPlan] = useBuyStandardPlanMutation();
+    
+        const handlePurchansePlan = async(plan)=>{
+          // console.log("handlePurchansePlan::",plan);
+          if (plan?.link.trim()) {
+            window.location = plan?.link;
+          }else{
+            try {
+              const body = {
+                plan_id: plan?.id,
+                days: plan?.days
+              }
+              const { data, error} = await buyStandardPlan(body);
+              if (data) {
+                // console.log(data)
+                if (data?.status) {
+                  successMessage(data?.message);
+                }
+              }
+              if (error) {
+                errorMessage(error?.data?.message);
+              }
+            } catch (err) {
+              console.log("err::",err)
+            }
+            
+          }
+        }
   return (
     <>
     {isLoading && <PageLoader/>  }
@@ -134,7 +199,7 @@ function BigMocks() {
               
 
           </div>
-              {!isLoading && allMocks.length === 0 &&
+              {!isLoading && auth.plan_info && allMocks.length === 0 &&
                         <div className="emtpy-mg-container"><p>No big mocks found.</p></div>
                     }
               {/* {
@@ -144,6 +209,14 @@ function BigMocks() {
                 </div>
               } */}
         </section>
+        {!auth.plan_info &&
+          <section className="buy-plan-container">
+            <h4>You haven&apos;t purchased any plan yet.</h4>
+            <p>Please purchase a plan to start attempting questions.</p>
+            {/* <p>You haven&apos;t purchased any plan. Please buy any plan to start attempting questions.</p> */}
+            <button type="button" className="btn btn-primary" onClick={handleOpenPlansModal}>Buy Plan</button>
+          </section>
+        }
       </div>
       {detailModal &&
         <ReactPortal wrapperId="external_modal_container">
@@ -172,6 +245,11 @@ function BigMocks() {
         </section>
         </ReactPortal>
       }
+       {plansModal &&
+              <ReactPortal wrapperId="external_modal_container">
+                <ExtendPlans allPlans={allStandardPlans} closeBtn={closeBtn} closeModal={handleClosePlansModal} handlePurchase={handlePurchansePlan} />
+              </ReactPortal>
+            }
     </>
   )
 }

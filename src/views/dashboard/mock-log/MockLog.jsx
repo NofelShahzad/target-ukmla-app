@@ -18,7 +18,7 @@ function MockLog() {
     useEffect(() => {
         if (data) {
             if (data?.status) {
-                setAllQuestion(data?.questions);
+                setAllQuestion(data);
                 // console.log("data?.questions::", data?.questions)
             }
             if (!data?.status) {
@@ -48,6 +48,21 @@ function MockLog() {
                     ${questionDetails?.answer?.correct === 'no' && opt?.correct === 'yes' ? 'actual-correct' : ''}  */}
                 </div>
                 <div className='questionnaire-wrapper'>
+                    {!isLoading && allQuestions?.mock_status &&
+                        <div className={`col-12 card mb-2`} >
+                            <div className={`card-body ${allQuestions?.mock_status?.pass?'bg-correct':'bg-wrong'}`}>
+                                <h4>{allQuestions?.mock_status?.pass?'Passed':'Failed'}</h4>
+                                <p>You have attempted {allQuestions?.mock_status?.attempted} questions out of {allQuestions?.mock_status?.total}.<br />
+                                    You answered {allQuestions?.mock_status?.correct} correctly. {allQuestions?.mock_status?.pass ? 'Congratulations, you passed!' : 'Unfortunately, you did not pass.'}
+                                </p>
+                                <p className="">
+                                Attempted: {allQuestions?.mock_status?.attempted} <br/>
+                                Correct: {allQuestions?.mock_status?.correct}<br/>
+                                <span><strong>Your Scores:</strong> {((allQuestions?.mock_status?.correct/allQuestions?.mock_status?.total)*100).toFixed(2)}%</span>
+                                </p>
+                            </div>
+                        </div>
+                    }
                     <div className='questionnaire-inner-wrapper'>
                         <div className="col-12">
                             {isLoading ?
@@ -55,7 +70,7 @@ function MockLog() {
                                 <div className='question-container'>
                                     <div className='question-container'>
                                         <div className='question-body'>
-                                            {allQuestions.map((question,index) =>{
+                                            {allQuestions?.questions.map((question,index) =>{
                                                     const optionMap = new Map(question?.options.map(option => [option?.id, option]));
 
                                                     const sortedByRank = [...question.options].sort((a, b) => a.rank - b.rank);

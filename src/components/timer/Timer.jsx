@@ -55,6 +55,7 @@ function Timer({
         }
         if (type==="practice") {
           navigate("/practice-mocks")
+          console.log("practice-mocks:::")
           // navigate(-1);
         }
         if (type==="category") {

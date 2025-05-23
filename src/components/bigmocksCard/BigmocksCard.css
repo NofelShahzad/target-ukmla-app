@@ -29,6 +29,14 @@
     width: 100%;
 }
 
+.bigmocks-card .bigmocks-inner-card .bigmocks-card-body .description.gems-description{
+    height: 67px;
+    overflow: hidden;
+}
+.bigmocks-card .bigmocks-inner-card .bigmocks-card-body .description.gems-description * {
+    margin: 0!important;
+}
+
 .bigmocks-card .bigmocks-inner-card .bigmocks-card-body .card-title-wrapper .title {
     font-size: 16px;
     color: var(--theme-heading-color);

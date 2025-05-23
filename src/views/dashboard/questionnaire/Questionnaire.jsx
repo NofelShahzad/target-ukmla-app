@@ -165,7 +165,8 @@ function Questionnaire({ isMock, type }) {
         if (getSingleQuestionData) {
             if (getSingleQuestionData.status) {
                 // console.log("getSingleQuestionData::",getSingleQuestionData);
-                setSingleQuestionDetails(getSingleQuestionData?.question);
+                const position = questionsCount.findIndex(q => q.id === getSingleQuestionData?.question.id);
+                setSingleQuestionDetails({...getSingleQuestionData?.question,question_number: position+1});
                 setSelectedValue('');
                 setSelected(false);
                 setActiveQuestionIndex(question_Id);
@@ -1036,8 +1037,8 @@ const handleFinishSave = async () => {
                 }
                 if (type === "practice") {
                     // console.log("practice")
-                    // navigate(`/practice-mocks`);
-                    navigate(-1);
+                    navigate(`/practice-mocks`);
+                    // navigate(-1);
                 }
             } else {
                 errorMessage(data?.message);
@@ -1182,7 +1183,7 @@ useEffect(() => {
                                                         </button>
                                                     </div>
                                                 )}
-                                                {console.log("singleQuestionDetails::",singleQuestionDetails?.question_type==="multiple_choice")}
+                                                {/* {console.log("singleQuestionDetails::",singleQuestionDetails?.question_type==="multiple_choice")} */}
                                                 {/* For Other Types */}
                                                 {(type !== "practice" && type !== "mock") && !singleQuestionDetails?.answer && !removedQuestion && (
                                                     <div className="col-12 py-1">
@@ -1236,7 +1237,7 @@ useEffect(() => {
                                     <div className="notes-container">
                                         <div className="notes-inner-container">
                                             <div className="notes-description">
-                                                {singleQuestionDetails?.question_type !== "ranking" && 
+                                                {/* {singleQuestionDetails?.question_type !== "ranking" &&  */}
                                                     <p className="mb-3"><b> Correct Answers:</b>&nbsp;
                                                         {singleQuestionDetails?.question_type === "single_choice" &&
                                                             <strong className='text-success'> {singleQuestionDetails?.options.map((opt, index) => {
@@ -1255,8 +1256,11 @@ useEffect(() => {
                                                                 }
                                                             </strong>
                                                         }
+                                                        {singleQuestionDetails?.question_type === "ranking" &&
+                                                            singleQuestionDetails?.options.map(option=>alphabets[option?.rank-1]).join(", ")
+                                                        }
                                                     </p>
-                                                }
+                                                {/* } */}
                                                 <strong>Explanation</strong><br/>
                                                 {/* <p>
                                                 The term here would be &quot;Saturday night palsy&quot;. It can result from resting the medial side of the arm against an edge of the operating table for a prolonged period when the patient is anaesthetised. This results in compression of the radial nerve. Ideally, the anaesthetist should realise this and move the patient&aps;s hand back.<br/><br/> Clear hints in this question are the &quot;wrist drop&quot; and sensory loss of the dorsal aspect of 1st and 2nd metacarpals.

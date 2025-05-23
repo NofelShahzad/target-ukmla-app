@@ -154,8 +154,8 @@ function Dashboard() {
       <section className="dashboard-wrapper-banner">
         <div className="dashboard-banner">
           <div className="banner-content">
-              <h3 className="banner-title">The Big Mock (April 2024)</h3>
-              <p>180 High Yield Questions (Now available for purchase!)</p>
+              <h3 className="banner-title">Question Bank</h3>
+              <p>Comprehensive, all systems covered</p>
 
           </div>
 
@@ -169,9 +169,12 @@ function Dashboard() {
           {/* <div className="single-info"><div className="type removed-by-admin"></div> <div className="info-title"><span> Removed by the admin</span></div> </div> */}
       </section>
       <section className="question-categories-wrapper">
-        <div>
-          {allQuestionsType.map(type=>(
+        {/* <div> */}
+          {allQuestionsType.map((type) =>(
             <>
+            {/* {index!==0 &&
+              <hr></hr>
+            } */}
               <h2 className="cat-title">{type?.name}</h2>
               <div className="question-categories-inner-wrapper">
                 {
@@ -185,7 +188,7 @@ function Dashboard() {
           ))
 
           }
-        </div>
+        {/* </div> */}
         <div>
           {allQuestions.length>0 && allQuestionsType.length>0 &&
             <h2 className="cat-title">All categories</h2>
@@ -229,7 +232,7 @@ function Dashboard() {
                 <h2 className="title">{singleQuestionCat?.name}</h2>
               </div>
               <div className="description">
-                <p className="text-balance mb-2">Are you sure you want to reset<br /> <strong> {singleQuestionCat?.name}</strong> questionnaire?</p>
+                <p className="text-balance mb-2">Are you sure you want to reset<br /> <strong> {singleQuestionCat?.name}</strong> category?</p>
               </div>
               <div className="modal-footer-custom">
                 <button className="btn btn-primary mb-2" onClick={handleSubmitResetQuestionnaire}>Yes</button>

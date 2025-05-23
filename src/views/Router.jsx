@@ -42,6 +42,8 @@ import ChangePassword from './dashboard/ChangePassword';
 import Gems from './dashboard/gems/Gems';
 import AboutUs from './dashboard/AboutUs';
 import Gem from './frontSite/gems/Gem';
+import TermAndCondition from './frontSite/TermAndCondition';
+import TermsAndConditions from './dashboard/TermsAndConditions';
 
 const RouterWrapper = () => {
     const isUserAuthenticated = useSelector(state => !!state.auth.user);
@@ -191,11 +193,12 @@ const RouterWrapper = () => {
         />
         <Route path="question-bank" element={<QuestionBank />} />
         <Route path="mocks" element={<BigMock />} />
-        <Route path="webinar" element={<Webinar />} />
+        {/* <Route path="webinar" element={<Webinar />} /> */}
         <Route path="contact-us" element={<Contactus />} />
         <Route path="gem" element={<Gem/>}/>
         <Route path="reset-password" element={<ResetPassword title={"Forget Password"} />} />
         <Route path="new-password" element={<CreateNewPassword />} />
+        {/* <Route path='term-and-condition' element={<TermAndCondition/>}/> */}
     </Route>
 
     {/* Payment Routes (Accessible without login) */}
@@ -232,9 +235,10 @@ const RouterWrapper = () => {
             <Route path="log/:mock_id" element={<MockLog />} />
         </Route> 
         
-        <Route path="webinars" element={<Webinars />} />
+        {/* <Route path="webinars" element={<Webinars />} /> */}
         <Route path="contactus" element={<ContactUs />} />
         <Route path="about-us" element={<AboutUs />} />
+        {/* <Route path='terms-and-conditions' element={<TermsAndConditions/>}/> */}
         <Route path=":questionnaire_Id/:question_Id" element={<Questionnaire isMock={false} type={"category"} />} />
         <Route path="/mock/:mock_id/:question_Id" element={<Questionnaire isMock={true} type={"mock"} />} />
         <Route path="/practice/:practice_id/:question_Id" element={<Questionnaire isMock={true} type={"practice"} />} />

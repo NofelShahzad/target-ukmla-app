@@ -139,6 +139,9 @@ function Webinars() {
                         <WebinarsCard imgSrc={ogEssential} handleWebinarModal={handleWebinarModal} handleConfirmPurchase={handleConfirmPurchase} />
                         <WebinarsCard imgSrc={ecg} handleWebinarModal={handleWebinarModal} handleConfirmPurchase={handleConfirmPurchase} /> */}
                     </div>
+                    {!isLoading && allWebinars.length === 0 &&
+                        <div className="emtpy-mg-container"><p>No Gems found.</p></div>
+                    }
                 </section>
             </div>
             {detailModal &&

@@ -17,9 +17,9 @@ function Gems() {
 
     useEffect(() => {
         if (data) {
-            // console.log("data::", data);
+            // console.log("data::", data?.categories);
             if (data?.status) {
-                setAllGems(data?.gems);
+                setAllGems(data?.categories);
             }
             if (!data?.status) {
                 setAllGems([]);
@@ -73,35 +73,41 @@ function Gems() {
                     {/* <p>Text explaining what these are.</p> */}
                 </div>
                 <section className="bigmocks-wrapper">
-                    <div className="bigmocks-inner-wrapper">
                         {!isLoading && allGems.length > 0 &&
-                            allGems.map(gem =>
-                                <div key={gem.id} className='col-sm-12 col-md-6 col-xl-4 col-xxl-3 col-12'>
-                                    <div className='bigmocks-card'>
-                                        <div className='bigmocks-inner-card'>
-                                            {/* <div className='bigmocks-img'>
+                            allGems.map(cat =>
+                    <div className="bigmocks-inner-wrapper mb-2" key={cat?.id}>
+                                <>
+                                    <h6 className="col-12">{cat?.name}</h6>
+                                    {cat?.gems.map(gem =>
+                                        <div key={gem.id} className='col-sm-12 col-md-6 col-xl-4 col-xxl-3 col-12'>
+                                            <div className='bigmocks-card'>
+                                                <div className='bigmocks-inner-card'>
+                                                    {/* <div className='bigmocks-img'>
                                                 <img src={gem?.icon ? `${VITE_REACT_APP_BASE_URL}/${gem?.icon ?? babiesImg} ` : babiesImg} alt="gems" />
                                             </div> */}
-                                            <div className='ps-0 bigmocks-card-body'>
-                                                <div className='card-title-wrapper'>
-                                                    {/* Babies in PLAB - 11th May 2024 */}
-                                                    <h2 className='title text-capitalize'> {gem?.title} </h2>
-                                                </div>
-                                                <div className="description">
-                                                    <Markup markup={gem?.description} />
-                                                </div>
-                                                <div className="bigmocks-card-footer">
-                                                    <div className="col-12 pe-1">
-                                                        <button onClick={() => handleOpenGemModal(gem?.id)} type="button" className="btn btn-detail">View Gem</button>
+                                                    <div className='ps-0 bigmocks-card-body'>
+                                                        <div className='card-title-wrapper'>
+                                                            {/* Babies in PLAB - 11th May 2024 */}
+                                                            <h2 className='title text-capitalize'> {gem?.title} </h2>
+                                                        </div>
+                                                        <div className="description gems-description">
+                                                            <Markup markup={gem?.description} />
+                                                        </div>
+                                                        <div className="bigmocks-card-footer">
+                                                            <div className="col-12 pe-1">
+                                                                <button onClick={() => handleOpenGemModal(gem?.id)} type="button" className="btn btn-detail">View Gem</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    )
+                                    }
+                                </>
+                    </div>
                             )
                         }
-                    </div>
                     {!isLoading && allGems.length === 0 &&
                         <div className="emtpy-mg-container"><p>No Gems found.</p></div>
                     }
@@ -110,17 +116,22 @@ function Gems() {
             {detailModal &&
                 <ReactPortal wrapperId="external_modal_container">
                     <>
-                        <div className="detail-modal detail-modal-lg">
-                            <div className='close-btn-container'>
-                                <img src={closeBtn} alt='close' onClick={handleCloseGemModal} />
+                    {/* detail-modal detail-modal-lg */}
+                        <div className="modal fade d-block show ">
+                            <div className="modal-dialog modal-dialog-centered modal-lg">
+                                <div className="modal-content detail-modal">
+                                    <div className='close-btn-container'>
+                                        <img src={closeBtn} alt='close' onClick={handleCloseGemModal} />
+                                    </div>
+                                    <div className='title-wrapper'>
+                                        <h2 className='title mb-2'>{gemDetail?.title}</h2>
+                                        <div className='description gems-description-modal'>
+                                            <Markup markup={gemDetail?.description} />
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            <div className='title-wrapper'>
-                            <h2 className='title mb-2'>{gemDetail?.title}</h2>
-                            {/* <div className='date-time-wrapper'><span>18th May 2024 (9:00 AM to 11:00 AM UK time)</span></div> */}
-                            <div className='description'>
-                                <Markup markup={gemDetail?.description} />
-                            </div>
-                        </div>
                         </div>
                     </>
 

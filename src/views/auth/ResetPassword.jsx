@@ -146,7 +146,7 @@ function ResetPassword({title}) {
                         {verifyOtp &&
                             <div className="col-12">
                                 <div className="field-wrapper pb-3">
-                                    <label className="form-label" htmlFor="otp">Otp</label>
+                                    <label className="form-label" htmlFor="otp">OTP</label>
                                     <input type="text" ref={otpRef} required className={`form-control ${otp.trim() ? 'not-empty' : ''} ${otpErr?' input-error':''}`} defaultValue={otp} onChange={(e) => setOtp(e.target.value)} name='otp' id='otp' placeholder="Enter OTP" />
                                     <div className="err-msg">
                                         <p className={`m-0 text-danger`} ref={otpMsgRef}>{otpErrMsg} </p>

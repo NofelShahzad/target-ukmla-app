@@ -22,7 +22,9 @@ function Navbar() {
                 <img src={logo} alt="logo" />
                 {/* <span>TARGET</span> UKMLA */}
                 <span className="text-danger px-1">Target</span>
-                <span className="text-primary"> Ukmla</span>
+                <span className="text-primary"> UKMLA</span>
+                {/* <span className="text-primary"> MSRA</span> */}
+                {/* <span className="text-primary"> MRCGP</span> */}
               </h1>
             </Link>
             <li className="toggle-btn">
@@ -45,10 +47,10 @@ function Navbar() {
                 <NavLink to="/big-mock">
                   Big Mock</NavLink>
               </li> */}
-              <li>
+              {/* <li>
                 <NavLink to="/webinar" >
                   Webinars</NavLink>
-              </li>
+              </li> */}
               <li>
                 <NavLink to="/mocks">
                   Big Mocks</NavLink>

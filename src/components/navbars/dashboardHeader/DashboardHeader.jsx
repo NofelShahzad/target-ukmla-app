@@ -81,11 +81,11 @@ function DashboardHeader() {
                       <div className='dropmenu-item'><span>Big Mock </span> </div>
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link className="nav-link" to="/webinars">
                       <span>Webinars</span>
                     </Link>
-                  </li>
+                  </li> */}
 
                 </ul>
 
@@ -230,6 +230,11 @@ function DashboardHeader() {
                       <span>Contact Us</span>
                     </Link>
                   </li>
+                  {/* <li>
+                    <Link className="nav-link" to={`/terms-and-conditions`}>
+                      <span>Terms & conditions</span>
+                    </Link>
+                  </li> */}
                 </ul>
               </div>
 

@@ -3,7 +3,7 @@ import './contactus.css'
 import { useContactusMutation } from '../../../redux/features/auth/authApi';
 import { errorMessage, successMessage } from '../../../components/toastMessages/ToastifyMsg';
 import { useGetContactInfoQuery } from '../../../redux/features/commonApi/commonApiSlice';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 function Contactus() {
     const [contactData,setContactData]  = useState({
@@ -23,6 +23,13 @@ const handleSubmitContact = async(e)=>{
         if (data) {
             if (data?.status) {
                 successMessage(data?.message);
+                setContactData({
+                    first_name: "",
+                    last_name: "",
+                    email: "",
+                    phone: "",
+                    message: ""
+                })
             }
             if (!data?.status) {
                 errorMessage(data?.message);
@@ -130,20 +137,20 @@ useEffect(() => {
                     <form onSubmit={handleSubmitContact}>
                         <div className="row">
                             <div className="col-sm-6">
-                                <input type="text" required className="form-control" placeholder="First Name" name='first_name' onChange={(e)=>handleChange(e)} />
+                                <input type="text" required className="form-control" placeholder="First Name" name='first_name' value={contactData?.first_name} onChange={(e)=>handleChange(e)} />
                             </div>
                             <div className="col-sm-6">
-                                <input type="text" required className="form-control" placeholder="Last Name" name='last_name' onChange={(e)=>handleChange(e)} />
+                                <input type="text" required className="form-control" placeholder="Last Name" name='last_name' value={contactData?.last_name} onChange={(e)=>handleChange(e)} />
                             </div>
                             <div className="col-sm-12">
-                                <input type="email" required className="form-control" placeholder="Email" name='email' onChange={(e)=>handleChange(e)} />
+                                <input type="email" required className="form-control" placeholder="Email" name='email' value={contactData?.email} onChange={(e)=>handleChange(e)} />
                             </div>
                             <div className="col-sm-12">
-                                <input type="text" className="form-control" placeholder="Phone number" name="phone" onChange={(e)=>handleChange(e)} />
+                                <input type="text" className="form-control" placeholder="Phone number" name="phone" value={contactData?.phone} onChange={(e)=>handleChange(e)} />
                             </div>
                         </div>
                         <div className="form-group">
-                            <textarea className="form-control" required rows="5" id="comment" placeholder="Message" name='message' onChange={(e)=>handleChange(e)}></textarea>
+                            <textarea className="form-control" required rows="5" id="comment" placeholder="Message" name='message' value={contactData?.message} onChange={(e)=>handleChange(e)}></textarea>
                         </div>
                         <button className="btn btn-block" type="submit">Send Now!</button>
                     </form>
