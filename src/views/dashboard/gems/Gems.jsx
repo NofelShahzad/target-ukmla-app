@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useGetAllGemsQuery, useLazyGetSingleGemQuery } from '../../../redux/features/gemsApi/gemsApiSlice'
 import PageLoader from '../../../components/pageLoader/PageLoader';
 // import { VITE_REACT_APP_BASE_URL } from '../../../config';
@@ -6,9 +6,45 @@ import PageLoader from '../../../components/pageLoader/PageLoader';
 import { Markup } from 'react-render-markup';
 import closeBtn from '../../../assets/icons/dashboard/modal-close.svg'
 import ReactPortal from '../../../components/portal/ReactPortal'
+import { useSelector } from 'react-redux';
+import { errorMessage, successMessage } from '../../../components/toastMessages/ToastifyMsg';
+import { useBuyStandardPlanMutation, useGetStandardPlansQuery } from '../../../redux/features/plansApi/plansApiSlice';
+import ExtendPlans from '../../../components/modals/ExtendPlans';
 
 
 function Gems() {
+    const auth = useSelector(state => state.auth);
+    const [plansModal, setPlansModal] = useState(false);
+    const [allStandardPlans, setAllStandardPlans] = useState([]);
+    
+      const handleClosePlansModal = useCallback(() => {
+        setPlansModal(false)
+      }, []);
+      const handleOpenPlansModal = useCallback(() => {
+        setPlansModal(true)
+      }, []);
+
+        const { data: plansData, error: plansError } = useGetStandardPlansQuery(undefined, {
+          skip: auth?.plan_info !== null
+        });
+      
+        useEffect(() => {
+          if (plansData) {
+            if (plansData?.status) {
+              // console.log("plansData::",plansData)
+              setAllStandardPlans(plansData.plans)
+            }
+            if (!plansData.status) {
+              setAllStandardPlans([]);
+            }
+          }
+          if (plansError) {
+            errorMessage(plansError?.data?.message);
+            setAllStandardPlans([])
+          }
+      
+        }, [plansData, plansError])
+
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadingGem, setIsLoadingGem] = useState(false);
     const [isLoadingMsg, setIsLoadingMsg] = useState("Loading")
@@ -64,6 +100,36 @@ function Gems() {
     const handleCloseGemModal = () => {
         setDetailModal(false);
     }
+ const [buyStandardPlan] = useBuyStandardPlanMutation();
+
+    const handlePurchansePlan = async(plan)=>{
+      // console.log("handlePurchansePlan::",plan);
+      if (plan?.link.trim()) {
+        window.location = plan?.link;
+      }else{
+        try {
+          const body = {
+            plan_id: plan?.id,
+            days: plan?.days
+          }
+          const { data, error} = await buyStandardPlan(body);
+          if (data) {
+            // console.log(data)
+            if (data?.status) {
+              successMessage(data?.message);
+            }
+          }
+          if (error) {
+            errorMessage(error?.data?.message);
+          }
+        } catch (err) {
+          console.log("err::",err)
+        }
+        
+      }
+    }
+
+
     return (
         <>
             {(isLoading ||isLoadingGem ) && <PageLoader msg={isLoadingMsg} />}
@@ -108,10 +174,18 @@ function Gems() {
                     </div>
                             )
                         }
-                    {!isLoading && allGems.length === 0 &&
+                    {!isLoading && auth.plan_info && allGems.length === 0 &&
                         <div className="emtpy-mg-container"><p>No Gems found.</p></div>
                     }
                 </section>
+                {!auth.plan_info &&
+                    <section className="buy-plan-container">
+                        <h4>You haven&apos;t purchased any plan yet.</h4>
+                        <p>Please purchase a plan to start attempting questions.</p>
+                        {/* <p>You haven&apos;t purchased any plan. Please buy any plan to start attempting questions.</p> */}
+                        <button type="button" className="btn btn-primary" onClick={handleOpenPlansModal}>Buy Plan</button>
+                    </section>
+                }
             </div>
             {detailModal &&
                 <ReactPortal wrapperId="external_modal_container">
@@ -137,6 +211,11 @@ function Gems() {
 
                 </ReactPortal>
             }
+            {plansModal &&
+                    <ReactPortal wrapperId="external_modal_container">
+                      <ExtendPlans allPlans={allStandardPlans} closeBtn={closeBtn} closeModal={handleClosePlansModal} handlePurchase={handlePurchansePlan} />
+                    </ReactPortal>
+                  }
         </>
     )
 }
