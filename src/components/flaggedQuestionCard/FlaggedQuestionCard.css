@@ -12,6 +12,10 @@
     padding: 15px;
 }
 
+.flagged-question-card-wrapper .flagged-question-card-inner-wrapper a{
+    text-decoration: none;
+}
+
 .flagged-question-card-wrapper .flagged-question-card-inner-wrapper h2 {
     text-align: left;
     font: normal normal 500 16px/25px Poppins;
@@ -28,6 +32,10 @@
 .flagged-question-card-wrapper .flagged-question-card-inner-wrapper .question-body{
     text-wrap: balance;
     width: 73%;
+}
+.flagged-question-card-wrapper .flagged-question-card-inner-wrapper .question-body a{
+    color: #000;
+    text-decoration: none;
 }
 .flagged-question-card-wrapper .flagged-question-card-inner-wrapper .question-body p {
     margin-bottom: 5px;

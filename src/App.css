@@ -491,7 +491,8 @@ input.input-error{
   font-size: 20px;
   margin-left: 5px;
   display: inline-flex;
-  color: var(--text-primary);
+  /* color: var(--text-primary); */
+  color: #065fb4;
   /* background-color: #000; */
   padding: 5px;
 }
@@ -542,6 +543,8 @@ input.input-error{
   margin: 10px 0;
   text-transform: capitalize;
   color: var(--text-primary);
+  white-space: break-spaces;
+  overflow-wrap: break-word;
 }
 .single-question-card .single-question-footer{
   text-align: center;
@@ -761,6 +764,19 @@ input.input-error{
   flex-wrap: wrap;
 }
 
+.bigmocks-wrapper .bigmocks-inner-wrapper.gems-wrapper:not(:first-child){
+  margin-top: 30px;
+}
+
+.bigmocks-wrapper .bigmocks-inner-wrapper.gems-wrapper .title{
+    font-size: 20px;
+    margin-left: 5px;
+    display: inline-flex;
+    /* color: var(--text-primary); */
+    color: #065fb4;
+    /* background-color: #000; */
+    padding: 5px;
+}
 /* .bigmock-detail-modal{
 
 } */

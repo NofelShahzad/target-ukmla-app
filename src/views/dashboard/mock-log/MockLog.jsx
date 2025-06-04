@@ -70,14 +70,10 @@ function MockLog() {
                                 <div className='question-container'>
                                     <div className='question-container'>
                                         <div className='question-body'>
-                                            {allQuestions?.questions.map((question,index) =>{
-                                                    const optionMap = new Map(question?.options.map(option => [option?.id, option]));
+                                           {allQuestions?.questions.map((question,index) =>{
+                                                const optionMap = new Map(question?.options.map(option => [option?.id, option]));
+                                                const sortedOptions = question.attempted_options.map(id => optionMap.get(id));
 
-                                                    const sortedByRank = [...question.options].sort((a, b) => a.rank - b.rank);
-                                                    // console.log("sortedByRank:::",sortedByRank)
-                                                    // console.log("optionMap:::",optionMap)
-                                                    // Sort options according to answer.options order
-                                                    const sortedOptions = question.attempted_options.map(id => optionMap.get(id));
                                                return( <>
                                                     <div className="questionnaire-question-container" style={{borderBottom: '2px solid #fff'}}>
                                                         <span className='fw-bold'>Q{index+1}. &nbsp;&nbsp;</span><Markup markup={question?.question} />
@@ -138,12 +134,12 @@ function MockLog() {
                                                                     <>
                                                                     <div className="w-50">
                                                                         <p className="mb-1">
-                                                                            <strong>Correct Ranking</strong>
+                                                                            <strong>Question Options</strong>
                                                                         </p>
                                                                     <div className="ranking-options-container ">
                                                                         {
-                                                                            sortedByRank.map((item,index)=>
-                                                                                <div key={item.id} className='item correct'>
+                                                                            question?.options.map((item,index)=>
+                                                                                <div key={item.id} className='item user-submitted'>
                                                                                     <span className="">{alphabets[index]}.</span><Markup markup={item?.text}/>
                                                                                 </div>
                                                                             )
@@ -173,14 +169,50 @@ function MockLog() {
                                                             </div>
                                                         </div>
                                                         <div className='mt-2'>
-                                                            {question?.question_type!=="ranking" &&
-                                                                <p className="m-0"><b> Correct Answers:</b>&nbsp;
-                                                                    <strong className='text-success'> {question?.options.map((opt, index)=>{
-                                                                        return opt?.is_correct===true?`${alphabets[index]}`:''
-                                                                    })
-                                                                    }</strong>
-                                                                </p>
-                                                            }
+                                                           <p className="m-0"><b> Correct Answers:</b>&nbsp;
+                                                               {/* {question?.question_type !== "ranking" &&
+                                                                   <strong className='text-success'> {question?.options.map((opt, index) => {
+                                                                       return opt?.is_correct === true ? `${alphabets[index]}` : ''
+                                                                   })
+                                                                   }</strong>
+                                                               } */}
+                                                               {question?.question_type !== "ranking" &&
+                                                                   <strong className='text-success'>
+                                                                       {
+                                                                           question?.options
+                                                                               .map((opt, index) => opt?.is_correct ? alphabets[index] : null)
+                                                                               .filter(Boolean) // remove nulls
+                                                                               .join(', ')
+                                                                       }
+                                                                   </strong>
+                                                               }
+
+                                                               {question?.question_type === "ranking" &&
+                                                                   <>
+                                                                       {/* <strong className='text-success'>
+                                                                    {options.map(option=>alphabets[option?.rank-1]).join(", ")}
+                                                                </strong> */}
+                                                                       <strong className='text-success'>
+                                                                           {/* {[1, 2, 3, 4, 5]
+                                                                               .map(rank => {
+                                                                                   const index = question?.options.findIndex(opt => opt.rank === rank);
+                                                                                   return alphabets[index];
+                                                                               })
+                                                                               .join(", ")
+                                                                           } */}
+                                                                       {
+                                                                           Array.from({ length: question?.options.length }, (_, i) => i + 1) // [1, 2, 3, ..., N]
+                                                                               .map(rank => {
+                                                                                   const index = question?.options.findIndex(opt => opt.rank === rank);
+                                                                                   return alphabets[index];
+                                                                               })
+                                                                               .join(', ')
+                                                                       }
+                                                                       </strong>
+                                                                   </>
+                                                               }
+                                                           </p>
+                                                            
                                                             <span className='fw-bold'>Explanation</span>
                                                             <p className="mb-0">
                                                                 <Markup markup={question?.explanation}/>

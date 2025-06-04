@@ -166,13 +166,13 @@ function Questionnaire({ isMock, type }) {
             if (getSingleQuestionData.status) {
                 // console.log("getSingleQuestionData::",getSingleQuestionData);
                 const position = questionsCount.findIndex(q => q.id === getSingleQuestionData?.question.id);
-                setSingleQuestionDetails({...getSingleQuestionData?.question,question_number: position+1});
+                setSingleQuestionDetails({ ...getSingleQuestionData?.question, question_number: position + 1 });
                 setSelectedValue('');
                 setSelected(false);
                 setActiveQuestionIndex(question_Id);
                 setFlagMarked(getSingleQuestionData?.question?.is_flagged_count === 1 ? true : false);
                 // console.log("getSingleQuestion?.question:::",getSingleQuestionData?.question?.options)
-                if (getSingleQuestionData?.question?.answer===null) {
+                if (getSingleQuestionData?.question?.answer === null) {
                     setSourceOptions(structuredClone(getSingleQuestionData?.question?.options))
                     setTargetDroppedOptions([])
                 }
@@ -184,7 +184,7 @@ function Questionnaire({ isMock, type }) {
                     } else if (question?.question_type === "multiple_choice") {
                         setSelectedValue(question?.answer?.options || []);
                     }
-                    if (question?.question_type === "ranking"){
+                    if (question?.question_type === "ranking") {
                         // console.log("question:::",question)
                         // Create a map of options by ID for quick lookup
                         const optionMap = new Map(question?.options.map(option => [option?.id, option]));
@@ -196,19 +196,19 @@ function Questionnaire({ isMock, type }) {
                         const sortedOptions = question.answer.options.map(id => optionMap.get(id));
 
                         // console.log("sortedOptions::",sortedOptions);
-                        if (type==="mock") {
-                            
+                        if (type === "mock" || type === "practice") {
+
                             setIsRankingSubmitted(true);
                             setIsRankingAnswerShow(false);
                             setSourceOptions([]);
-                        }else{
+                        } else {
                             setIsRankingSubmitted(true);
                             setIsRankingAnswerShow(true);
                             setSourceOptions(structuredClone(sortedByRank));
                         }
-                        setTargetDroppedOptions(structuredClone(sortedOptions.length>0?sortedOptions:question.options));
+                        setTargetDroppedOptions(structuredClone(sortedOptions.length > 0 ? sortedOptions : question.options));
                     }
-                    
+
                 } else {
                     setSelectedValue([]);
                     setIsRankingAnswerShow(false);
@@ -264,18 +264,36 @@ function Questionnaire({ isMock, type }) {
     }, [])
     
 
-    const handleChange = (event) => {
+ const handleChange = (event) => {
         // console.log("event.target.value:::",event.target.value)
+        const value = JSON.parse(event.target.value);
         // console.log("singleQuestionDetails?.question_type::",singleQuestionDetails?.question_type)
         // setSelectedValue(JSON.parse(event.target.value));
         if (singleQuestionDetails?.question_type === "single_choice") {
             setSelectedValue([JSON.parse(event.target.value)]);
         } else if (singleQuestionDetails?.question_type === "multiple_choice") {
-            setSelectedValue((prev) =>
-                prev.includes(JSON.parse(event.target.value))
-                    ? prev.filter((item) => item !== JSON.parse(event.target.value))
-                    : [...prev, JSON.parse(event.target.value)]
-            );
+            // setSelectedValue((prev) =>
+            //     prev.includes(JSON.parse(event.target.value))
+            //         ? prev.filter((item) => item !== JSON.parse(event.target.value))
+            //         : [...prev, JSON.parse(event.target.value)]
+            // );
+            setSelectedValue((prev) => {
+                const isSelected = prev.includes(value);
+
+                // If trying to add a new item
+                if (!isSelected) {
+                    if (prev.length >= 3) {
+                        // Show a warning and do not add
+                        errorMessage("You can only select up to 3 options.")
+                        // alert("You can only select up to 3 options.");
+                        return prev;
+                    }
+                    return [...prev, value];
+                } else {
+                    // If item is already selected, remove it
+                    return prev.filter((item) => item !== value);
+                }
+            });
         }
         // setSelected(true);
         // console.log("handleChange::",event.target.value)
@@ -283,16 +301,17 @@ function Questionnaire({ isMock, type }) {
 
     const handleAddDropOption = (evt) => {
         const droppedId = parseFloat(evt.item.dataset.id);
-        const itemToMove = sourceOptions.find((item) => item.id === parseFloat(droppedId));
-        // console.log("droppedId:::",droppedId)
-        // console.log("itemToMove::::",itemToMove)
-        if (!itemToMove) return;
+        const itemToMove = sourceOptions.find((item) => item.id === droppedId);
 
-        // console.log("droppedId::",droppedId)
-    
+        if (!itemToMove) {
+            // In case something went wrong, re-render source list to bring item back
+            setSourceOptions((prev) => [...prev]);
+            return;
+        }
+
         setTargetDroppedOptions((prev) => [...prev, itemToMove]);
         setSourceOptions((prev) => prev.filter((item) => item.id !== droppedId));
-      };
+    };
     
       const isSourceOptionsDivEmpty = sourceOptions?.length === 0;
 
@@ -325,7 +344,7 @@ function Questionnaire({ isMock, type }) {
                 if (data?.status) {
                     setFlagMarked(!flagMarked);
                     // console.log(data?.status)
-                    successMessage(data?.message);
+                    // successMessage(data?.message);
                 }
                 if (!data?.status) {
                     console.log(data?.status)
@@ -351,7 +370,7 @@ function Questionnaire({ isMock, type }) {
         if (type === "practice") return `/practice/${practice_id}/${questionNumber}`;
     };
 // console.log("targetDroppedOptions::",targetDroppedOptions)
-    const handleSubmitAnswer = async (e) => {
+  const handleSubmitAnswer = async (e) => {
         try {
             e.preventDefault();
             setApiCall(true);
@@ -383,10 +402,10 @@ function Questionnaire({ isMock, type }) {
             if (data) {
                 // console.log("data::",data)
                 if (data?.status) {
-                    if (type==="mock") {
+                    if (type==="mock" || type==="practice") {
                         setSingleQuestionDetails({...data?.question, answer: true});
                         setSelected(true);
-                        successMessage("Answer submitted successfully.")
+                        // successMessage("Answer submitted successfully.")
                     }
                     else{
                         setSingleQuestionDetails(data?.question);
@@ -397,7 +416,7 @@ function Questionnaire({ isMock, type }) {
                     // if (data?.question?.answer) {
                     //     setSelectedValue(data?.question?.answer?.option_id)
                     // }
-                    if (data?.question?.answer && type!=="mock") {
+                    if (data?.question?.answer && type!=="mock" ) {
                         if (data?.question?.question_type === "single_choice") {
                             setSelectedValue([Number(data?.question?.answer.option_id)]);
                         }
@@ -424,7 +443,8 @@ function Questionnaire({ isMock, type }) {
                           
                               const sortedByRank = [...options].sort((a, b) => a.rank - b.rank);
                             // setSourceOptions([]); // Source is empty initially
-                            if (type==="mock") {
+                            if (type==="mock" || type==="practice") {
+                                // console.log("type===",type)
                                 setIsRankingSubmitted(true);
                                 setIsRankingAnswerShow(false);
                                 setSourceOptions([]);
@@ -432,8 +452,8 @@ function Questionnaire({ isMock, type }) {
                                 setIsRankingSubmitted(true);
                                 setIsRankingAnswerShow(true);
                                 setSourceOptions(structuredClone(sortedByRank));
+                                setTargetDroppedOptions(structuredClone(sortedOptions));
                             }
-                            setTargetDroppedOptions(structuredClone(sortedOptions));
                           }
                           
                     } else {
@@ -1257,7 +1277,9 @@ useEffect(() => {
                                                             </strong>
                                                         }
                                                         {singleQuestionDetails?.question_type === "ranking" &&
-                                                            singleQuestionDetails?.options.map(option=>alphabets[option?.rank-1]).join(", ")
+                                                            <strong className="text-success">
+                                                                {singleQuestionDetails?.options.map(option=>alphabets[option?.rank-1]).join(", ")}
+                                                            </strong>
                                                         }
                                                     </p>
                                                 {/* } */}

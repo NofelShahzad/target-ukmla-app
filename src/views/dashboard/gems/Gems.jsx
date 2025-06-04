@@ -141,9 +141,9 @@ function Gems() {
                 <section className="bigmocks-wrapper">
                         {!isLoading && allGems.length > 0 &&
                             allGems.map(cat =>
-                    <div className="bigmocks-inner-wrapper mb-2" key={cat?.id}>
+                    <div className="bigmocks-inner-wrapper mb-2 gems-wrapper" key={cat?.id}>
                                 <>
-                                    <h6 className="col-12">{cat?.name}</h6>
+                                    <h6 className="title col-12">{cat?.name}</h6>
                                     {cat?.gems.map(gem =>
                                         <div key={gem.id} className='col-sm-12 col-md-6 col-xl-4 col-xxl-3 col-12'>
                                             <div className='bigmocks-card'>

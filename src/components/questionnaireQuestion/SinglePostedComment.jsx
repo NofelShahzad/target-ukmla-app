@@ -1,5 +1,5 @@
 // import React from 'react'
-import moment from 'moment/moment'
+// import moment from 'moment/moment'
 import './SinglePostedComment.css'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -53,7 +53,7 @@ function SinglePostedComment({comment,handleReactOnComment,handleDeleteComment,h
     <div className="single-posted-comment-card">
       <div className="single-posted-comment-card-header">
         <span className="author">{comment?.customer?.name} {comment?.customer?.last_name} </span>
-        <span className="tag">PLAB</span>
+        {/* <span className="tag">PLAB</span> */}
       </div>
       {!updateToggle && 
           <div className="single-posted-comment-card-content">
@@ -73,7 +73,9 @@ function SinglePostedComment({comment,handleReactOnComment,handleDeleteComment,h
         </div>
       }
       <div className="single-posted-comment-card-footer">
-        <span className="time">{moment(comment?.created_at).startOf('day').fromNow()} 
+        <span className="time">
+          {/* {moment(comment?.created_at).startOf('day').fromNow()}  */}
+          {comment?.submitted_at && comment?.submitted_at}
           {/* 3 months ago */}
         </span>
         <div className="likes">
